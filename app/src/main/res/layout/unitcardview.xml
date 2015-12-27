@@ -9,6 +9,7 @@
         android:layout_height="0dp"
         android:id="@+id/unit_cardview"
         card_view:cardCornerRadius="4dp"
+        card_view:cardUseCompatPadding="true"
         >
 
             <ImageView

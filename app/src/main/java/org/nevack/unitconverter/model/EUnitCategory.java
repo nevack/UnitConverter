@@ -6,14 +6,14 @@ import android.support.v4.content.ContextCompat;
 import org.nevack.unitconverter.R;
 
 public enum EUnitCategory {
-    MASS(R.string.mass, R.drawable.weight, R.color.unitRed), //Done
-    VOLUME(R.string.volume, R.drawable.volume, R.color.unitGreen), //Done
-    TEMPERATURE(R.string.temperature, R.drawable.temperature, R.color.unitPurple), //Done
-    SPEED(R.string.speed, R.drawable.speed, R.color.unitDBlue), //Done
-    LENGTH(R.string.length, R.drawable.ruler, R.color.unitGrey), //Done
+    MASS(R.string.mass, R.drawable.weight, R.color.unitRed),
+    VOLUME(R.string.volume, R.drawable.volume, R.color.unitGreen),
+    TEMPERATURE(R.string.temperature, R.drawable.temperature, R.color.unitPurple),
+    SPEED(R.string.speed, R.drawable.speed, R.color.unitDBlue),
+    LENGTH(R.string.length, R.drawable.ruler, R.color.unitGrey),
     MEMORY(R.string.memory, R.drawable.memory, R.color.unitLBlue),
-    TIME(R.string.time, R.drawable.timer, R.color.unitRed),
-    OTHER(R.string.other, R.drawable.force, R.color.unitOrange);
+    TIME(R.string.time, R.drawable.timer, R.color.unitOrange),
+    OTHER(R.string.other, R.drawable.other, R.color.unitRed);
 
     private int unitNameResID;
     private int unitIconResID;

@@ -2,10 +2,11 @@
     <string name="app_name">Unit Converter</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_convert">ConvertActivity</string>
-    <string name="kilogram">Kilogram</string>
-    <string name="milligram">Milligram</string>
-    <string name="gram">Gram</string>
-    <string name="ton">Ton</string>
+
+    <string name="source_value">Source value</string>
+    <string name="result_value">Result value</string>
+
+    <!-- Converter names -->
     <string name="mass">Mass</string>
     <string name="force">Force</string>
     <string name="temperature">Temperature</string>
@@ -13,10 +14,31 @@
     <string name="speed">Speed</string>
     <string name="length">Length</string>
     <string name="memory">Memory</string>
+    <string name="other">Other</string>
+    <string name="time">Time</string>
+
+    <!-- Mass units and symbols -->
+    <string name="kilogram">Kilogram</string>
+    <string name="milligram">Milligram</string>
+    <string name="gram">Gram</string>
+    <string name="tonne">Tonne</string>
+    <string name="hundredweight">Hundredweight</string>
+
+    <string name="kilogramsymbol">kg</string>
+    <string name="gramsymbol">g</string>
+    <string name="milligramsymbol">mg</string>
+    <string name="hundredweightsymbol">cwt</string>
+    <string name="tonnesymbol">t</string>
+
+    <!-- Volume units and symbols -->
+    <string name="millilitre">Millilitre</string>
     <string name="cubicmetre">Cubic metre</string>
     <string name="litre">Litre</string>
-    <string name="source_value">Source value</string>
-    <string name="result_value">Result value</string>
+
+    <string name="litresymbol">L</string>
+    <string name="millilitresymbol">mL</string>
+
+    <!-- Length units and symbols -->
     <string name="metre">Metre</string>
     <string name="millimetre">Millimetre</string>
     <string name="centimetre">Centimetre</string>
@@ -26,7 +48,65 @@
     <string name="mile">Mile</string>
     <string name="foot">Foot</string>
     <string name="yard">Yard</string>
+
+    <string name="metresymbol">m</string>
+    <string name="millimetresymbol">mm</string>
+    <string name="centimetresymbol">cm</string>
+    <string name="decimetresymbol">dm</string>
+    <string name="kilometresymbol">km</string>
+    <string name="inchsymbol">in</string>
+    <string name="milesymbol">mi</string>
+    <string name="footsymbol">ft</string>
+    <string name="yardsymbol">yd</string>
+
+    <!-- Temperature units and symbols -->
     <string name="fahrenheit">Fahrenheit</string>
     <string name="celsius">Celsius</string>
     <string name="kelvin">Kelvin</string>
+
+    <string name="kelvinsymbol">K</string>
+    <string name="celsiussymbol">°C</string>
+    <string name="fahrenheitsymbol">°F</string>
+
+    <!-- Speed units and symbols -->
+    <string name="metrespersecond">Metres per second</string>
+    <string name="kilometresperhour">Kilometres per hour</string>
+    <string name="knots">Knots</string>
+    <string name="footspersecond">Feet per second</string>
+    <string name="milesperhour">Miles per hour</string>
+
+    <string name="mpssymbol">m/s</string>
+    <string name="kmpssymbol">km/h</string>
+    <string name="miphsymbol">mi/h</string>
+    <string name="ftpssymbol">ft/s</string>
+    <string name="knotssymbol">kn</string>
+
+    <!-- Time units and symbols -->
+    <string name="microsecond">Microsecond</string>
+    <string name="millisecond">Millisecond</string>
+    <string name="second">Second</string>
+    <string name="minute">Minute</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="year">Year</string>
+
+    <string name="millisecondsymbol">ms</string>
+    <string name="microsecondsymbol">μs</string>
+    <string name="secondsymbol">s</string>
+    <string name="minutesymbol">min</string>
+    <string name="hoursymbol">h</string>
+    <string name="daysymbol">d</string>
+    <string name="weeksymbol">w</string>
+    <string name="yearsymbol">y</string>
+
+    <!-- Other units -->
+    <string name="pico">Pico</string>
+    <string name="nano">Nano</string>
+    <string name="micro">Micro</string>
+    <string name="milli">Milli</string>
+    <string name="kilo">Kilo</string>
+    <string name="mega">Mega</string>
+    <string name="giga">Giga</string>
+    <string name="tera">Tera</string>
 </resources>

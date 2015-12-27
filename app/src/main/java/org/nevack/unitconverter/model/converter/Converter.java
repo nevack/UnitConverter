@@ -1,6 +1,8 @@
 package org.nevack.unitconverter.model.converter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.widget.ArrayAdapter;
 
 import org.nevack.unitconverter.model.Unit;
@@ -29,5 +31,9 @@ public abstract class Converter {
             adapter.add(unit.getName());
         }
         return adapter;
+    }
+
+    public Spanned getUnitSymbol(int position) {
+        return Html.fromHtml(unitList.get(position).getUnitSymbol());
     }
 }

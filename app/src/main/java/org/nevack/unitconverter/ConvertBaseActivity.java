@@ -14,18 +14,24 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.nevack.unitconverter.model.converter.Converter;
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.LengthConverter;
 import org.nevack.unitconverter.model.converter.MassConverter;
+import org.nevack.unitconverter.model.converter.OtherConverter;
+import org.nevack.unitconverter.model.converter.SpeedConverter;
 import org.nevack.unitconverter.model.converter.TemperatureConverter;
+import org.nevack.unitconverter.model.converter.TimeConverter;
 import org.nevack.unitconverter.model.converter.VolumeConverter;
 
 public class ConvertBaseActivity extends AppCompatActivity implements OnItemSelectedListener, TextWatcher {
-    private EditText sourceText;
-    private EditText resultText;
+    private EditText sourceValue;
+    private TextView sourceValueSymbol;
+    private EditText resultValue;
+    private TextView resultValueSymbol;
     private Spinner sourceSpinner;
     private Spinner resultSpinner;
     private ImageButton imageButton;
@@ -43,13 +49,19 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!resultText.getText().toString().equals("")) {
-                    ClipboardManager clipboard = (ClipboardManager)
-                            getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clipData = ClipData.newPlainText("result value", resultText.getText().toString());
-                    clipboard.setPrimaryClip(clipData);
-                    Toast.makeText(ConvertBaseActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                if (!resultValue.getText().toString().equals("")) {
+                    copyResultToClipboard(resultValue.getText().toString());
                 }
+            }
+        });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (!resultValue.getText().toString().equals("")) {
+                    copyResultToClipboard(resultValue.getText().toString() + resultValueSymbol.getText().toString());
+                }
+                return true;
             }
         });
 
@@ -66,8 +78,17 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
             case TEMPERATURE:
                 converter = new TemperatureConverter(this);
                 break;
+            case SPEED:
+                converter = new SpeedConverter(this);
+                break;
+            case TIME:
+                converter = new TimeConverter(this);
+                break;
+            case OTHER:
+                converter = new OtherConverter(this);
+                break;
             default:
-                converter = new MassConverter(this);
+                converter = new OtherConverter(this);
                 break;
         }
 
@@ -76,12 +97,14 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
         sourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
         resultSpinner = (Spinner) findViewById(R.id.resultspinner);
 
+        sourceValue = (EditText) findViewById(R.id.sourcevalue);
+        sourceValueSymbol = (TextView) findViewById(R.id.sourcevaluesymbol);
+        resultValue = (EditText) findViewById(R.id.resultvalue);
+        resultValueSymbol = (TextView) findViewById(R.id.resultvaluesymbol);
+
         initData();
 
-        sourceText = (EditText) findViewById(R.id.sourcevalue);
-        resultText = (EditText) findViewById(R.id.resultvalue);
-
-        sourceText.addTextChangedListener(this);
+        sourceValue.addTextChangedListener(this);
 
         sourceSpinner.setOnItemSelectedListener(this);
         resultSpinner.setOnItemSelectedListener(this);
@@ -90,9 +113,9 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String temp = sourceText.getText().toString();
-                sourceText.setText(resultText.getText().toString());
-                resultText.setText(temp);
+                String temp = sourceValue.getText().toString();
+                sourceValue.setText(resultValue.getText().toString());
+                resultValue.setText(temp);
                 int temppos = sourceSpinner.getSelectedItemPosition();
                 sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
                 resultSpinner.setSelection(temppos);
@@ -101,20 +124,32 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
         });
     }
 
+    private void copyResultToClipboard(String valueToCopy) {
+        ClipboardManager clipboard = (ClipboardManager)
+                getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("result", valueToCopy);
+        clipboard.setPrimaryClip(clipData);
+        Toast.makeText(ConvertBaseActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+    }
+
     private void initData() {
         sourceSpinner.setAdapter(converter.getAdapter());
         resultSpinner.setAdapter(converter.getAdapter());
+        sourceValueSymbol.setText(converter.getUnitSymbol(0));
+        resultValueSymbol.setText(converter.getUnitSymbol(0));
     }
 
     private void convert() {
-        if (sourceText.getText().toString().equals("")) resultText.setText("");
-        else resultText.setText(converter.convert(sourceText.getText().toString(),
+        if (sourceValue.getText().toString().equals("")) resultValue.setText("");
+        else resultValue.setText(converter.convert(sourceValue.getText().toString(),
                 sourceSpinner.getSelectedItemPosition(),
                 resultSpinner.getSelectedItemPosition()));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        sourceValueSymbol.setText(converter.getUnitSymbol(sourceSpinner.getSelectedItemPosition()));
+        resultValueSymbol.setText(converter.getUnitSymbol(resultSpinner.getSelectedItemPosition()));
         convert();
     }
 
@@ -136,6 +171,16 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
 
     @Override
     public void afterTextChanged(Editable s) {
-        convert();
+        if (sourceValue.getText().toString().equals(".")) {
+            sourceValue.setText("0.");
+            sourceValue.setSelection(sourceValue.getText().toString().length());
+        }
+        if (!sourceValue.getText().toString().equals("-")) convert();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim);
     }
 }

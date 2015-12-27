@@ -8,8 +8,9 @@ import org.nevack.unitconverter.model.Unit;
 public class VolumeConverter extends Converter{
     public VolumeConverter(Context context) {
         this.context = context;
-        unitList.add(new Unit(context.getString(R.string.litre), 0.001d));
-        unitList.add(new Unit(context.getString(R.string.cubicmetre), 1d));
+        unitList.add(new Unit(context.getString(R.string.litre), 0.001d, context.getString(R.string.litresymbol)));
+        unitList.add(new Unit(context.getString(R.string.cubicmetre), 1d, context.getString(R.string.metresymbol) + "<sup><small>3</small></sup>"));
+        unitList.add(new Unit(context.getString(R.string.millilitre), 0.000001d, context.getString(R.string.millilitresymbol)));
     }
 
     public String getTitle() {

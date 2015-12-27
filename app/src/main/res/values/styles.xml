@@ -15,4 +15,20 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="EditTextValue" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">numberDecimal|numberSigned</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="EditTextSymbol" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">75dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
 </resources>

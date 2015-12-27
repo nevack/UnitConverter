@@ -16,25 +16,25 @@
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"/>
 
-        <EditText
-            android:id="@+id/sourcevalue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/sourcespinner"
-            android:hint="@string/source_value"
-            android:textSize="25sp"
-            android:inputType="numberDecimal"
-            android:maxLength="12" />
+    <EditText
+        android:id="@+id/sourcevalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sourcespinner"
+        android:hint="@string/source_value"
+        android:textSize="25sp"
+        android:inputType="numberDecimal|numberSigned"
+        android:maxLength="12" />
 
 
-        <EditText
-            android:id="@+id/resultvalue"
-            android:layout_below="@id/sourcevalue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/result_value"
-            android:inputType="numberDecimal|numberSigned"
-            android:textSize="25sp" />
+    <EditText
+        android:id="@+id/resultvalue"
+        android:layout_below="@id/sourcevalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/result_value"
+        android:inputType="numberDecimal|numberSigned"
+        android:textSize="25sp" />
 
     <Spinner
         android:id="@+id/resultspinner"

@@ -116,9 +116,9 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
                 String temp = sourceValue.getText().toString();
                 sourceValue.setText(resultValue.getText().toString());
                 resultValue.setText(temp);
-                int temppos = sourceSpinner.getSelectedItemPosition();
+                int position = sourceSpinner.getSelectedItemPosition();
                 sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
-                resultSpinner.setSelection(temppos);
+                resultSpinner.setSelection(position);
                 convert();
             }
         });

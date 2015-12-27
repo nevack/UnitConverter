@@ -5,9 +5,6 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 
 public class ResizableRecyclerView extends RecyclerView {
     private GridLayoutManager manager;

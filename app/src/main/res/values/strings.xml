@@ -8,7 +8,6 @@
 
     <!-- Converter names -->
     <string name="mass">Mass</string>
-    <string name="force">Force</string>
     <string name="temperature">Temperature</string>
     <string name="volume">Volume</string>
     <string name="speed">Speed</string>

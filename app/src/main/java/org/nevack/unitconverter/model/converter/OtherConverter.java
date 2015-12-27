@@ -1,7 +1,6 @@
 package org.nevack.unitconverter.model.converter;
 
 import android.content.Context;
-import android.text.Html;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.Unit;

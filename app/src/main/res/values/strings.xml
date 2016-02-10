@@ -98,6 +98,22 @@
     <string name="daysymbol">d</string>
     <string name="weeksymbol">w</string>
     <string name="yearsymbol">y</string>
+    
+    <!-- Memory units and symbols -->
+    
+    <string name="memorybyte">Byte</string>
+    <string name="kilobyte">Kilobyte</string>
+    <string name="megabyte">Megabyte</string>
+    <string name="gigabyte">GigaByte</string>
+    <string name="terabyte">TeraByte</string>
+    <string name="petabyte">PetaByte</string>
+
+    <string name="memorybytesymbol">B</string>
+    <string name="kilobytesymbol">kB</string>
+    <string name="megabytesymbol">MB</string>
+    <string name="gigabytesymbol">GB</string>
+    <string name="terabytesymbol">TB</string>
+    <string name="petabytesymbol">PB</string>
 
     <!-- Other units -->
     <string name="pico">Pico</string>
@@ -108,4 +124,6 @@
     <string name="mega">Mega</string>
     <string name="giga">Giga</string>
     <string name="tera">Tera</string>
+    <string name="copy_result_toast">Copied to clipboard</string>
+
 </resources>

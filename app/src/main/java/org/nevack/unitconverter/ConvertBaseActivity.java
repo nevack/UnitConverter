@@ -17,10 +17,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.nevack.unitconverter.model.converter.Converter;
 import org.nevack.unitconverter.model.EUnitCategory;
+import org.nevack.unitconverter.model.converter.Converter;
 import org.nevack.unitconverter.model.converter.LengthConverter;
 import org.nevack.unitconverter.model.converter.MassConverter;
+import org.nevack.unitconverter.model.converter.MemoryConverter;
 import org.nevack.unitconverter.model.converter.OtherConverter;
 import org.nevack.unitconverter.model.converter.SpeedConverter;
 import org.nevack.unitconverter.model.converter.TemperatureConverter;
@@ -87,10 +88,34 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
             case OTHER:
                 converter = new OtherConverter(this);
                 break;
+            case MEMORY:
+                converter = new MemoryConverter(this);
+                break;
             default:
                 converter = new OtherConverter(this);
                 break;
         }
+
+//        Second way to pass converter!
+//
+//        String converterEnumName = EUnitCategory.values()[getIntent().getIntExtra("ConverterID", 0)].name();
+//        String converterName = converterEnumName.substring(0,1) + converterEnumName.substring(1).toLowerCase();
+//        String converterClassName = this.getPackageName() + ".model.converter." + converterName + "Converter";
+//
+//        try {
+//            converter = (Converter) Class.forName(converterClassName).getConstructor(Context.class).newInstance(this);
+//        } catch (ClassNotFoundException e) {
+//            converter = new OtherConverter(this);
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
 
         setTitle(converter.getTitle());
 
@@ -129,7 +154,7 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
                 getSystemService(CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("result", valueToCopy);
         clipboard.setPrimaryClip(clipData);
-        Toast.makeText(ConvertBaseActivity.this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ConvertBaseActivity.this, R.string.copy_result_toast, Toast.LENGTH_SHORT).show();
     }
 
     private void initData() {
@@ -179,8 +204,8 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
     }
 
     @Override
-    public void finish() {
-        super.finish();
+    public void onBackPressed() {
+        super.onBackPressed();
         overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim);
     }
 }

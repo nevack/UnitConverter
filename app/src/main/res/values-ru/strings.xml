@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Конвертер величин</string>
+    <string name="app_name">Конвертер</string>
     <string name="action_settings">Настройки</string>
     <string name="celsius">Градусы Цельсия</string>
     <string name="celsiussymbol">°C</string>
@@ -86,4 +86,17 @@
     <string name="yardsymbol">яр</string>
     <string name="year">Года</string>
     <string name="yearsymbol">г</string>
+    <string name="gigabyte">Гигабайты</string>
+    <string name="kilobyte">Килобайты</string>
+    <string name="megabyte">Мегабайты</string>
+    <string name="memorybyte">Байты</string>
+    <string name="petabyte">Петабайты</string>
+    <string name="terabyte">Терабайты</string>
+    <string name="terabytesymbol">ТБ</string>
+    <string name="petabytesymbol">ПБ</string>
+    <string name="memorybytesymbol">б</string>
+    <string name="kilobytesymbol">кБ</string>
+    <string name="megabytesymbol">МБ</string>
+    <string name="gigabytesymbol">ГБ</string>
+    <string name="copy_result_toast">Результат скопирован</string>
 </resources>

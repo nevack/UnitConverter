@@ -3,6 +3,7 @@ package org.nevack.unitconverter;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
+import org.nevack.unitconverter.model.converter.CurrencyConverter;
 import org.nevack.unitconverter.model.converter.LengthConverter;
 import org.nevack.unitconverter.model.converter.MassConverter;
 import org.nevack.unitconverter.model.converter.MemoryConverter;
@@ -66,6 +68,8 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
             }
         });
 
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+
         switch (EUnitCategory.values()[getIntent().getIntExtra("ConverterID", 0)]) {
             case MASS:
                 converter = new MassConverter(this);
@@ -90,6 +94,9 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
                 break;
             case MEMORY:
                 converter = new MemoryConverter(this);
+                break;
+            case CURRENCY:
+                converter = new CurrencyConverter(this);
                 break;
             default:
                 converter = new OtherConverter(this);

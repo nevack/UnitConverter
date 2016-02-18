@@ -125,5 +125,6 @@
     <string name="giga">Giga</string>
     <string name="tera">Tera</string>
     <string name="copy_result_toast">Copied to clipboard</string>
+    <string name="currency">Currency Exchange</string>
 
 </resources>

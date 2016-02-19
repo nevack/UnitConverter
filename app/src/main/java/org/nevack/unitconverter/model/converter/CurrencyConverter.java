@@ -10,6 +10,8 @@ import org.nevack.unitconverter.model.NBRBCurrencyExchangeParser;
 import org.nevack.unitconverter.model.Unit;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -25,14 +27,37 @@ public class CurrencyConverter extends Converter{
     public CurrencyConverter(Context context) {
         this.context = context;
 
-        String fullurl = NBRBCurrencyExchangeParser.NBRB_URL + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date());
+        String url = NBRBCurrencyExchangeParser.NBRB_URL + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date());
 
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isAvailable()) {
-            List<Currency> currencies = new DownloadXmlTask().doInBackground(fullurl);
+            List<Currency> currencies = new DownloadXmlTask().doInBackground(url);
 
             for (Currency currency : currencies)
                 unitList.add(new Unit(currency.name, Double.parseDouble(currency.rate), currency.charCode));
+            try {
+                URL xmlurl = new URL(NBRBCurrencyExchangeParser.NBRB_URL);
+                HttpURLConnection conn = (HttpURLConnection) xmlurl.openConnection();
+                conn.setReadTimeout(10000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(true);
+                conn.connect();
+
+                File file = new File(context.getFilesDir(), "currency.xml");
+                FileOutputStream fileOutput = new FileOutputStream(file);
+                InputStream inputStream = conn.getInputStream();
+
+                byte[] buffer = new byte[1024];
+                int bufferLength;
+                while ((bufferLength = inputStream.read(buffer)) > 0) {
+                    fileOutput.write(buffer, 0, bufferLength);
+                }
+                fileOutput.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         unitList.add(new Unit("Белорусский рубль", 1d, "BYR"));
     }
@@ -73,7 +98,7 @@ public class CurrencyConverter extends Converter{
         }
 
         private InputStream downloadUrl(String urlString) throws IOException {
-            URL url = new URL("http://www.nbrb.by/Services/XmlExRates.aspx?ondate=02/18/2016");
+            URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);

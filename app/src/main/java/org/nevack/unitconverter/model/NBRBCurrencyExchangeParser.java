@@ -26,8 +26,25 @@ public class NBRBCurrencyExchangeParser {
         }
     }
 
+    public String parseDate(InputStream in) throws XmlPullParserException, IOException {
+        String date = "";
+        try {
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in, null);
+            parser.nextTag();
+            parser.require(XmlPullParser.START_TAG, ns, "DailyExRates");
+            date = parser.getAttributeValue(null, "Date");
+            parser.nextTag();
+            parser.require(XmlPullParser.END_TAG, ns, "DailyExRates");
+        } finally {
+            in.close();
+        }
+        return date;
+    }
+
     private List<Currency> readDailyExRates(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<Currency> entries = new ArrayList<>();
+        List<Currency> currencies = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "DailyExRates");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -37,12 +54,12 @@ public class NBRBCurrencyExchangeParser {
             String name = parser.getName();
             // Starts by looking for the entry tag
             if (name.equals("Currency")) {
-                entries.add(readCurrency(parser));
+                currencies.add(readCurrency(parser));
             } else {
                 skip(parser);
             }
         }
-        return entries;
+        return currencies;
     }
 
     private Currency readCurrency(XmlPullParser parser) throws XmlPullParserException, IOException {

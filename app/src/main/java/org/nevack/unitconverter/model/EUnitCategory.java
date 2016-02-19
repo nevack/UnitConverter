@@ -13,7 +13,7 @@ public enum EUnitCategory {
     LENGTH(R.string.length, R.drawable.ruler, R.color.unitGrey),
     MEMORY(R.string.memory, R.drawable.memory, R.color.unitLBlue),
     TIME(R.string.time, R.drawable.timer, R.color.unitOrange),
-    CURRENCY(R.string.currency, R.drawable.currency, R.color.unitPurple),
+    CURRENCY(R.string.currency, R.drawable.currency, R.color.unitDGreen),
     OTHER(R.string.other, R.drawable.other, R.color.unitRed);
 
     private int unitNameResID;

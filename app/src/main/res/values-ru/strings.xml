@@ -99,5 +99,5 @@
     <string name="megabytesymbol">МБ</string>
     <string name="gigabytesymbol">ГБ</string>
     <string name="copy_result_toast">Результат скопирован</string>
-    <string name="currency">Currency Exchange</string>
+    <string name="currency">Валюта</string>
 </resources>

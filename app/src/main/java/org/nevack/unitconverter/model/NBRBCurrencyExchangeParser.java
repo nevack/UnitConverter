@@ -26,23 +26,6 @@ public class NBRBCurrencyExchangeParser {
         }
     }
 
-    public String parseDate(InputStream in) throws XmlPullParserException, IOException {
-        String date = "";
-        try {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            parser.require(XmlPullParser.START_TAG, ns, "DailyExRates");
-            date = parser.getAttributeValue(null, "Date");
-            parser.nextTag();
-            parser.require(XmlPullParser.END_TAG, ns, "DailyExRates");
-        } finally {
-            in.close();
-        }
-        return date;
-    }
-
     private List<Currency> readDailyExRates(XmlPullParser parser) throws XmlPullParserException, IOException {
         List<Currency> currencies = new ArrayList<>();
 

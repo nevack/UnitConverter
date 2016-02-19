@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Converter {
+    protected static final String TAG = "Converter";
+
     protected List<Unit> unitList = new ArrayList<>();
     protected Context context;
 

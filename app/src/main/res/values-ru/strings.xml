@@ -6,10 +6,10 @@
     <string name="celsiussymbol">°C</string>
     <string name="centimetre">Сантиметр</string>
     <string name="centimetresymbol">см</string>
-    <string name="cubicmetre">Кубический метр</string>
+    <string name="cubicmetre">Кубические метры</string>
     <string name="day">Дни</string>
     <string name="daysymbol">д</string>
-    <string name="decimetre">Дециметр</string>
+    <string name="decimetre">Дециметры</string>
     <string name="decimetresymbol">дм</string>
     <string name="fahrenheit">Градусы Фаренгейта</string>
     <string name="fahrenheitsymbol">°F</string>
@@ -29,7 +29,7 @@
     <string name="kelvin">Кельвин</string>
     <string name="kelvinsymbol">К</string>
     <string name="kilo">Кило</string>
-    <string name="kilogram">Килограмм</string>
+    <string name="kilogram">Килограммы</string>
     <string name="kilogramsymbol">кг</string>
     <string name="kilometre">Километры</string>
     <string name="kilometresperhour">Километры в час</string>
@@ -53,7 +53,7 @@
     <string name="milesperhour">Мили в час</string>
     <string name="milesymbol">мили</string>
     <string name="milli">Милли</string>
-    <string name="milligram">Миллиграмм</string>
+    <string name="milligram">Миллиграммы</string>
     <string name="milligramsymbol">мг</string>
     <string name="millilitre">Миллилитры</string>
     <string name="millilitresymbol">мл</string>
@@ -100,4 +100,22 @@
     <string name="gigabytesymbol">ГБ</string>
     <string name="copy_result_toast">Результат скопирован</string>
     <string name="currency">Валюта</string>
+    <string name="unable_to_fetch_data">Невозможно получить данные. Повторите позже</string>
+    <string name="bit">Биты</string>
+    <string name="bit_symbol">б</string>
+    <string name="area">Площадь</string>
+    <string name="squaremetre">Квадратные метры</string>
+    <string name="squarekilometre">Квадратные километры</string>
+    <string name="squarefoot">Квадратные футы</string>
+    <string name="squareyard">Квадратные ярды</string>
+    <string name="squaremile">Квадратные мили</string>
+    <string name="squareinch">Квадратные дюймы</string>
+    <string name="hectare">Гектары</string>
+    <string name="are">Ары</string>
+    <string name="acre">Акры</string>
+    <string name="hectaresymbol">га</string>
+    <string name="aresymbol">ар</string>
+    <string name="acresymbol">акр</string>
+    <string name="squarecentimetre">Квадратные сантиметры</string>
+    <string name="squaremillimetre">Квадратные миллиметры</string>
 </resources>

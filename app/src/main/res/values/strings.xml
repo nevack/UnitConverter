@@ -15,6 +15,8 @@
     <string name="memory">Memory</string>
     <string name="other">Other</string>
     <string name="time">Time</string>
+    <string name="area">Area</string>
+    <string name="currency">Currency Exchange</string>
 
     <!-- Mass units and symbols -->
     <string name="kilogram">Kilogram</string>
@@ -100,7 +102,8 @@
     <string name="yearsymbol">y</string>
     
     <!-- Memory units and symbols -->
-    
+
+    <string name="bit">Bit</string>
     <string name="memorybyte">Byte</string>
     <string name="kilobyte">Kilobyte</string>
     <string name="megabyte">Megabyte</string>
@@ -108,12 +111,31 @@
     <string name="terabyte">TeraByte</string>
     <string name="petabyte">PetaByte</string>
 
+    <string name="bit_symbol">b</string>
     <string name="memorybytesymbol">B</string>
     <string name="kilobytesymbol">kB</string>
     <string name="megabytesymbol">MB</string>
     <string name="gigabytesymbol">GB</string>
     <string name="terabytesymbol">TB</string>
     <string name="petabytesymbol">PB</string>
+
+    <!-- Area units and symbols -->
+
+    <string name="squaremetre">Square metre</string>
+    <string name="squarecentimetre">Square Centimetre</string>
+    <string name="squaremillimetre">Square millimetre</string>
+    <string name="squarekilometre">Square kilometre</string>
+    <string name="squarefoot">Square foot</string>
+    <string name="squareyard">Square yard</string>
+    <string name="squaremile">Square mile</string>
+    <string name="squareinch">Square inch</string>
+    <string name="hectare">Hectare</string>
+    <string name="are">Are</string>
+    <string name="acre">Acre</string>
+
+    <string name="hectaresymbol">ha</string>
+    <string name="aresymbol">a</string>
+    <string name="acresymbol">Acre</string>
 
     <!-- Other units -->
     <string name="pico">Pico</string>
@@ -125,6 +147,6 @@
     <string name="giga">Giga</string>
     <string name="tera">Tera</string>
     <string name="copy_result_toast">Copied to clipboard</string>
-    <string name="currency">Currency Exchange</string>
+    <string name="unable_to_fetch_data">Unable to fetch data. Try again later</string>
 
 </resources>

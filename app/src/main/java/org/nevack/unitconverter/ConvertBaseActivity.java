@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.nevack.unitconverter.model.EUnitCategory;
+import org.nevack.unitconverter.model.converter.AreaConverter;
 import org.nevack.unitconverter.model.converter.Converter;
 import org.nevack.unitconverter.model.converter.CurrencyConverter;
 import org.nevack.unitconverter.model.converter.LengthConverter;
@@ -29,6 +30,10 @@ import org.nevack.unitconverter.model.converter.SpeedConverter;
 import org.nevack.unitconverter.model.converter.TemperatureConverter;
 import org.nevack.unitconverter.model.converter.TimeConverter;
 import org.nevack.unitconverter.model.converter.VolumeConverter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ConvertBaseActivity extends AppCompatActivity implements OnItemSelectedListener, TextWatcher {
     private EditText sourceValue;
@@ -97,6 +102,10 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
                 break;
             case CURRENCY:
                 converter = new CurrencyConverter(this);
+                toolbar.setSubtitle("on " + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date()));
+                break;
+            case AREA:
+                converter = new AreaConverter(this);
                 break;
             default:
                 converter = new OtherConverter(this);

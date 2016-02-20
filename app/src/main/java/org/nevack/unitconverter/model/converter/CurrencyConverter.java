@@ -3,6 +3,9 @@ package org.nevack.unitconverter.model.converter;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.Currency;
@@ -23,6 +26,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class CurrencyConverter extends Converter{
+
+    private static final String FILE_NAME = "currency.xml";
 
     public CurrencyConverter(Context context) {
         this.context = context;
@@ -45,11 +50,12 @@ public class CurrencyConverter extends Converter{
         @Override
         protected List<Currency> doInBackground(String... urls) {
             try {
-                File file = new File(context.getFilesDir(), "currency.xml");
-
                 ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 if (manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isAvailable()) {
+                    Log.d(TAG, "doInBackground: Internet is available!");
                     InputStream inputStream = downloadUrl(urls[0]);
+                    Log.d(TAG, "doInBackground: Fetched data");
+                    File file = new File(context.getFilesDir(), FILE_NAME);
                     FileOutputStream fileOutput = context.openFileOutput(file.getName(), Context.MODE_PRIVATE);
 
                     byte[] buffer = new byte[1024];
@@ -58,9 +64,18 @@ public class CurrencyConverter extends Converter{
                         fileOutput.write(buffer, 0, bufferLength);
                     }
                     fileOutput.close();
-                }
 
-                return loadXmlFromFile(file);
+                    Log.d(TAG, "doInBackground: New data has been written to the local file");
+                }
+            } catch (IOException e) {
+                Toast toast = Toast.makeText(context, R.string.unable_to_fetch_data, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+
+            try {
+                Log.d(TAG, "doInBackground: Reading from local file");
+                return loadXmlFromFile(FILE_NAME);
             } catch (IOException e) {
                 return new ArrayList<>();
             } catch (XmlPullParserException e) {
@@ -68,12 +83,12 @@ public class CurrencyConverter extends Converter{
             }
         }
 
-        private List<Currency> loadXmlFromFile(File file) throws XmlPullParserException, IOException {
+        private List<Currency> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
             InputStream stream = null;
             NBRBCurrencyExchangeParser nbrbCurrencyExchangeParser = new NBRBCurrencyExchangeParser();
             List<Currency> currencies = null;
             try {
-                stream = context.openFileInput(file.getName());
+                stream = context.openFileInput(fileName);
                 currencies = nbrbCurrencyExchangeParser.parse(stream);
             } finally {
                 if (stream != null) {

@@ -11,6 +11,7 @@ public enum EUnitCategory {
     TEMPERATURE(R.string.temperature, R.drawable.temperature, R.color.unitPurple),
     SPEED(R.string.speed, R.drawable.speed, R.color.unitDBlue),
     LENGTH(R.string.length, R.drawable.ruler, R.color.unitGrey),
+    AREA(R.string.area, R.drawable.area, R.color.unitRed),
     MEMORY(R.string.memory, R.drawable.memory, R.color.unitLBlue),
     TIME(R.string.time, R.drawable.timer, R.color.unitOrange),
     CURRENCY(R.string.currency, R.drawable.currency, R.color.unitDGreen),

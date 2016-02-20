@@ -10,6 +10,7 @@ public class MemoryConverter extends Converter {
     public MemoryConverter(Context context) {
         this.context = context;
 
+        unitList.add(new Unit(context.getString(R.string.bit), 0.125d, context.getString(R.string.bit_symbol)));
         unitList.add(new Unit(context.getString(R.string.memorybyte), 1d, context.getString(R.string.memorybytesymbol)));
         unitList.add(new Unit(context.getString(R.string.kilobyte), 1000d, context.getString(R.string.kilobytesymbol)));
         unitList.add(new Unit(context.getString(R.string.megabyte), 1000000d, context.getString(R.string.megabytesymbol)));

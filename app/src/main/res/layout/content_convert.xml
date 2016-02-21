@@ -12,7 +12,7 @@
         android:id="@+id/sourcespinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"/>
+        android:spinnerMode="dialog"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -47,7 +47,7 @@
         android:id="@+id/resultspinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"/>
+        android:spinnerMode="dialog"/>
 
     <ImageButton android:id="@+id/swapbutton"
         android:layout_width="wrap_content"

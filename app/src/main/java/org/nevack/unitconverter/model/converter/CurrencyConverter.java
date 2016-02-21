@@ -2,10 +2,7 @@ package org.nevack.unitconverter.model.converter;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.Currency;
@@ -32,8 +29,37 @@ public class CurrencyConverter extends Converter{
     public CurrencyConverter(Context context) {
         this.context = context;
 
+        List<Currency> currencies;
         String url = NBRBCurrencyExchangeParser.NBRB_URL + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date());
-        List<Currency> currencies = new DownloadXmlTask().doInBackground(url);
+
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isAvailable()) {
+            try {
+                Log.d(TAG, "doInBackground: Internet is available!");
+                InputStream inputStream = downloadUrl(url);
+                Log.d(TAG, "doInBackground: Fetched data");
+                File file = new File(context.getFilesDir(), FILE_NAME);
+                FileOutputStream fileOutput = context.openFileOutput(file.getName(), Context.MODE_PRIVATE);
+
+                byte[] buffer = new byte[1024];
+                int bufferLength;
+                while ((bufferLength = inputStream.read(buffer)) > 0) {
+                    fileOutput.write(buffer, 0, bufferLength);
+                }
+                fileOutput.close();
+
+                Log.d(TAG, "doInBackground: New data has been written to the local file");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Log.d(TAG, "doInBackground: Reading from local file");
+            currencies = loadXmlFromFile(FILE_NAME);
+        } catch (IOException | XmlPullParserException e) {
+            currencies = new ArrayList<>();
+        }
 
         for (Currency currency : currencies)
             unitList.add(new Unit(currency.name, Double.parseDouble(currency.rate), currency.charCode));
@@ -46,68 +72,30 @@ public class CurrencyConverter extends Converter{
         return context.getString(R.string.currency);
     }
 
-    private class DownloadXmlTask extends AsyncTask<String, Void, List<Currency>> {
-        @Override
-        protected List<Currency> doInBackground(String... urls) {
-            try {
-                ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isAvailable()) {
-                    Log.d(TAG, "doInBackground: Internet is available!");
-                    InputStream inputStream = downloadUrl(urls[0]);
-                    Log.d(TAG, "doInBackground: Fetched data");
-                    File file = new File(context.getFilesDir(), FILE_NAME);
-                    FileOutputStream fileOutput = context.openFileOutput(file.getName(), Context.MODE_PRIVATE);
-
-                    byte[] buffer = new byte[1024];
-                    int bufferLength;
-                    while ((bufferLength = inputStream.read(buffer)) > 0) {
-                        fileOutput.write(buffer, 0, bufferLength);
-                    }
-                    fileOutput.close();
-
-                    Log.d(TAG, "doInBackground: New data has been written to the local file");
-                }
-            } catch (IOException e) {
-                Toast toast = Toast.makeText(context, R.string.unable_to_fetch_data, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-
-            try {
-                Log.d(TAG, "doInBackground: Reading from local file");
-                return loadXmlFromFile(FILE_NAME);
-            } catch (IOException e) {
-                return new ArrayList<>();
-            } catch (XmlPullParserException e) {
-                return new ArrayList<>();
+    private List<Currency> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+        NBRBCurrencyExchangeParser nbrbCurrencyExchangeParser = new NBRBCurrencyExchangeParser();
+        List<Currency> currencies = null;
+        try {
+            stream = context.openFileInput(fileName);
+            currencies = nbrbCurrencyExchangeParser.parse(stream);
+        } finally {
+            if (stream != null) {
+                stream.close();
             }
         }
+        return currencies;
+    }
 
-        private List<Currency> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
-            InputStream stream = null;
-            NBRBCurrencyExchangeParser nbrbCurrencyExchangeParser = new NBRBCurrencyExchangeParser();
-            List<Currency> currencies = null;
-            try {
-                stream = context.openFileInput(fileName);
-                currencies = nbrbCurrencyExchangeParser.parse(stream);
-            } finally {
-                if (stream != null) {
-                    stream.close();
-                }
-            }
-            return currencies;
-        }
-
-        private InputStream downloadUrl(String urlString) throws IOException {
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            conn.connect();
-            return conn.getInputStream();
-        }
+    private InputStream downloadUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        // Starts the query
+        conn.connect();
+        return conn.getInputStream();
     }
 }

@@ -32,7 +32,7 @@ import org.nevack.unitconverter.model.converter.TemperatureConverter;
 import org.nevack.unitconverter.model.converter.TimeConverter;
 import org.nevack.unitconverter.model.converter.VolumeConverter;
 
-public class ConvertBaseActivity extends AppCompatActivity implements OnItemSelectedListener, TextWatcher {
+public class ConvertBaseActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
@@ -75,17 +75,36 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
             }
         });
 
-        sourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
-        resultSpinner = (Spinner) findViewById(R.id.resultspinner);
-
-        sourceValue = (EditText) findViewById(R.id.sourcevalue);
         sourceValueSymbol = (TextView) findViewById(R.id.sourcevaluesymbol);
         resultValue = (EditText) findViewById(R.id.resultvalue);
         resultValueSymbol = (TextView) findViewById(R.id.resultvaluesymbol);
 
-        sourceValue.addTextChangedListener(this);
+        sourceValue = (EditText) findViewById(R.id.sourcevalue);
+        sourceValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (sourceValue.getText().toString().equals(".")) {
+                    sourceValue.setText("0.");
+                    sourceValue.setSelection(sourceValue.getText().toString().length());
+                }
+                if (!sourceValue.getText().toString().equals("-")) convert();
+            }
+        });
+
+        sourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
         sourceSpinner.setOnItemSelectedListener(this);
+
+        resultSpinner = (Spinner) findViewById(R.id.resultspinner);
         resultSpinner.setOnItemSelectedListener(this);
 
         imageButton = (ImageButton) findViewById(R.id.swapbutton);
@@ -132,31 +151,10 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
         convert();
     }
 
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        if (sourceValue.getText().toString().equals(".")) {
-            sourceValue.setText("0.");
-            sourceValue.setSelection(sourceValue.getText().toString().length());
-        }
-        if (!sourceValue.getText().toString().equals("-")) convert();
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         mInitDataAsync.cancel(true);
-        finish();
         overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim);
     }
 
@@ -168,7 +166,7 @@ public class ConvertBaseActivity extends AppCompatActivity implements OnItemSele
             super.onPreExecute();
 
             mDialog = new ProgressDialog(ConvertBaseActivity.this);
-            mDialog.setMessage("Loading data");
+            mDialog.setMessage(getString(R.string.loading_data));
             mDialog.setCancelable(false);
             mDialog.show();
         }

@@ -148,5 +148,6 @@
     <string name="tera">Tera</string>
     <string name="copy_result_toast">Copied to clipboard</string>
     <string name="unable_to_fetch_data">Unable to fetch data. Try again later</string>
+    <string name="loading_data">Loading data</string>
 
 </resources>

@@ -118,4 +118,5 @@
     <string name="acresymbol">акр</string>
     <string name="squarecentimetre">Квадратные сантиметры</string>
     <string name="squaremillimetre">Квадратные миллиметры</string>
+    <string name="loading_data">Загрузка данных</string>
 </resources>

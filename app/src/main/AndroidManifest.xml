@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConvertBaseActivity"
+            android:name=".ConverterActivity"
             android:label="@string/title_activity_convert"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"

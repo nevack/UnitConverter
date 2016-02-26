@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(MainActivity.this, ConvertBaseActivity.class);
+                        Intent intent = new Intent(MainActivity.this, ConverterActivity.class);
                         intent.putExtra("ConverterID", position);
                         startActivity(intent);
                         overridePendingTransition(R.anim.enter_in_anim, R.anim.enter_out_anim);

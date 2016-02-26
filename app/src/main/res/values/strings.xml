@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Unit Converter</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_convert">ConvertActivity</string>
+    <string name="title_activity_convert">Converter</string>
 
     <string name="source_value">Source value</string>
     <string name="result_value">Result value</string>

@@ -7,17 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import org.nevack.unitconverter.adapters.UnitsSelectAdapter;
-import org.nevack.unitconverter.model.EUnitCategory;
-import org.nevack.unitconverter.model.UnitCategory;
+import org.nevack.unitconverter.adapters.UnitsCategoryAdapter;
 import org.nevack.unitconverter.views.RecyclerItemClickListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-
-    private List<UnitCategory> unitCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +18,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initData();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.unitsrecycler);
-        final UnitsSelectAdapter adapter = new UnitsSelectAdapter(unitCategories);
+        final UnitsCategoryAdapter adapter = new UnitsCategoryAdapter(this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(
@@ -41,12 +33,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-    }
-
-    private void initData() {
-        unitCategories = new ArrayList<>();
-        for (EUnitCategory category : EUnitCategory.values()) {
-            unitCategories.add(new UnitCategory(category.getName(this), category.getUnitIconResID(), category.getColor(this)));
-        }
     }
 }

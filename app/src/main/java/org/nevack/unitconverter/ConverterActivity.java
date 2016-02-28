@@ -48,7 +48,7 @@ public class ConverterActivity extends AppCompatActivity {
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         final Menu menu = mNavigationView.getMenu();
         for (int i = 0; i < EUnitCategory.values().length; i++) {
-            menu.add(Menu.NONE, Menu.NONE, i, EUnitCategory.values()[i].getName(this));
+            menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getNameResID()));
         }
         mNavigationView.getMenu().getItem(converter_id).setChecked(true);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

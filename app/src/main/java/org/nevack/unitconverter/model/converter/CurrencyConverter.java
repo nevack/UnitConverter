@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.util.Log;
 
 import org.nevack.unitconverter.R;
-import org.nevack.unitconverter.model.Currency;
 import org.nevack.unitconverter.model.NBRBCurrencyExchangeParser;
 import org.nevack.unitconverter.model.Unit;
 import org.xmlpull.v1.XmlPullParserException;
@@ -29,7 +28,6 @@ public class CurrencyConverter extends Converter{
     public CurrencyConverter(Context context) {
         this.context = context;
 
-        List<Currency> currencies;
         String url = NBRBCurrencyExchangeParser.NBRB_URL + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date());
 
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -56,13 +54,10 @@ public class CurrencyConverter extends Converter{
 
         try {
             Log.d(TAG, "doInBackground: Reading from local file");
-            currencies = loadXmlFromFile(FILE_NAME);
+            unitList = loadXmlFromFile(FILE_NAME);
         } catch (IOException | XmlPullParserException e) {
-            currencies = new ArrayList<>();
+            unitList = new ArrayList<>();
         }
-
-        for (Currency currency : currencies)
-            unitList.add(new Unit(currency.name, Double.parseDouble(currency.rate), currency.charCode));
 
         unitList.add(new Unit("Белорусский рубль", 1d, "BYR"));
     }
@@ -72,30 +67,32 @@ public class CurrencyConverter extends Converter{
         return context.getString(R.string.currency);
     }
 
-    private List<Currency> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
+    private List<Unit> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
         InputStream stream = null;
         NBRBCurrencyExchangeParser nbrbCurrencyExchangeParser = new NBRBCurrencyExchangeParser();
-        List<Currency> currencies = null;
+
+        List<Unit> units = null;
         try {
             stream = context.openFileInput(fileName);
-            currencies = nbrbCurrencyExchangeParser.parse(stream);
+            units = nbrbCurrencyExchangeParser.parse(stream);
         } finally {
             if (stream != null) {
                 stream.close();
             }
         }
-        return currencies;
+        return units;
     }
 
     private InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000 /* milliseconds */);
-        conn.setConnectTimeout(15000 /* milliseconds */);
+
+        conn.setReadTimeout(10000);
+        conn.setConnectTimeout(15000);
         conn.setRequestMethod("GET");
         conn.setDoInput(true);
-        // Starts the query
         conn.connect();
+
         return conn.getInputStream();
     }
 }

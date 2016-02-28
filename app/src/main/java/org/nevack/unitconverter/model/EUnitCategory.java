@@ -1,8 +1,5 @@
 package org.nevack.unitconverter.model;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
-
 import org.nevack.unitconverter.R;
 
 public enum EUnitCategory {
@@ -27,15 +24,15 @@ public enum EUnitCategory {
         this.unitColorResID = unitColorResID;
     }
 
-    public String getName(Context context) {
-        return context.getString(unitNameResID);
+    public int getNameResID() {
+        return unitNameResID;
     }
 
-    public int getUnitIconResID() {
+    public int getIconResID() {
         return unitIconResID;
     }
 
-    public int getColor(Context context) {
-        return ContextCompat.getColor(context, unitColorResID);
+    public int getColorResID() {
+        return unitColorResID;
     }
 }

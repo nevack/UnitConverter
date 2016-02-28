@@ -14,7 +14,7 @@ public class NBRBCurrencyExchangeParser {
     public static final String NBRB_URL = "http://www.nbrb.by/Services/XmlExRates.aspx?ondate=";
     private static final String ns = null;
 
-    public List<Currency> parse(InputStream in) throws XmlPullParserException, IOException {
+    public List<Unit> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -26,8 +26,8 @@ public class NBRBCurrencyExchangeParser {
         }
     }
 
-    private List<Currency> readDailyExRates(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<Currency> currencies = new ArrayList<>();
+    private List<Unit> readDailyExRates(XmlPullParser parser) throws XmlPullParserException, IOException {
+        List<Unit> currencies = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "DailyExRates");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -45,7 +45,7 @@ public class NBRBCurrencyExchangeParser {
         return currencies;
     }
 
-    private Currency readCurrency(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private Unit readCurrency(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Currency");
         String charCode = null;
         String name = null;
@@ -65,7 +65,7 @@ public class NBRBCurrencyExchangeParser {
                 skip(parser);
             }
         }
-        return new Currency(charCode, name, rate);
+        return new Unit(name, Double.parseDouble(rate), charCode);
     }
 
     private String readCharCode(XmlPullParser parser) throws IOException, XmlPullParserException {

@@ -5,8 +5,10 @@ import android.app.FragmentTransaction;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import org.nevack.unitconverter.fragments.ConverterFragment;
 import org.nevack.unitconverter.model.EUnitCategory;
@@ -25,6 +26,7 @@ public class ConverterActivity extends AppCompatActivity {
     private FloatingActionButton mFab;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
+    private CoordinatorLayout mCoordinatorLayout;
 
     private int converter_id = 0;
 
@@ -71,12 +73,15 @@ public class ConverterActivity extends AppCompatActivity {
             }
         });
 
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 copyResultToClipboard(fragment.getResult(false));
+                Snackbar.make(mCoordinatorLayout, R.string.copy_result_toast, Snackbar.LENGTH_SHORT)
+                        .show();
             }
         });
 
@@ -84,6 +89,8 @@ public class ConverterActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 copyResultToClipboard(fragment.getResult(true));
+                Snackbar.make(mCoordinatorLayout, R.string.copy_result_toast, Snackbar.LENGTH_SHORT)
+                        .show();
                 return true;
             }
         });
@@ -100,6 +107,15 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim);
@@ -109,6 +125,5 @@ public class ConverterActivity extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager)
                 getSystemService(CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(clipData);
-        Toast.makeText(ConverterActivity.this, R.string.copy_result_toast, Toast.LENGTH_SHORT).show();
     }
 }

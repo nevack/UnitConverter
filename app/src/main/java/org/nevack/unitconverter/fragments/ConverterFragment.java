@@ -139,6 +139,10 @@ public class ConverterFragment extends Fragment{
         if (!mResultEditText.getText().toString().equals("")) {
             textToCopy = mResultEditText.getText().toString();
         }
+        if (withUnitSymbol)
+        {
+            textToCopy += mResultTextView.getText().toString();
+        }
         return ClipData.newPlainText(COPY_RESULT, textToCopy);
     }
 

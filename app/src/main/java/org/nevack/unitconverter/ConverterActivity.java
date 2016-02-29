@@ -49,7 +49,7 @@ public class ConverterActivity extends AppCompatActivity {
         final Menu menu = mNavigationView.getMenu();
         for (int i = 0; i < EUnitCategory.values().length; i++) {
             menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getNameResID()));
-            menu.getItem(i).setIcon(R.drawable.ic_memory);
+            menu.getItem(i).setIcon(EUnitCategory.values()[i].getNavIconResID());
         }
         mNavigationView.getMenu().getItem(converter_id).setChecked(true);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

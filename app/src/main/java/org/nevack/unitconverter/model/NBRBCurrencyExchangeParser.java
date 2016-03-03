@@ -55,14 +55,19 @@ public class NBRBCurrencyExchangeParser {
                 continue;
             }
             String parsename = parser.getName();
-            if (parsename.equals("CharCode")) {
-                charCode = readCharCode(parser);
-            } else if (parsename.equals("Name")) {
-                name = readName(parser);
-            } else if (parsename.equals("Rate")) {
-                rate = readRate(parser);
-            } else {
-                skip(parser);
+            switch (parsename) {
+                case "CharCode":
+                    charCode = readCharCode(parser);
+                    break;
+                case "Name":
+                    name = readName(parser);
+                    break;
+                case "Rate":
+                    rate = readRate(parser);
+                    break;
+                default:
+                    skip(parser);
+                    break;
             }
         }
         return new Unit(name, Double.parseDouble(rate), charCode);

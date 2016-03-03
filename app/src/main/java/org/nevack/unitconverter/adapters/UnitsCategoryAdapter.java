@@ -61,9 +61,4 @@ public class UnitsCategoryAdapter extends RecyclerView.Adapter<UnitsCategoryAdap
     public int getItemCount() {
         return unitCategories.size();
     }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 }

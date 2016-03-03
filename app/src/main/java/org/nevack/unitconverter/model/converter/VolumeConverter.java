@@ -7,7 +7,7 @@ import org.nevack.unitconverter.model.Unit;
 
 public class VolumeConverter extends Converter{
 
-    public static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
+    private static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
 
     public VolumeConverter(Context context) {
         this.context = context;

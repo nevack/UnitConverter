@@ -7,7 +7,7 @@ import org.nevack.unitconverter.model.Unit;
 
 public class AreaConverter extends Converter {
 
-    public static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
+    private static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
 
     public AreaConverter(Context context) {
         this.context = context;

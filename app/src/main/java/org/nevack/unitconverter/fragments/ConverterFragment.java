@@ -64,7 +64,7 @@ public class ConverterFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_convert, container, false);
+        View view = inflater.inflate(R.layout.fragment_convert, container, false);
 
         mSourceSpinner = (Spinner) view.findViewById(R.id.sourcespinner);
         mSourceSpinner.setOnItemSelectedListener(mListener);

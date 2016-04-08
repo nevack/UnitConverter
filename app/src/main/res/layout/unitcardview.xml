@@ -1,35 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<org.nevack.unitconverter.views.SquareCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <org.nevack.unitconverter.views.SquareCardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/unit_cardview"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardUseCompatPadding="true"
-        >
+    android:layout_height="0dp"
+    android:id="@+id/unit_cardview"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardUseCompatPadding="true">
 
             <ImageView
+                android:id="@+id/unit_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="center"
-                android:id="@+id/unit_icon"
+                android:contentDescription="@string/unit_icon_description"
                 />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/unit_icon"
-                android:layout_toEndOf="@id/unit_icon"
-                android:layout_gravity="bottom"
                 android:id="@+id/unit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:paddingLeft="5dp"
@@ -37,7 +29,4 @@
                 android:paddingBottom="2dp"
                 />
 
-
     </org.nevack.unitconverter.views.SquareCardView>
-
-</LinearLayout>

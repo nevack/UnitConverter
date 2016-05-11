@@ -7,7 +7,8 @@ import org.nevack.unitconverter.model.Unit;
 
 public class SpeedConverter extends Converter {
     public SpeedConverter(Context context) {
-        this.context = context;
+        super(context);
+
         unitList.add(new Unit(context.getString(R.string.metrespersecond), 3.6d, context.getString(R.string.mpssymbol)));
         unitList.add(new Unit(context.getString(R.string.kilometresperhour), 1d, context.getString(R.string.kmpssymbol)));
         unitList.add(new Unit(context.getString(R.string.milesperhour), 1.609344d, context.getString(R.string.miphsymbol)));

@@ -8,7 +8,8 @@ import org.nevack.unitconverter.model.Unit;
 public class TimeConverter extends Converter
 {
     public TimeConverter(Context context) {
-        this.context = context;
+        super(context);
+
         unitList.add(new Unit(context.getString(R.string.microsecond), 0.000001d, context.getString(R.string.microsecondsymbol)));
         unitList.add(new Unit(context.getString(R.string.millisecond), 0.001d, context.getString(R.string.millisecondsymbol)));
         unitList.add(new Unit(context.getString(R.string.second), 1d, context.getString(R.string.secondsymbol)));

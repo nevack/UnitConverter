@@ -17,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +28,7 @@ public class CurrencyConverter extends Converter{
     private static final String FILE_NAME = "currency.xml";
 
     public CurrencyConverter(Context context) {
-        this.context = context;
+        super(context);
 
         String url = NBRBCurrencyExchangeParser.NBRB_URL + new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH).format(new Date());
 
@@ -60,6 +62,13 @@ public class CurrencyConverter extends Converter{
         }
 
         unitList.add(new Unit("Белорусский рубль", 1d, "BYR"));
+
+        Collections.sort(unitList, new Comparator<Unit>() {
+            @Override
+            public int compare(Unit lhs, Unit rhs) {
+                return lhs.getName().compareToIgnoreCase(rhs.getName());
+            }
+        });
     }
 
     @Override

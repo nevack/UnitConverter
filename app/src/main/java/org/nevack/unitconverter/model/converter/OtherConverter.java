@@ -8,7 +8,8 @@ import org.nevack.unitconverter.model.Unit;
 public class OtherConverter extends Converter {
 
     public OtherConverter(Context context){
-        this.context = context;
+        super(context);
+
         unitList.add(new Unit(context.getString(R.string.pico), 0.000000000001d, "×10<sup><small>-12</small></sup>"));
         unitList.add(new Unit(context.getString(R.string.nano), 0.000000001d, "×10<sup><small>-9</small></sup>"));
         unitList.add(new Unit(context.getString(R.string.micro), 0.000001d, "×10<sup><small>-6</small></sup>"));

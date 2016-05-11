@@ -41,8 +41,7 @@ public class UnitsCategoryAdapter extends RecyclerView.Adapter<UnitsCategoryAdap
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup,
-                                         int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                  .inflate(R.layout.unitcardview, viewGroup, false);
 

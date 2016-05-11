@@ -150,5 +150,6 @@
     <string name="unable_to_fetch_data">Unable to fetch data. Try again later</string>
     <string name="loading_data">Loading data</string>
     <string name="unit_icon_description">Unit icon</string>
+    <string name="swap">Swap</string>
 
 </resources>

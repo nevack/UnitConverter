@@ -11,24 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.EUnitCategory;
-import org.nevack.unitconverter.model.converter.AreaConverter;
 import org.nevack.unitconverter.model.converter.Converter;
-import org.nevack.unitconverter.model.converter.CurrencyConverter;
-import org.nevack.unitconverter.model.converter.LengthConverter;
-import org.nevack.unitconverter.model.converter.MassConverter;
-import org.nevack.unitconverter.model.converter.MemoryConverter;
-import org.nevack.unitconverter.model.converter.OtherConverter;
-import org.nevack.unitconverter.model.converter.SpeedConverter;
-import org.nevack.unitconverter.model.converter.TemperatureConverter;
-import org.nevack.unitconverter.model.converter.TimeConverter;
-import org.nevack.unitconverter.model.converter.VolumeConverter;
 
 public class ConverterFragment extends Fragment{
 
@@ -41,7 +31,7 @@ public class ConverterFragment extends Fragment{
     private EditText mResultEditText;
     private TextView mResultTextView;
     private Spinner mResultSpinner;
-    private ImageButton mSwapImageButton;
+    private Button mSwapImageButton;
 
     private EUnitCategory mCategory;
     private Converter mConverter;
@@ -98,7 +88,7 @@ public class ConverterFragment extends Fragment{
         mSourceTextView = (TextView) view.findViewById(R.id.sourcevaluesymbol);
         mResultTextView = (TextView) view.findViewById(R.id.resultvaluesymbol);
 
-        mSwapImageButton = (ImageButton) view.findViewById(R.id.swapbutton);
+        mSwapImageButton = (Button) view.findViewById(R.id.swapbutton);
         mSwapImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +99,20 @@ public class ConverterFragment extends Fragment{
                 mSourceSpinner.setSelection(mResultSpinner.getSelectedItemPosition());
                 mResultSpinner.setSelection(position);
                 convert();
+            }
+        });
+
+        mSourceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSourceSpinner.performClick();
+            }
+        });
+
+        mResultTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mResultSpinner.performClick();
             }
         });
 
@@ -189,41 +193,7 @@ public class ConverterFragment extends Fragment{
 
         @Override
         protected Void doInBackground(Void... params) {
-            switch (mCategory) {
-                case MASS:
-                    mConverter = new MassConverter(getActivity());
-                    break;
-                case VOLUME:
-                    mConverter = new VolumeConverter(getActivity());
-                    break;
-                case LENGTH:
-                    mConverter = new LengthConverter(getActivity());
-                    break;
-                case TEMPERATURE:
-                    mConverter = new TemperatureConverter(getActivity());
-                    break;
-                case SPEED:
-                    mConverter = new SpeedConverter(getActivity());
-                    break;
-                case TIME:
-                    mConverter = new TimeConverter(getActivity());
-                    break;
-                case OTHER:
-                    mConverter = new OtherConverter(getActivity());
-                    break;
-                case MEMORY:
-                    mConverter = new MemoryConverter(getActivity());
-                    break;
-                case CURRENCY:
-                    mConverter = new CurrencyConverter(getActivity());
-                    break;
-                case AREA:
-                    mConverter = new AreaConverter(getActivity());
-                    break;
-                default:
-                    mConverter = new OtherConverter(getActivity());
-                    break;
-            }
+            mConverter = mCategory.getConverter(getActivity());
 
             return null;
         }

@@ -119,4 +119,6 @@
     <string name="squarecentimetre">Квадратные сантиметры</string>
     <string name="squaremillimetre">Квадратные миллиметры</string>
     <string name="loading_data">Загрузка данных</string>
+    <string name="swap">Обмен</string>
+    <string name="unit_icon_description">Иконка единицы измерения</string>
 </resources>

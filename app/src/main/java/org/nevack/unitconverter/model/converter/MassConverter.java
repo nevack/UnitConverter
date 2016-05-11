@@ -8,7 +8,8 @@ import org.nevack.unitconverter.model.Unit;
 public class MassConverter extends Converter{
 
     public MassConverter(Context context) {
-        this.context = context;
+        super(context);
+
         unitList.add(new Unit(context.getString(R.string.kilogram), 1d, context.getString(R.string.kilogramsymbol)));
         unitList.add(new Unit(context.getString(R.string.gram), 0.001d, context.getString(R.string.gramsymbol)));
         unitList.add(new Unit(context.getString(R.string.milligram), 0.0000001d, context.getString(R.string.milligramsymbol)));

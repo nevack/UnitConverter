@@ -8,7 +8,8 @@ import org.nevack.unitconverter.model.Unit;
 public class LengthConverter extends Converter{
 
     public LengthConverter(Context context) {
-        this.context = context;
+        super(context);
+
         unitList.add(new Unit(context.getString(R.string.metre), 1d, context.getString(R.string.metresymbol)));
         unitList.add(new Unit(context.getString(R.string.millimetre), 0.001d, context.getString(R.string.millimetresymbol)));
         unitList.add(new Unit(context.getString(R.string.centimetre), 0.01d, context.getString(R.string.centimetresymbol)));

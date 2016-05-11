@@ -13,9 +13,15 @@ import java.util.List;
 
 public abstract class Converter {
     protected static final String TAG = "Converter";
+    protected static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
+    protected static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
 
     protected List<Unit> unitList = new ArrayList<>();
     protected Context context;
+
+    public Converter(Context context) {
+        this.context = context;
+    }
 
     public String convert(String inputValue, int inputValueType, int outputValueType) {
         BigDecimal source = new BigDecimal(inputValue);

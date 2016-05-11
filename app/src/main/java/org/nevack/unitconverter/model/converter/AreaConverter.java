@@ -6,11 +6,8 @@ import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.Unit;
 
 public class AreaConverter extends Converter {
-
-    private static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
-
     public AreaConverter(Context context) {
-        this.context = context;
+        super(context);
 
         unitList.add(new Unit(context.getString(R.string.squaremetre), 1d, context.getString(R.string.metresymbol) + SQUARE_POSTFIX));
         unitList.add(new Unit(context.getString(R.string.squarecentimetre), 0.0001, context.getString(R.string.centimetresymbol) + SQUARE_POSTFIX));

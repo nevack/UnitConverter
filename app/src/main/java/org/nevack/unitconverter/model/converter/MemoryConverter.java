@@ -8,7 +8,7 @@ import org.nevack.unitconverter.model.Unit;
 public class MemoryConverter extends Converter {
 
     public MemoryConverter(Context context) {
-        this.context = context;
+        super(context);
 
         unitList.add(new Unit(context.getString(R.string.bit), 0.125d, context.getString(R.string.bit_symbol)));
         unitList.add(new Unit(context.getString(R.string.memorybyte), 1d, context.getString(R.string.memorybytesymbol)));

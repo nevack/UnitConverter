@@ -158,10 +158,7 @@ public class ConverterFragment extends Fragment{
             convert();
         }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-            convert();
-        }
+        @Override public void onNothingSelected(AdapterView<?> parent) { convert(); }
     }
 
     private class InitDataAsync extends AsyncTask<Void, Void, Void> {

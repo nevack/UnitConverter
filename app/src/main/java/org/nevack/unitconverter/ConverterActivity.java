@@ -3,6 +3,7 @@ package org.nevack.unitconverter;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -302,6 +303,7 @@ public class ConverterActivity extends AppCompatActivity {
     private class SpinnerListener implements Spinner.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             mSourceTextView.setText(mConverter.getUnitSymbol(mSourceSpinner.getSelectedItemPosition()));
             mResultTextView.setText(mConverter.getUnitSymbol(mResultSpinner.getSelectedItemPosition()));
             convert();

@@ -56,15 +56,15 @@
                     android:inputType="numberDecimal|numberSigned"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:textSize="34sp"
-                    />
+                    android:textColor="@android:color/white"
+                    android:textSize="34sp"/>
 
                 <TextView
                     android:id="@+id/sourcevaluesymbol"
                     style="@style/EditTextSymbol"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    />
+                    android:textColor="@android:color/white"/>
 
             </LinearLayout>
 
@@ -129,13 +129,15 @@
                     android:inputType="numberDecimal|numberSigned"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:textColor="@android:color/white"
                     android:textSize="34sp"/>
 
                 <TextView
                     android:id="@+id/resultvaluesymbol"
                     style="@style/EditTextSymbol"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/white"/>
             </LinearLayout>
 
         </LinearLayout>

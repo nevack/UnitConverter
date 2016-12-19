@@ -154,5 +154,7 @@
     <string name="description_application_icon">Application icon</string>
     <string name="description_copy_button">Copy result button</string>
     <string name="description_paste_button">Paste value button</string>
+    <string name="description_icon" translatable="false">Category icon</string>
+    <string name="zero_hint">0</string>
 
 </resources>

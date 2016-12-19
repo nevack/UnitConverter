@@ -124,4 +124,5 @@
     <string name="description_application_icon">Іконка прыкладання</string>
     <string name="description_copy_button">Кнопка скапіяваць вынік</string>
     <string name="description_paste_button">Кнопка ўставіць значэнне</string>
+    <string name="zero_hint">0</string>
 </resources>

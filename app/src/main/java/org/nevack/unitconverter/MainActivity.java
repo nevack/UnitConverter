@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     class UnitsCategoryAdapter extends RecyclerView.Adapter<UnitsCategoryAdapter.ViewHolder> {
 
-        private List<EUnitCategory> unitCategories;
+        private final List<EUnitCategory> unitCategories;
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private FrameLayout mCardView;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mTextView.setText(unitCategories.get(position).getNameResID());
             holder.mImageView.setImageResource(unitCategories.get(position).getIconResID());
             holder.mCardView.setBackgroundResource(unitCategories.get(position).getColorResID());
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, ConverterActivity.class);
-                    intent.putExtra("ConverterID", position);
+                    intent.putExtra("ConverterID", holder.getAdapterPosition());
                     startActivity(intent);
                     overridePendingTransition(R.anim.enter_in_anim, R.anim.enter_out_anim);
                 }

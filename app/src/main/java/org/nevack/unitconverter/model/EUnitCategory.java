@@ -17,10 +17,10 @@ public enum EUnitCategory {
     CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.unitDGreen, CurrencyConverter.class),
     OTHER(R.string.other, R.drawable.ic_other, R.color.unitRed, OtherConverter.class);
 
-    private int unitNameResID;
-    private int unitIconResID;
-    private int unitColorResID;
-    private Class<? extends Converter> converter;
+    private final int unitNameResID;
+    private final int unitIconResID;
+    private final int unitColorResID;
+    private final Class<? extends Converter> converter;
 
     EUnitCategory(int unitNameResID, int unitIconResID, int unitColorResID, Class<? extends Converter> converter) {
         this.unitNameResID = unitNameResID;

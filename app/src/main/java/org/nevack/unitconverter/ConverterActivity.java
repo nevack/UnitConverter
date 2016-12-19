@@ -225,7 +225,7 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     private class Listener implements View.OnClickListener {
-        String text;
+        final String text;
         Listener(String text)
         {
             this.text = text;

@@ -16,10 +16,10 @@ public abstract class Converter {
     static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
     static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
 
-    protected List<Unit> unitList = new ArrayList<>();
-    protected Context context;
+    List<Unit> unitList = new ArrayList<>();
+    final Context context;
 
-    public Converter(Context context) {
+    Converter(Context context) {
         this.context = context;
     }
 

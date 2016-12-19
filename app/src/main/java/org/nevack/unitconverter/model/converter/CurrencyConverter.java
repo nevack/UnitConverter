@@ -56,7 +56,7 @@ public class CurrencyConverter extends Converter{
 
         try {
             Log.d(TAG, "doInBackground: Reading from local file");
-            unitList = loadXmlFromFile(FILE_NAME);
+            unitList = loadXmlFromFile();
         } catch (IOException | XmlPullParserException e) {
             unitList = new ArrayList<>();
         }
@@ -76,13 +76,13 @@ public class CurrencyConverter extends Converter{
         return context.getString(R.string.currency);
     }
 
-    private List<Unit> loadXmlFromFile(String fileName) throws XmlPullParserException, IOException {
+    private List<Unit> loadXmlFromFile() throws XmlPullParserException, IOException {
         InputStream stream = null;
         NBRBCurrencyExchangeParser nbrbCurrencyExchangeParser = new NBRBCurrencyExchangeParser();
 
         List<Unit> units = null;
         try {
-            stream = context.openFileInput(fileName);
+            stream = context.openFileInput(CurrencyConverter.FILE_NAME);
             units = nbrbCurrencyExchangeParser.parse(stream);
         } finally {
             if (stream != null) {

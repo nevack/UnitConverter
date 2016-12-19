@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unit_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginTop="2dp">
+
+    <ImageView
+        android:id="@+id/unit_icon"
+        android:layout_width="72dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        />
+
+    <TextView
+        android:id="@+id/unit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_vertical"
+        android:paddingStart="72dp"
+        android:paddingEnd="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color_dark"/>
+
+</FrameLayout>

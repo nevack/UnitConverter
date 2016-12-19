@@ -122,7 +122,7 @@
     <!-- Area units and symbols -->
 
     <string name="squaremetre">Square metre</string>
-    <string name="squarecentimetre">Square Centimetre</string>
+    <string name="squarecentimetre">Square centimetre</string>
     <string name="squaremillimetre">Square millimetre</string>
     <string name="squarekilometre">Square kilometre</string>
     <string name="squarefoot">Square foot</string>
@@ -151,5 +151,8 @@
     <string name="loading_data">Loading data</string>
     <string name="unit_icon_description">Unit icon</string>
     <string name="swap">Swap</string>
+    <string name="description_application_icon">Application icon</string>
+    <string name="description_copy_button">Copy result button</string>
+    <string name="description_paste_button">Paste value button</string>
 
 </resources>

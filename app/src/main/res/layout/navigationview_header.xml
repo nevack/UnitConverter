@@ -11,7 +11,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="4dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/description_application_icon"/>
 
     <TextView
         android:layout_width="wrap_content"

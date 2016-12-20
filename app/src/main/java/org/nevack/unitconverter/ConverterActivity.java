@@ -17,6 +17,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +39,7 @@ public class ConverterActivity extends AppCompatActivity {
 
     private static final String CATEGORY_ID = "category_id";
     private static final String COPY_RESULT = "converter_result";
+    private static final String ID_EXTRA = "CONVERTERID";
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
@@ -69,13 +72,11 @@ public class ConverterActivity extends AppCompatActivity {
 
     private Converter mConverter;
 
-    private int converter_id = 0;
+    private int converterId;
 
-    private static final String ID_EXTRA = "CONVERTERID";
-
-    public static Intent getIntent(Context context, int convertrterId) {
+    public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
-        intent.putExtra(ID_EXTRA, convertrterId);
+        intent.putExtra(ID_EXTRA, converterId);
         return intent;
     }
 
@@ -83,6 +84,8 @@ public class ConverterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_converter);
+
+        converterId = getIntent().getIntExtra(ID_EXTRA, 0);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -98,14 +101,15 @@ public class ConverterActivity extends AppCompatActivity {
         for (int i = 0; i < EUnitCategory.values().length; i++) {
             menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getName()));
             menu.getItem(i).setIcon(EUnitCategory.values()[i].getIcon());
+            if (i == converterId) menu.getItem(i).setChecked(true);
         }
-        mNavigationView.getMenu().getItem(converter_id).setChecked(true);
+        mNavigationView.getMenu().getItem(converterId).setChecked(true);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                mNavigationView.getMenu().getItem(converter_id).setChecked(false);
+                mNavigationView.getMenu().getItem(converterId).setChecked(false);
                 menuItem.setChecked(true);
-                converter_id = menuItem.getOrder();
+                converterId = menuItem.getOrder();
 
                 mDrawerLayout.closeDrawers();
 
@@ -232,7 +236,6 @@ public class ConverterActivity extends AppCompatActivity {
             }
         });
 
-        converter_id = getIntent().getIntExtra(ID_EXTRA, 0);
         setConverter();
     }
 
@@ -280,14 +283,14 @@ public class ConverterActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(CATEGORY_ID, converter_id);
+        outState.putInt(CATEGORY_ID, converterId);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        converter_id = savedInstanceState.getInt(CATEGORY_ID);
+        converterId = savedInstanceState.getInt(CATEGORY_ID);
         setConverter();
     }
 
@@ -316,8 +319,8 @@ public class ConverterActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-            mSourceTextView.setText(mConverter.getUnitSymbol(mSourceSpinner.getSelectedItemPosition()));
-            mResultTextView.setText(mConverter.getUnitSymbol(mResultSpinner.getSelectedItemPosition()));
+            mSourceTextView.setText(Html.fromHtml(mConverter.getUnitSymbol(mSourceSpinner.getSelectedItemPosition())));
+            mResultTextView.setText(Html.fromHtml(mConverter.getUnitSymbol(mResultSpinner.getSelectedItemPosition())));
             convert();
         }
 
@@ -337,7 +340,7 @@ public class ConverterActivity extends AppCompatActivity {
             mDialog = new ProgressDialog(ConverterActivity.this);
             mDialog.setMessage(getString(R.string.loading_data));
             mDialog.setCancelable(false);
-            mDialog.show();
+            if (converterId == EUnitCategory.CURRENCY.ordinal()) mDialog.show();
         }
 
         @Override
@@ -354,15 +357,16 @@ public class ConverterActivity extends AppCompatActivity {
 
             mSourceSpinner.setAdapter(adapter);
             mResultSpinner.setAdapter(adapter);
-            mSourceTextView.setText(mConverter.getUnitSymbol(0));
-            mResultTextView.setText(mConverter.getUnitSymbol(0));
+            Spanned symbol = Html.fromHtml(mConverter.getUnitSymbol(0));
+            mSourceTextView.setText(symbol);
+            mResultTextView.setText(symbol);
 
             if (mDialog != null && mDialog.isShowing()) mDialog.dismiss();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            mConverter = EUnitCategory.values()[converter_id].getConverter(ConverterActivity.this);
+            mConverter = EUnitCategory.values()[converterId].getConverter(ConverterActivity.this);
             return null;
         }
     }

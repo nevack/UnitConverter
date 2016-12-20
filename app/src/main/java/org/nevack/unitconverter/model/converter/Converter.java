@@ -1,8 +1,5 @@
 package org.nevack.unitconverter.model.converter;
 
-import android.text.Html;
-import android.text.Spanned;
-
 import org.nevack.unitconverter.model.Unit;
 
 import java.math.BigDecimal;
@@ -19,7 +16,7 @@ public abstract class Converter {
         BigDecimal source = new BigDecimal(inputValue);
         BigDecimal sourceFactor = BigDecimal.valueOf(units.get(inputValueType).getFactor());
         BigDecimal resultFactor = BigDecimal.valueOf(units.get(outputValueType).getFactor());
-        BigDecimal result = source.multiply(sourceFactor).divide(resultFactor, 8, BigDecimal.ROUND_HALF_UP);
+        BigDecimal result = source.multiply(sourceFactor).divide(resultFactor, 9, BigDecimal.ROUND_HALF_UP);
         return result.stripTrailingZeros().toPlainString();
     }
 
@@ -29,7 +26,7 @@ public abstract class Converter {
         return units;
     }
 
-    public Spanned getUnitSymbol(int position) {
-        return Html.fromHtml(units.get(position).getUnitSymbol());
+    public String getUnitSymbol(int position) {
+        return units.get(position).getUnitSymbol();
     }
 }

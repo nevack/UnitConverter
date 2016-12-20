@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
-
     defaultConfig {
         applicationId "org.nevack.unitconverter"
         minSdkVersion 17
@@ -14,6 +13,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -29,7 +29,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportlibraryversion"
     compile "com.android.support:design:$rootProject.supportlibraryversion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportlibraryversion"
-    compile "com.google.code.gson:gson:2.8.0"
-    compile "com.squareup.retrofit2:retrofit:2.1.0"
-    compile "com.squareup.retrofit2:converter-gson:2.1.0"
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 }

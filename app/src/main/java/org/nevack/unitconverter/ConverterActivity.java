@@ -3,6 +3,8 @@ package org.nevack.unitconverter;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +69,14 @@ public class ConverterActivity extends AppCompatActivity {
     private Converter mConverter;
 
     private int converter_id = 0;
+
+    private static final String ID_EXTRA = "CONVERTERID";
+
+    public static Intent getIntent(Context context, int convertrterId) {
+        Intent intent = new Intent(context, ConverterActivity.class);
+        intent.putExtra(ID_EXTRA, convertrterId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +231,7 @@ public class ConverterActivity extends AppCompatActivity {
             }
         });
 
-        converter_id = getIntent().getIntExtra("ConverterID", 0);
+        converter_id = getIntent().getIntExtra(ID_EXTRA, 0);
         setConverter();
     }
 
@@ -345,7 +356,7 @@ public class ConverterActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             mConverter = EUnitCategory.values()[converter_id].getConverter(ConverterActivity.this);
-
+            Log.d("TAG", mConverter.getTitle());
             return null;
         }
     }

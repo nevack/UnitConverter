@@ -14,7 +14,7 @@ public enum EUnitCategory {
     AREA(R.string.area, R.drawable.ic_area, R.color.unitRed, AreaConverter.class),
     MEMORY(R.string.memory, R.drawable.ic_memory, R.color.unitLBlue, MemoryConverter.class),
     TIME(R.string.time, R.drawable.ic_timer, R.color.unitOrange, TimeConverter.class),
-    CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.unitDGreen, CurrencyConverter.class),
+    CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.unitDGreen, NewCurrencyConverter.class),
     OTHER(R.string.other, R.drawable.ic_other, R.color.unitRed, OtherConverter.class);
 
     private final int unitNameResID;
@@ -45,6 +45,7 @@ public enum EUnitCategory {
         try {
             return converter.getConstructor(Context.class).newInstance(context);
         } catch (Exception e) {
+            e.printStackTrace();
             return new OtherConverter(context);
         }
     }

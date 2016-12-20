@@ -56,14 +56,14 @@ public class CurrencyConverter extends Converter{
 
         try {
             Log.d(TAG, "doInBackground: Reading from local file");
-            unitList = loadXmlFromFile();
+            units = loadXmlFromFile();
         } catch (IOException | XmlPullParserException e) {
-            unitList = new ArrayList<>();
+            units = new ArrayList<>();
         }
 
-        unitList.add(new Unit("Белорусский рубль", 1d, "BYR"));
+        units.add(new Unit("Белорусский рубль", 1d, "BYR"));
 
-        Collections.sort(unitList, new Comparator<Unit>() {
+        Collections.sort(units, new Comparator<Unit>() {
             @Override
             public int compare(Unit lhs, Unit rhs) {
                 return lhs.getName().compareToIgnoreCase(rhs.getName());

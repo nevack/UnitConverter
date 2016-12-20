@@ -16,7 +16,7 @@ public abstract class Converter {
     static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
     static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
 
-    List<Unit> unitList = new ArrayList<>();
+    List<Unit> units = new ArrayList<>();
     final Context context;
 
     Converter(Context context) {
@@ -25,9 +25,9 @@ public abstract class Converter {
 
     public String convert(String inputValue, int inputValueType, int outputValueType) {
         BigDecimal source = new BigDecimal(inputValue);
-        BigDecimal sourceFactor = BigDecimal.valueOf(unitList.get(inputValueType).getFactor());
-        BigDecimal resultFactor = BigDecimal.valueOf(unitList.get(outputValueType).getFactor());
-        BigDecimal result = source.multiply(sourceFactor).divide(resultFactor, 6, BigDecimal.ROUND_HALF_UP);
+        BigDecimal sourceFactor = BigDecimal.valueOf(units.get(inputValueType).getFactor());
+        BigDecimal resultFactor = BigDecimal.valueOf(units.get(outputValueType).getFactor());
+        BigDecimal result = source.multiply(sourceFactor).divide(resultFactor, 8, BigDecimal.ROUND_HALF_UP);
         return result.stripTrailingZeros().toPlainString();
     }
 
@@ -35,13 +35,13 @@ public abstract class Converter {
 
     public ArrayAdapter<String> getAdapter() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
-        for (Unit unit : unitList) {
+        for (Unit unit : units) {
             adapter.add(unit.getName());
         }
         return adapter;
     }
 
     public Spanned getUnitSymbol(int position) {
-        return Html.fromHtml(unitList.get(position).getUnitSymbol());
+        return Html.fromHtml(units.get(position).getUnitSymbol());
     }
 }

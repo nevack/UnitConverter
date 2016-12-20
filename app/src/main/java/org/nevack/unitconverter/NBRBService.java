@@ -1,6 +1,7 @@
 package org.nevack.unitconverter;
 
 import org.nevack.unitconverter.model.Currency;
+import org.nevack.unitconverter.model.Rate;
 
 import java.util.List;
 
@@ -10,19 +11,19 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface NBRBService {
-    @GET("/Currencies")
+    @GET("Currencies")
     Call<List<Currency>> listAllCurrencies();
 
-    @GET("/Currencies/{id}")
+    @GET("Currencies/{id}")
     Call<List<Currency>> getCurrencyById(@Path("id") String currencyId);
 
-    @GET("/Rates?Periodicity=0")
-    Call<List<Currency>> getAllRatesForToday();
+    @GET("Rates?Periodicity=0")
+    Call<List<Rate>> getAllRatesForToday();
 
-    @GET("/Rates?Periodicity=0")
-    Call<List<Currency>> getAllRatesForDate(@Query("onDate") String date);
+    @GET("Rates?Periodicity=0")
+    Call<List<Rate>> getAllRatesForDate(@Query("onDate") String date);
 
-    @GET("/Rates?Periodicity=1")
-    Call<List<Currency>> getAllRatesForThisMonth();
+    @GET("Rates?Periodicity=1")
+    Call<List<Rate>> getAllRatesForThisMonth();
 }
 

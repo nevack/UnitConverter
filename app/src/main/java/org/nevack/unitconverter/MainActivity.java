@@ -1,6 +1,5 @@
 package org.nevack.unitconverter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -71,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, ConverterActivity.class);
-                    intent.putExtra("ConverterID", holder.getAdapterPosition());
-                    startActivity(intent);
+                    startActivity(ConverterActivity.getIntent(MainActivity.this, holder.getAdapterPosition()));
                     overridePendingTransition(R.anim.enter_in_anim, R.anim.enter_out_anim);
                 }
             });

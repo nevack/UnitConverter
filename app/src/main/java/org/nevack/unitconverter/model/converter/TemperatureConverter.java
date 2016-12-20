@@ -11,9 +11,9 @@ public class TemperatureConverter extends Converter {
     public TemperatureConverter(Context context) {
         super(context);
 
-        unitList.add(new Unit(context.getString(R.string.kelvin), 1d, context.getString(R.string.kelvinsymbol)));
-        unitList.add(new Unit(context.getString(R.string.celsius), 1d, context.getString(R.string.celsiussymbol)));
-        unitList.add(new Unit(context.getString(R.string.fahrenheit), 1d, context.getString(R.string.fahrenheitsymbol)));
+        units.add(new Unit(context.getString(R.string.kelvin), 1d, context.getString(R.string.kelvinsymbol)));
+        units.add(new Unit(context.getString(R.string.celsius), 1d, context.getString(R.string.celsiussymbol)));
+        units.add(new Unit(context.getString(R.string.fahrenheit), 1d, context.getString(R.string.fahrenheitsymbol)));
     }
 
     @Override

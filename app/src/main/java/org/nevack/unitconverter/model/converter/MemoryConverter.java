@@ -8,8 +8,6 @@ import org.nevack.unitconverter.model.Unit;
 public class MemoryConverter extends Converter {
 
     public MemoryConverter(Context context) {
-        super(context);
-
         units.add(new Unit(context.getString(R.string.bit), 0.125d, context.getString(R.string.bit_symbol)));
         units.add(new Unit(context.getString(R.string.memorybyte), 1d, context.getString(R.string.memorybytesymbol)));
         units.add(new Unit(context.getString(R.string.kilobyte), 1000d, context.getString(R.string.kilobytesymbol)));
@@ -18,7 +16,7 @@ public class MemoryConverter extends Converter {
         units.add(new Unit(context.getString(R.string.terabyte), 1000000000000d, context.getString(R.string.terabytesymbol)));
         units.add(new Unit(context.getString(R.string.petabyte), 1000000000000000d, context.getString(R.string.petabytesymbol)));
     }
-    public String getTitle() {
-        return context.getString(R.string.memory);
+    public int getTitle() {
+        return R.string.memory;
     }
 }

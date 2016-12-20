@@ -1,9 +1,9 @@
 package org.nevack.unitconverter.model;
 
 public class Unit {
-    private final String name;
-    private final double factor;
-    private final String unitSymbol;
+    private String name;
+    private double factor;
+    private String unitSymbol;
 
     public Unit(String name, double factor, String unitSymbol) {
         this.name = name;

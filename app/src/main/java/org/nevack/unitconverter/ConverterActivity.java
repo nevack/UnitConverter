@@ -18,11 +18,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.model.EUnitCategory;
+import org.nevack.unitconverter.model.Unit;
 import org.nevack.unitconverter.model.converter.Converter;
 
 public class ConverterActivity extends AppCompatActivity {
@@ -95,8 +96,8 @@ public class ConverterActivity extends AppCompatActivity {
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         final Menu menu = mNavigationView.getMenu();
         for (int i = 0; i < EUnitCategory.values().length; i++) {
-            menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getNameResID()));
-            menu.getItem(i).setIcon(EUnitCategory.values()[i].getIconResID());
+            menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getName()));
+            menu.getItem(i).setIcon(EUnitCategory.values()[i].getIcon());
         }
         mNavigationView.getMenu().getItem(converter_id).setChecked(true);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -345,8 +346,14 @@ public class ConverterActivity extends AppCompatActivity {
 
             setTitle(mConverter.getTitle());
 
-            mSourceSpinner.setAdapter(mConverter.getAdapter());
-            mResultSpinner.setAdapter(mConverter.getAdapter());
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(ConverterActivity.this, android.R.layout.simple_list_item_1);
+            for (Unit unit : mConverter.getUnits()) {
+                adapter.add(unit.getName());
+            }
+
+            mSourceSpinner.setAdapter(adapter);
+            mResultSpinner.setAdapter(adapter);
             mSourceTextView.setText(mConverter.getUnitSymbol(0));
             mResultTextView.setText(mConverter.getUnitSymbol(0));
 
@@ -356,7 +363,6 @@ public class ConverterActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             mConverter = EUnitCategory.values()[converter_id].getConverter(ConverterActivity.this);
-            Log.d("TAG", mConverter.getTitle());
             return null;
         }
     }

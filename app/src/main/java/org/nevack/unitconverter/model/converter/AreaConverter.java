@@ -7,8 +7,6 @@ import org.nevack.unitconverter.model.Unit;
 
 public class AreaConverter extends Converter {
     public AreaConverter(Context context) {
-        super(context);
-
         units.add(new Unit(context.getString(R.string.squaremetre), 1d, context.getString(R.string.metresymbol) + SQUARE_POSTFIX));
         units.add(new Unit(context.getString(R.string.squarecentimetre), 0.0001, context.getString(R.string.centimetresymbol) + SQUARE_POSTFIX));
         units.add(new Unit(context.getString(R.string.squaremillimetre), 0.000001d, context.getString(R.string.millimetresymbol) + SQUARE_POSTFIX));
@@ -23,7 +21,7 @@ public class AreaConverter extends Converter {
     }
 
     @Override
-    public String getTitle() {
-        return context.getString(R.string.area);
+    public int getTitle() {
+        return R.string.area;
     }
 }

@@ -14,38 +14,37 @@ public enum EUnitCategory {
     AREA(R.string.area, R.drawable.ic_area, R.color.unitRed, AreaConverter.class),
     MEMORY(R.string.memory, R.drawable.ic_memory, R.color.unitLBlue, MemoryConverter.class),
     TIME(R.string.time, R.drawable.ic_timer, R.color.unitOrange, TimeConverter.class),
-    CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.unitDGreen, NewCurrencyConverter.class),
+    CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.unitDGreen, CurrencyConverter.class),
     OTHER(R.string.other, R.drawable.ic_other, R.color.unitRed, OtherConverter.class);
 
-    private final int unitNameResID;
-    private final int unitIconResID;
-    private final int unitColorResID;
+    private final int name;
+    private final int icon;
+    private final int color;
     private final Class<? extends Converter> converter;
 
-    EUnitCategory(int unitNameResID, int unitIconResID, int unitColorResID, Class<? extends Converter> converter) {
-        this.unitNameResID = unitNameResID;
-        this.unitIconResID = unitIconResID;
-        this.unitColorResID = unitColorResID;
+    EUnitCategory(int name, int icon, int unitColorResID, Class<? extends Converter> converter) {
+        this.name = name;
+        this.icon = icon;
+        this.color = unitColorResID;
         this.converter = converter;
     }
 
-    public int getNameResID() {
-        return unitNameResID;
+    public int getName() {
+        return name;
     }
 
-    public int getIconResID() {
-        return unitIconResID;
+    public int getIcon() {
+        return icon;
     }
 
-    public int getColorResID() {
-        return unitColorResID;
+    public int getColor() {
+        return color;
     }
 
     public Converter getConverter(Context context) {
         try {
             return converter.getConstructor(Context.class).newInstance(context);
         } catch (Exception e) {
-            e.printStackTrace();
             return new OtherConverter(context);
         }
     }

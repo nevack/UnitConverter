@@ -8,8 +8,6 @@ import org.nevack.unitconverter.model.Unit;
 public class LengthConverter extends Converter{
 
     public LengthConverter(Context context) {
-        super(context);
-
         units.add(new Unit(context.getString(R.string.metre), 1d, context.getString(R.string.metresymbol)));
         units.add(new Unit(context.getString(R.string.millimetre), 0.001d, context.getString(R.string.millimetresymbol)));
         units.add(new Unit(context.getString(R.string.centimetre), 0.01d, context.getString(R.string.centimetresymbol)));
@@ -21,7 +19,7 @@ public class LengthConverter extends Converter{
         units.add(new Unit(context.getString(R.string.yard), 0.9144d, context.getString(R.string.yardsymbol)));
     }
 
-    public String getTitle() {
-        return context.getString(R.string.length);
+    public int getTitle() {
+        return R.string.length;
     }
 }

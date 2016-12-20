@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mTextView.setText(unitCategories.get(position).getNameResID());
-            holder.mImageView.setImageResource(unitCategories.get(position).getIconResID());
-            holder.mCardView.setBackgroundResource(unitCategories.get(position).getColorResID());
+            holder.mTextView.setText(unitCategories.get(position).getName());
+            holder.mImageView.setImageResource(unitCategories.get(position).getIcon());
+            holder.mCardView.setBackgroundResource(unitCategories.get(position).getColor());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -9,8 +9,6 @@ import java.math.BigDecimal;
 
 public class TemperatureConverter extends Converter {
     public TemperatureConverter(Context context) {
-        super(context);
-
         units.add(new Unit(context.getString(R.string.kelvin), 1d, context.getString(R.string.kelvinsymbol)));
         units.add(new Unit(context.getString(R.string.celsius), 1d, context.getString(R.string.celsiussymbol)));
         units.add(new Unit(context.getString(R.string.fahrenheit), 1d, context.getString(R.string.fahrenheitsymbol)));
@@ -80,7 +78,7 @@ public class TemperatureConverter extends Converter {
         return resultValue;
     }
 
-    public String getTitle() {
-        return context.getString(R.string.temperature);
+    public int getTitle() {
+        return R.string.temperature;
     }
 }

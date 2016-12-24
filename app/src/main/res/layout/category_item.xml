@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/unit_cardview"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:layout_marginTop="2dp">
+    android:layout_height="56dp">
 
     <ImageView
         android:id="@+id/unit_icon"
-        android:layout_width="72dp"
-        android:layout_height="40dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:layout_marginStart="16dp"
         android:contentDescription="@string/description_icon"
         />
 
@@ -20,7 +18,7 @@
         android:id="@+id/unit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textColor="@android:color/white"
         android:layout_gravity="center_vertical"
         android:paddingStart="72dp"
@@ -29,6 +27,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/divider_color_dark"/>
+        android:background="@color/divider_color_dark"
+        android:layout_gravity="bottom"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color_light"
+        android:layout_gravity="top"/>
 
 </FrameLayout>

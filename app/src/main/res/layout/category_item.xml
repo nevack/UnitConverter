@@ -26,15 +26,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_color_dark"
+        android:layout_height="4dp"
+        android:background="@drawable/category_item_background"
         android:layout_gravity="bottom"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_color_light"
-        android:layout_gravity="top"/>
 
     <View
         android:layout_width="match_parent"

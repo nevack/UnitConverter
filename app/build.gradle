@@ -7,8 +7,8 @@ android {
         applicationId "org.nevack.unitconverter"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "0.9.7"
+        versionCode 2
+        versionName "0.9.8"
     }
     buildTypes {
         release {

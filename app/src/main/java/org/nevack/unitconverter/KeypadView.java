@@ -32,6 +32,7 @@ public class KeypadView extends LinearLayout {
 
     public KeypadView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setOrientation(HORIZONTAL);
 
         inflate(context, R.layout.keypad, this);
 

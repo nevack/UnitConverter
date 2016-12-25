@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/sourcevalue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="end"
+            android:hint="@string/zero_hint"
+            android:imeOptions="actionNone"
+            android:inputType="numberDecimal|numberSigned"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/sourcevaluesymbol"
+            style="@style/EditTextSymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_swap_vert"
+            app:fabSize="mini" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/sourcespinner"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:spinnerMode="dropdown" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray" />
+
+            <Spinner
+                android:id="@+id/resultspinner"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/resultvalue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="end"
+            android:hint="@string/zero_hint"
+            android:inputType="numberDecimal|numberSigned"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/resultvaluesymbol"
+            style="@style/EditTextSymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</merge>

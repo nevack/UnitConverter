@@ -32,124 +32,16 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <LinearLayout
-                android:id="@+id/reveal_container"
+            <org.nevack.unitconverter.ConverterDisplayView
+                android:id="@+id/display"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/sourcevalue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/zero_hint"
-                        android:imeOptions="actionNone"
-                        android:inputType="numberDecimal|numberSigned"
-                        android:textSize="34sp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:gravity="end"
-                        android:background="@null"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"
-                        />
-
-                    <TextView
-                        android:id="@+id/sourcevaluesymbol"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        style="@style/EditTextSymbol"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:orientation="horizontal">
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:src="@drawable/ic_swap_vert"
-                        app:fabSize="mini"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <Spinner
-                            android:id="@+id/sourcespinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="32dp"
-                            android:spinnerMode="dropdown"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@android:color/darker_gray"/>
-
-                        <Spinner
-                            android:id="@+id/resultspinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="32dp"
-                            android:spinnerMode="dropdown"
-                            />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/resultvalue"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/zero_hint"
-                        android:inputType="numberDecimal|numberSigned"
-                        android:textSize="34sp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:gravity="end"
-                        android:background="@null"
-                        android:focusableInTouchMode="false"
-                        android:focusable="false"/>
-
-                    <TextView
-                        android:id="@+id/resultvaluesymbol"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        style="@style/EditTextSymbol"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <org.nevack.unitconverter.KeypadView
             android:id="@+id/keypad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:background="@color/keypad_background_color"/>
 
     </LinearLayout>

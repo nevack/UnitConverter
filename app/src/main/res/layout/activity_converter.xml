@@ -29,6 +29,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/reveal_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -55,14 +56,14 @@
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:textColor="@android:color/white"
-                    android:textSize="34sp"/>
+                    android:textSize="34sp" />
 
                 <TextView
                     android:id="@+id/sourcevaluesymbol"
                     style="@style/EditTextSymbol"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 
@@ -78,7 +79,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_swap_vert"
-                    app:fabSize="mini"/>
+                    app:fabSize="mini" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,19 +90,18 @@
                         android:id="@+id/sourcespinner"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
-                        android:spinnerMode="dropdown"/>
+                        android:spinnerMode="dropdown" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:background="@android:color/darker_gray"/>
+                        android:background="@android:color/darker_gray" />
 
                     <Spinner
                         android:id="@+id/resultspinner"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
-                        android:spinnerMode="dropdown"
-                        />
+                        android:spinnerMode="dropdown" />
 
                 </LinearLayout>
 
@@ -128,23 +128,24 @@
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:textColor="@android:color/white"
-                    android:textSize="34sp"/>
+                    android:textSize="34sp" />
 
                 <TextView
                     android:id="@+id/resultvaluesymbol"
                     style="@style/EditTextSymbol"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
         </LinearLayout>
 
-        <include
-            layout="@layout/keypad"
+        <org.nevack.unitconverter.KeypadView
+            android:id="@+id/keypad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:orientation="horizontal"
+            android:background="@color/keypad_background_color"/>
 
     </LinearLayout>
 

@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
             ViewHolder(View itemView) {
                 super(itemView);
-                mCardView = (FrameLayout) itemView.findViewById(R.id.unit_cardview);
-                mTextView = (TextView) itemView.findViewById(R.id.unit_name);
-                mImageView = (ImageView) itemView.findViewById(R.id.unit_icon);
+                mCardView = (FrameLayout) itemView.findViewById(R.id.category_container);
+                mTextView = (TextView) itemView.findViewById(R.id.category_name);
+                mImageView = (ImageView) itemView.findViewById(R.id.category_icon);
             }
         }
 

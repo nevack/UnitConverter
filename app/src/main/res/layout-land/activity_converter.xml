@@ -33,10 +33,10 @@
             </android.support.design.widget.AppBarLayout>
 
             <LinearLayout
+                android:id="@+id/reveal_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -145,11 +145,12 @@
 
         </LinearLayout>
 
-        <include
-            layout="@layout/keypad"
+        <org.nevack.unitconverter.KeypadView
+            android:id="@+id/keypad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:orientation="horizontal"
+            android:background="@color/keypad_background_color"/>
 
     </LinearLayout>
 

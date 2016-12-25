@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/unit_cardview"
+    android:id="@+id/category_container"
     android:layout_width="match_parent"
     android:layout_height="56dp">
 
     <ImageView
-        android:id="@+id/unit_icon"
+        android:id="@+id/category_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
@@ -15,7 +15,7 @@
         />
 
     <TextView
-        android:id="@+id/unit_name"
+        android:id="@+id/category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -35,5 +35,10 @@
         android:layout_height="1dp"
         android:background="@color/divider_color_light"
         android:layout_gravity="top"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 
 </FrameLayout>

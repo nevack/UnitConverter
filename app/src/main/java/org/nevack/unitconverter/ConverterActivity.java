@@ -1,5 +1,6 @@
 package org.nevack.unitconverter;
 
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -23,11 +25,10 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,36 +42,21 @@ public class ConverterActivity extends AppCompatActivity {
     private static final String COPY_RESULT = "converter_result";
     private static final String ID_EXTRA = "CONVERTERID";
 
-    private Toolbar mToolbar;
-    private FloatingActionButton mFab;
-    private NavigationView mNavigationView;
-    private DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
-    private Spinner mSourceSpinner;
-    private EditText mSourceEditText;
-    private TextView mSourceTextView;
-    private EditText mResultEditText;
-    private TextView mResultTextView;
-    private Spinner mResultSpinner;
+    private Spinner sourceSpinner;
+    private EditText sourceEditText;
+    private TextView sourceTextView;
+    private EditText resultEditText;
+    private TextView resultTextView;
+    private Spinner resultSpinner;
 
-    private Button mButton2;
-    private Button mButton1;
-    private Button mButton4;
-    private Button mButton3;
-    private Button mButton5;
-    private Button mButton6;
-    private Button mButton7;
-    private Button mButton8;
-    private Button mButton9;
-    private Button mButton0;
-    private Button mButtonDot;
-    private Button mButtonMinus;
-    private Button mButtonBackspace;
+    private KeypadView keypadView;
 
-    private ImageButton mButtonCopy;
-    private ImageButton mButtonPaste;
-
-    private Converter mConverter;
+    private Converter converter;
 
     private int converterId;
 
@@ -87,151 +73,128 @@ public class ConverterActivity extends AppCompatActivity {
 
         converterId = getIntent().getIntExtra(ID_EXTRA, 0);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        final ActionBar actionBar = getSupportActionBar();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-        final Menu menu = mNavigationView.getMenu();
+        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        final Menu menu = navigationView.getMenu();
         for (int i = 0; i < EUnitCategory.values().length; i++) {
             menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getName()));
             menu.getItem(i).setIcon(EUnitCategory.values()[i].getIcon());
-            if (i == converterId) menu.getItem(i).setChecked(true);
         }
-        mNavigationView.getMenu().getItem(converterId).setChecked(true);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        menu.getItem(converterId).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                mNavigationView.getMenu().getItem(converterId).setChecked(false);
+                menu.getItem(converterId).setChecked(false);
                 menuItem.setChecked(true);
                 converterId = menuItem.getOrder();
-
-                mDrawerLayout.closeDrawers();
-
+                drawerLayout.closeDrawers();
                 setConverter();
                 return true;
             }
         });
 
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        mSourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
-        mSourceSpinner.setOnItemSelectedListener(new SpinnerListener());
+        sourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
+        sourceSpinner.setOnItemSelectedListener(new SpinnerListener());
 
-        mResultSpinner = (Spinner) findViewById(R.id.resultspinner);
-        mResultSpinner.setOnItemSelectedListener(new SpinnerListener());
+        resultSpinner = (Spinner) findViewById(R.id.resultspinner);
+        resultSpinner.setOnItemSelectedListener(new SpinnerListener());
 
-        mSourceEditText = (EditText) findViewById(R.id.sourcevalue);
-        mSourceEditText.addTextChangedListener(new TextWatcher() {
+        sourceEditText = (EditText) findViewById(R.id.sourcevalue);
+        sourceEditText.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mSourceEditText.getText().toString().equals(".")) {
-                    mSourceEditText.setText("0.");
-                    mSourceEditText.setSelection(mSourceEditText.getText().toString().length());
+                if (sourceEditText.getText().toString().equals(".")) {
+                    sourceEditText.setText("0.");
+                    sourceEditText.setSelection(sourceEditText.getText().toString().length());
                 }
 
-                if (mSourceEditText.getText().toString().equals("-.")) {
-                    mSourceEditText.setText("-0.");
-                    mSourceEditText.setSelection(mSourceEditText.getText().toString().length());
+                if (sourceEditText.getText().toString().equals("-.")) {
+                    sourceEditText.setText("-0.");
+                    sourceEditText.setSelection(sourceEditText.getText().toString().length());
                 }
 
-                if (!mSourceEditText.getText().toString().equals("-")) convert();
+                if (!sourceEditText.getText().toString().equals("-")) convert();
             }
         });
-        mResultEditText = (EditText) findViewById(R.id.resultvalue);
+        resultEditText = (EditText) findViewById(R.id.resultvalue);
 
-        mSourceTextView = (TextView) findViewById(R.id.sourcevaluesymbol);
-        mResultTextView = (TextView) findViewById(R.id.resultvaluesymbol);
+        sourceTextView = (TextView) findViewById(R.id.sourcevaluesymbol);
+        resultTextView = (TextView) findViewById(R.id.resultvaluesymbol);
 
-        mFab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String temp = mSourceEditText.getText().toString();
-                mSourceEditText.setText(mResultEditText.getText().toString());
-                mResultEditText.setText(temp);
-                int position = mSourceSpinner.getSelectedItemPosition();
-                mSourceSpinner.setSelection(mResultSpinner.getSelectedItemPosition());
-                mResultSpinner.setSelection(position);
+                String temp = sourceEditText.getText().toString();
+                sourceEditText.setText(resultEditText.getText().toString());
+                resultEditText.setText(temp);
+                int position = sourceSpinner.getSelectedItemPosition();
+                sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
+                resultSpinner.setSelection(position);
                 convert();
             }
         });
 
-        mSourceTextView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { mSourceSpinner.performClick(); }
+        sourceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { sourceSpinner.performClick(); }
         });
 
-        mResultTextView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { mResultSpinner.performClick(); }
+        resultTextView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) { resultSpinner.performClick(); }
         });
 
-        mButton1 = (Button) findViewById(R.id.button1);
-        mButton2 = (Button) findViewById(R.id.button2);
-        mButton3 = (Button) findViewById(R.id.button3);
-        mButton4 = (Button) findViewById(R.id.button4);
-        mButton5 = (Button) findViewById(R.id.button5);
-        mButton6 = (Button) findViewById(R.id.button6);
-        mButton7 = (Button) findViewById(R.id.button7);
-        mButton8 = (Button) findViewById(R.id.button8);
-        mButton9 = (Button) findViewById(R.id.button9);
-        mButton0 = (Button) findViewById(R.id.button0);
-        mButtonDot = (Button) findViewById(R.id.button_dot);
-        mButtonMinus = (Button) findViewById(R.id.button_minus);
-        mButtonBackspace = (Button) findViewById(R.id.button_backspace);
-        mButtonCopy = (ImageButton) findViewById(R.id.button_copy);
-        mButtonPaste = (ImageButton) findViewById(R.id.button_paste);
+        keypadView = (KeypadView) findViewById(R.id.keypad);
+        keypadView.setEditText(sourceEditText);
 
-        mButton1.setOnClickListener(new Listener("1"));
-        mButton2.setOnClickListener(new Listener("2"));
-        mButton3.setOnClickListener(new Listener("3"));
-        mButton4.setOnClickListener(new Listener("4"));
-        mButton5.setOnClickListener(new Listener("5"));
-        mButton6.setOnClickListener(new Listener("6"));
-        mButton7.setOnClickListener(new Listener("7"));
-        mButton8.setOnClickListener(new Listener("8"));
-        mButton9.setOnClickListener(new Listener("9"));
-        mButton0.setOnClickListener(new Listener("0"));
-        mButtonDot.setOnClickListener(new Listener("."));
-        mButtonMinus.setOnClickListener(new Listener("-"));
-        mButtonBackspace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textString = mSourceEditText.getText().toString();
-                if( textString.length() > 0 ) {
-                    mSourceEditText.setText(textString.substring(0, textString.length() - 1 ));
-                    mSourceEditText.setSelection(mSourceEditText.getText().length());
+        keypadView.setCopyListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        copyResultToClipboard(false);
+                    }
+                },
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        copyResultToClipboard(true);
+                        return true;
+                    }
                 }
-            }
-        });
+        );
 
-        mButtonCopy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                copyResultToClipboard(false);
-            }
-        });
-
-        mButtonCopy.setOnLongClickListener(new View.OnLongClickListener() {
+        keypadView.setBackspaceLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                copyResultToClipboard(true);
-                return true;
-            }
-        });
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    final View myView = findViewById(R.id.reveal_container);
 
-        mButtonBackspace.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mSourceEditText.setText("");
-                mResultEditText.setText("");
+                    int cx = myView.getWidth();
+                    int cy = myView.getHeight() / 2;
+
+                    float finalRadius = (float) Math.hypot(cx, cy);
+
+                    Animator anim =
+                            ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+
+                    myView.setVisibility(View.VISIBLE);
+                    anim.start();
+                }
+
+                sourceEditText.setText("");
+                resultEditText.setText("");
                 return true;
             }
         });
@@ -239,34 +202,22 @@ public class ConverterActivity extends AppCompatActivity {
         setConverter();
     }
 
-    private class Listener implements View.OnClickListener {
-        final String text;
-        Listener(String text)
-        {
-            this.text = text;
-        }
-        @Override
-        public void onClick(View v) {
-            mSourceEditText.append(text);
-        }
-    }
-
     private void setConverter() {
         new InitDataAsync().execute();
     }
 
     private void convert() {
-        if (mSourceEditText.getText().toString().equals("")) mResultEditText.setText("");
-        else mResultEditText.setText(mConverter.convert(mSourceEditText.getText().toString(),
-                mSourceSpinner.getSelectedItemPosition(),
-                mResultSpinner.getSelectedItemPosition()));
+        if (sourceEditText.getText().toString().equals("")) resultEditText.setText("");
+        else resultEditText.setText(converter.convert(sourceEditText.getText().toString(),
+                sourceSpinner.getSelectedItemPosition(),
+                resultSpinner.getSelectedItemPosition()));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -274,8 +225,8 @@ public class ConverterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -302,25 +253,25 @@ public class ConverterActivity extends AppCompatActivity {
 
     private void copyResultToClipboard(boolean withUnitSymbol) {
         String textToCopy = "";
-        if (!mResultEditText.getText().toString().equals("")) {
-            textToCopy = mResultEditText.getText().toString();
+        if (!resultEditText.getText().toString().equals("")) {
+            textToCopy = resultEditText.getText().toString();
         }
         if (withUnitSymbol)
         {
-            textToCopy += mResultTextView.getText().toString();
+            textToCopy += resultTextView.getText().toString();
         }
         ClipboardManager clipboard = (ClipboardManager)
                 getSystemService(CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText(COPY_RESULT, textToCopy));
-        //Snackbar.make(mCoordinatorLayout, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(keypadView, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
     }
 
     private class SpinnerListener implements Spinner.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-            mSourceTextView.setText(Html.fromHtml(mConverter.getUnitSymbol(mSourceSpinner.getSelectedItemPosition())));
-            mResultTextView.setText(Html.fromHtml(mConverter.getUnitSymbol(mResultSpinner.getSelectedItemPosition())));
+            sourceTextView.setText(Html.fromHtml(converter.getUnitSymbol(sourceSpinner.getSelectedItemPosition())));
+            resultTextView.setText(Html.fromHtml(converter.getUnitSymbol(resultSpinner.getSelectedItemPosition())));
             convert();
         }
 
@@ -334,8 +285,8 @@ public class ConverterActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            mSourceEditText.setText("");
-            mResultEditText.setText("");
+            sourceEditText.setText("");
+            resultEditText.setText("");
 
             mDialog = new ProgressDialog(ConverterActivity.this);
             mDialog.setMessage(getString(R.string.loading_data));
@@ -347,26 +298,26 @@ public class ConverterActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            setTitle(mConverter.getTitle());
+            setTitle(converter.getTitle());
 
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<>(ConverterActivity.this, android.R.layout.simple_list_item_1);
-            for (Unit unit : mConverter.getUnits()) {
+            for (Unit unit : converter.getUnits()) {
                 adapter.add(unit.getName());
             }
 
-            mSourceSpinner.setAdapter(adapter);
-            mResultSpinner.setAdapter(adapter);
-            Spanned symbol = Html.fromHtml(mConverter.getUnitSymbol(0));
-            mSourceTextView.setText(symbol);
-            mResultTextView.setText(symbol);
+            sourceSpinner.setAdapter(adapter);
+            resultSpinner.setAdapter(adapter);
+            Spanned symbol = Html.fromHtml(converter.getUnitSymbol(0));
+            sourceTextView.setText(symbol);
+            resultTextView.setText(symbol);
 
             if (mDialog != null && mDialog.isShowing()) mDialog.dismiss();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            mConverter = EUnitCategory.values()[converterId].getConverter(ConverterActivity.this);
+            converter = EUnitCategory.values()[converterId].getConverter(ConverterActivity.this);
             return null;
         }
     }

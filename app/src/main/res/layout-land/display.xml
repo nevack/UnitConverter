@@ -35,44 +35,26 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <Spinner
+        android:id="@+id/sourcespinner"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:orientation="horizontal">
+        android:layout_height="32dp"
+        android:spinnerMode="dropdown" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            app:srcCompat="@drawable/ic_swap_vert"
-            app:fabSize="mini" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        app:srcCompat="@drawable/ic_swap_vert"
+        app:fabSize="normal" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/sourcespinner"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/white" />
-
-            <Spinner
-                android:id="@+id/resultspinner"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <Spinner
+        android:id="@+id/resultspinner"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:spinnerMode="dropdown" />
 
     <LinearLayout
         android:layout_width="match_parent"

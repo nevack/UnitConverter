@@ -241,6 +241,30 @@ public class ConverterDisplayView extends LinearLayout {
 
     public void setupWithKeypad(KeypadView view) {
         view.setEditText(sourceEditText);
+
+        view.setCopyListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        copyResultToClipboard(false);
+                    }
+                },
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        copyResultToClipboard(true);
+                        return true;
+                    }
+                }
+        );
+
+        view.setBackspaceLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                erase();
+                return true;
+            }
+        });
     }
 
     private class SpinnerListener implements Spinner.OnItemSelectedListener {

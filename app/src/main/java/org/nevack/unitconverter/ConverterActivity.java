@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -16,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
@@ -24,18 +27,18 @@ import org.nevack.unitconverter.model.converter.Converter;
 public class ConverterActivity extends AppCompatActivity implements ConverterDisplayView.DisplayCallback {
 
     private static final String CATEGORY_ID = "category_id";
-    private static final String ID_EXTRA = "CONVERTERID";
+    private static final String ID_EXTRA = "converter_id";
 
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
     private KeypadView keypadView;
+    private ConverterDisplayView display;
 
     private Converter converter;
-
     private int converterId;
-    private ConverterDisplayView display;
+    private ImageView iconImage;
 
     public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
@@ -46,9 +49,9 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_converter);
 
         converterId = getIntent().getIntExtra(ID_EXTRA, 0);
+        setContentView(R.layout.activity_converter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,6 +60,8 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        iconImage = (ImageView) findViewById(R.id.converter_icon);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -82,34 +87,22 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
         keypadView = (KeypadView) findViewById(R.id.keypad);
         display.setupWithKeypad(keypadView);
 
-        keypadView.setCopyListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        display.copyResultToClipboard(false);
-                    }
-                },
-                new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        display.copyResultToClipboard(true);
-                        return true;
-                    }
-                }
-        );
-
-        keypadView.setBackspaceLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                display.erase();
-                return true;
-            }
-        });
-
         setConverter();
     }
 
     private void setConverter() {
+        int color = ContextCompat.getColor(this, EUnitCategory.values()[converterId].getColor());
+        toolbar.setBackgroundColor(color);
+        display.setBackgroundColor(color);
+        iconImage.setImageResource(EUnitCategory.values()[converterId].getIcon());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            float[] hsv = new float[3];
+            Color.colorToHSV(color, hsv);
+            hsv[2] *= 0.8f;
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.HSVToColor(hsv));
+        }
         new InitDataAsync().execute();
     }
 
@@ -156,16 +149,12 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
         overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim);
     }
 
-
-
     private class InitDataAsync extends AsyncTask<Void, Void, Void> {
         private ProgressDialog mDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            //display.erase();
 
             mDialog = new ProgressDialog(ConverterActivity.this);
             mDialog.setMessage(getString(R.string.loading_data));

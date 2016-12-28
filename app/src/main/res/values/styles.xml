@@ -14,16 +14,16 @@
     <style name="EditTextValue" parent="Widget.AppCompat.EditText">
         <item name="android:inputType">numberDecimal|numberSigned</item>
         <item name="android:textSize">23sp</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
     </style>
 
-    <style name="EditTextSymbol" parent="TextAppearance.AppCompat">
+    <style name="ConverterSymbol" parent="TextAppearance.AppCompat">
         <item name="android:textSize">24sp</item>
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">0dp</item>
     </style>
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -167,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_content_copy"
+            app:srcCompat="@drawable/ic_content_copy"
             android:contentDescription="@string/description_copy_button"
             style="@style/Widget.AppCompat.Button.Borderless"/>
 
@@ -176,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_content_paste"
+            app:srcCompat="@drawable/ic_content_paste"
             android:contentDescription="@string/description_paste_button"
             style="@style/Widget.AppCompat.Button.Borderless"/>
 

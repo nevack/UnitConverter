@@ -10,7 +10,7 @@
 
         <Button
             android:id="@+id/button1"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -20,7 +20,7 @@
 
         <Button
             android:id="@+id/button4"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -30,7 +30,7 @@
 
         <Button
             android:id="@+id/button7"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/button_dot"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/button2"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -69,7 +69,7 @@
 
         <Button
             android:id="@+id/button5"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -79,7 +79,7 @@
 
         <Button
             android:id="@+id/button8"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -89,7 +89,7 @@
 
         <Button
             android:id="@+id/button0"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -107,7 +107,7 @@
 
         <Button
             android:id="@+id/button3"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -117,7 +117,7 @@
 
         <Button
             android:id="@+id/button6"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -127,7 +127,7 @@
 
         <Button
             android:id="@+id/button9"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -137,7 +137,7 @@
 
         <Button
             android:id="@+id/button_minus"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -170,7 +170,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_content_copy"
             android:contentDescription="@string/description_copy_button"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            style="@style/KeyPadButton"/>
 
         <ImageButton
             android:id="@+id/button_paste"
@@ -179,7 +179,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_content_paste"
             android:contentDescription="@string/description_paste_button"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            style="@style/KeyPadButton"/>
 
     </LinearLayout>
 

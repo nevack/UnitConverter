@@ -35,6 +35,7 @@ import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;
 
+import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static org.nevack.unitconverter.R.layout.display;
 
@@ -224,7 +225,7 @@ public class ConverterDisplayView extends LinearLayout {
         );
     }
 
-    public void copyResultToClipboard(boolean withUnitSymbol) {
+    private void copyResultToClipboard(boolean withUnitSymbol) {
         String textToCopy = "";
         if (!resultEditText.getText().toString().equals("")) {
             textToCopy = resultEditText.getText().toString();
@@ -242,7 +243,7 @@ public class ConverterDisplayView extends LinearLayout {
     public void setupWithKeypad(KeypadView view) {
         view.setEditText(sourceEditText);
 
-        view.setCopyListener(
+        view.setOnCopyListeners(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -254,6 +255,26 @@ public class ConverterDisplayView extends LinearLayout {
                     public boolean onLongClick(View v) {
                         copyResultToClipboard(true);
                         return true;
+                    }
+                }
+        );
+
+        view.setOnPasteListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        double source = 0d;
+                        ClipboardManager clipboard = (ClipboardManager) getContext()
+                                .getSystemService(Context.CLIPBOARD_SERVICE);
+
+                        if ((clipboard.hasPrimaryClip() && clipboard.getPrimaryClipDescription()
+                                .hasMimeType(MIMETYPE_TEXT_PLAIN))) {
+                            String pasteData = clipboard.getPrimaryClip().getItemAt(0)
+                                    .getText().toString();
+                            if (!pasteData.isEmpty()) source = Double.parseDouble(pasteData);
+                        }
+
+                        if (source != 0d) sourceEditText.setText(String.valueOf(source));
                     }
                 }
         );

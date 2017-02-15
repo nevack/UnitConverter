@@ -80,9 +80,13 @@ public class KeypadView extends LinearLayout {
         this.editText = editText;
     }
 
-    public void setCopyListener(OnClickListener click, OnLongClickListener longClick) {
+    public void setOnCopyListeners(OnClickListener click, OnLongClickListener longClick) {
         mButtonCopy.setOnClickListener(click);
         mButtonCopy.setOnLongClickListener(longClick);
+    }
+
+    public void setOnPasteListener(OnClickListener listener) {
+        mButtonPaste.setOnClickListener(listener);
     }
 
     public void setBackspaceLongClickListener(OnLongClickListener listener) {

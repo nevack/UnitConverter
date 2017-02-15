@@ -24,6 +24,9 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:paddingStart">0dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
+    
+    <style name="KeyPadButton" parent="Widget.AppCompat.Button.Borderless"/>
 
 </resources>

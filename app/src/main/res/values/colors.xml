@@ -12,6 +12,8 @@
     <color name="material_bluegrey_500">#607D8B</color>
     <color name="material_blue_500">#2196F3</color>
     <color name="material_green_800">#2E7D32</color>
+    <color name="material_deep_purple_500">#673AB7</color>
+    <color name="material_teal_500">#009688</color>
 
     <color name="divider_color_dark">#1E000000</color>
     <color name="divider_color_light">#1EFFFFFF</color>

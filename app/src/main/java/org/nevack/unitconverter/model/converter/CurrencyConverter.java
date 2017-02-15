@@ -10,9 +10,11 @@ import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.Rate;
 import org.nevack.unitconverter.model.Unit;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
@@ -66,7 +68,9 @@ public class CurrencyConverter extends Converter {
             for (Rate rate : rates) {
                 units.add(rate.toUnit());
             }
-        } catch (FileNotFoundException ignored) {}
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void loadUnitsFromWeb() {
@@ -80,11 +84,21 @@ public class CurrencyConverter extends Converter {
         try {
             Response<List<Rate>> response = call.execute();
             if (response.isSuccessful()) {
-                for (Rate rate : response.body()) {
+                List<Rate> rates = response.body();
+                for (Rate rate : rates) {
                     units.add(rate.toUnit());
                 }
+
+                Type type = new TypeToken<List<Rate>>() {}.getType();
+                String json = gson.toJson(rates, type);
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter out = new BufferedWriter(fw);
+                out.write(json);
+                out.close();
             }
-        } catch (IOException ignored) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

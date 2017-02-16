@@ -98,6 +98,7 @@ public class CurrencyConverter extends Converter {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            loadUnitsFromFile();
         }
     }
 

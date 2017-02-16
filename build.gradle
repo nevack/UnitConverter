@@ -19,7 +19,7 @@ allprojects {
 }
 
 ext {
-    supportlibraryversion = '25.1.0'
+    supportlibraryversion = '25.1.1'
 }
 
 task clean(type: Delete) {

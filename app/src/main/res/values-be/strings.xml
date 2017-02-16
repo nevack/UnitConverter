@@ -125,4 +125,14 @@
     <string name="description_copy_button">Кнопка скапіяваць вынік</string>
     <string name="description_paste_button">Кнопка ўставіць значэнне</string>
     <string name="zero_hint">0</string>
+    <string name="gallon">Галон ЗША</string>
+    <string name="gallonsymbol">гал</string>
+    <string name="barrel">Барэль</string>
+    <string name="barrelsymbol">ба</string>
+    <string name="astronomicalunit">Астранамічная адзінка</string>
+    <string name="astronomicalunitsymbol">а.а.</string>
+    <string name="parsec">Парсек</string>
+    <string name="parsecsymbol">пс</string>
+    <string name="lightyear">Светлавы год</string>
+    <string name="lightyearsymbol">св.г.</string>
 </resources>

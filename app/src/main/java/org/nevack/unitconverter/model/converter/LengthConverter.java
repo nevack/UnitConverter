@@ -17,6 +17,9 @@ public class LengthConverter extends Converter{
         units.add(new Unit(context.getString(R.string.mile), 1609.344d, context.getString(R.string.milesymbol)));
         units.add(new Unit(context.getString(R.string.foot), 0.3048d, context.getString(R.string.footsymbol)));
         units.add(new Unit(context.getString(R.string.yard), 0.9144d, context.getString(R.string.yardsymbol)));
+        units.add(new Unit(context.getString(R.string.astronomicalunit), 149597870700d, context.getString(R.string.astronomicalunitsymbol)));
+        units.add(new Unit(context.getString(R.string.parsec), 3.0856776e16, context.getString(R.string.parsecsymbol)));
+        units.add(new Unit(context.getString(R.string.lightyear), 9460730472580800d, context.getString(R.string.lightyearsymbol)));
     }
 
     public int getTitle() {

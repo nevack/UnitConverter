@@ -156,5 +156,15 @@
     <string name="description_paste_button">Paste value button</string>
     <string name="description_icon" translatable="false">Category icon</string>
     <string name="zero_hint">0</string>
+    <string name="gallon">US Gallon</string>
+    <string name="gallonsymbol">gal</string>
+    <string name="barrel">Barrel</string>
+    <string name="barrelsymbol">ba</string>
+    <string name="astronomicalunit">Astronomical unit</string>
+    <string name="astronomicalunitsymbol">au</string>
+    <string name="parsec">Parsec</string>
+    <string name="parsecsymbol">pc</string>
+    <string name="lightyear">Light-year</string>
+    <string name="lightyearsymbol">ly</string>
 
 </resources>

@@ -1,8 +1,10 @@
 package org.nevack.unitconverter;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,11 +18,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import org.nevack.unitconverter.database.HistoryContract;
+import org.nevack.unitconverter.database.HistoryDatabaseHelper;
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
 
@@ -39,6 +44,7 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
     private Converter converter;
     private int converterId;
     private ImageView iconImage;
+    private SQLiteDatabase db;
 
     public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
@@ -88,6 +94,9 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
         display.setupWithKeypad(keypadView);
 
         setConverter();
+
+        HistoryDatabaseHelper helper = new HistoryDatabaseHelper(this);
+        db = helper.getWritableDatabase();
     }
 
     private void setConverter() {
@@ -112,11 +121,28 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_converter, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.save:
+                ContentValues values = new ContentValues();
+                values.put(HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY, getTitle().toString());
+                values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM, display.getSelectedSourceUnit());
+                values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO, display.getSelectedResultUnit());
+                values.put(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM, display.getSourceValue());
+                values.put(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO, display.getResultValue());
+                long newRowId = db.insert(HistoryContract.HistoryEntry.TABLE_NAME, null, values);
+                break;
+            case R.id.history:
+                startActivity(new Intent(this, HistoryActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

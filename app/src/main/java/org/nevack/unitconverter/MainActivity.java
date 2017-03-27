@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.unitsrecycler);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this,
                 getResources().getInteger(R.integer.column_count)));
         recyclerView.setAdapter(new UnitsCategoryAdapter());
@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
         private final List<EUnitCategory> unitCategories;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private FrameLayout mCardView;
+            private FrameLayout mContainer;
             private TextView mTextView;
             private ImageView mImageView;
 
             ViewHolder(View itemView) {
                 super(itemView);
-                mCardView = (FrameLayout) itemView.findViewById(R.id.category_container);
+                mContainer = (FrameLayout) itemView.findViewById(R.id.category_container);
                 mTextView = (TextView) itemView.findViewById(R.id.category_name);
                 mImageView = (ImageView) itemView.findViewById(R.id.category_icon);
             }
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mTextView.setText(unitCategories.get(position).getName());
             holder.mImageView.setImageResource(unitCategories.get(position).getIcon());
-            holder.mCardView.setBackgroundResource(unitCategories.get(position).getColor());
+            holder.mContainer.setBackgroundResource(unitCategories.get(position).getColor());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

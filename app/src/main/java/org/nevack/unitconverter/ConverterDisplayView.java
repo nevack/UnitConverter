@@ -63,7 +63,7 @@ public class ConverterDisplayView extends LinearLayout {
     public ConverterDisplayView(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        callback = (DisplayCallback) context;
+        if (context instanceof DisplayCallback) callback = (DisplayCallback) context;
 
         setOrientation(VERTICAL);
 
@@ -223,6 +223,22 @@ public class ConverterDisplayView extends LinearLayout {
                         sourceSpinner.getSelectedItemPosition(),
                         resultSpinner.getSelectedItemPosition())
         );
+    }
+
+    public String getSelectedSourceUnit() {
+        return sourceSpinner.getSelectedItem().toString();
+    }
+
+    public String getSelectedResultUnit() {
+        return resultSpinner.getSelectedItem().toString();
+    }
+
+    public String getSourceValue() {
+        return resultEditText.getText().toString();
+    }
+
+    public String getResultValue() {
+        return sourceEditText.getText().toString();
     }
 
     private void copyResultToClipboard(boolean withUnitSymbol) {

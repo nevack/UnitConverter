@@ -100,7 +100,7 @@
     <string name="daysymbol">d</string>
     <string name="weeksymbol">w</string>
     <string name="yearsymbol">y</string>
-    
+
     <!-- Memory units and symbols -->
 
     <string name="bit">Bit</string>

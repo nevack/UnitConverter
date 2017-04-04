@@ -135,4 +135,5 @@
     <string name="parsecsymbol">пс</string>
     <string name="lightyear">Светлавы год</string>
     <string name="lightyearsymbol">св.г.</string>
+    <string name="title_activity_history">History</string>
 </resources>

@@ -167,4 +167,9 @@
     <string name="lightyear">Light-year</string>
     <string name="lightyearsymbol">ly</string>
 
+    <string name="history_shortcut_short_label">History</string>
+    <string name="history_shortcut_long_label">History</string>
+    <string name="history_shortcut_disabled_label">History</string>
+    <string name="title_activity_history">History</string>
+
 </resources>

@@ -19,13 +19,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".ConverterActivity"
             android:label="@string/title_activity_convert"
             android:parentActivityName=".MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
-        <activity android:name=".HistoryActivity"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".HistoryActivity"
+            android:label="@string/title_activity_history"/>
     </application>
 
 </manifest>

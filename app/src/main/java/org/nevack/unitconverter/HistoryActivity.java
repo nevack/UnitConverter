@@ -36,14 +36,6 @@ public class HistoryActivity extends AppCompatActivity {
         HistoryDatabaseHelper helper = new HistoryDatabaseHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String[] projection = {
-                HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY,
-                HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM,
-                HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO,
-                HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM,
-                HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO
-        };
-
         Cursor cursor = db.query(
                 HistoryContract.HistoryEntry.TABLE_NAME,                     // The table to query
                 null,                               // The columns to return
@@ -75,7 +67,7 @@ public class HistoryActivity extends AppCompatActivity {
         String unitfrom;
         String unitto;
 
-        public HistoryItem(String category, String valuefrom, String valueto, String unitfrom, String unitto) {
+        HistoryItem(String category, String valuefrom, String valueto, String unitfrom, String unitto) {
             this.category = category;
             this.valuefrom = valuefrom;
             this.valueto = valueto;

@@ -3,7 +3,7 @@
     <shortcut
         android:shortcutId="history"
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_history"
+        android:icon="@drawable/ic_history"
         android:shortcutShortLabel="@string/history_shortcut_short_label"
         android:shortcutLongLabel="@string/history_shortcut_long_label"
         android:shortcutDisabledMessage="@string/history_shortcut_disabled_label">

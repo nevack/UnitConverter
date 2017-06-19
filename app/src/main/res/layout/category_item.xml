@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
 
-        <org.nevack.unitconverter.SquareFrameLayout
+        <org.nevack.unitconverter.categories.SquareFrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
@@ -23,7 +23,7 @@
                 android:contentDescription="@string/description_icon"
                 />
 
-        </org.nevack.unitconverter.SquareFrameLayout>
+        </org.nevack.unitconverter.categories.SquareFrameLayout>
 
         <TextView
             android:id="@+id/category_name"

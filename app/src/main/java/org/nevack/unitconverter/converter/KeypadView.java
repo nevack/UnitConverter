@@ -1,4 +1,4 @@
-package org.nevack.unitconverter;
+package org.nevack.unitconverter.converter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import org.nevack.unitconverter.R;
 
 public class KeypadView extends LinearLayout {
 

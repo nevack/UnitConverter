@@ -37,12 +37,12 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <org.nevack.unitconverter.ConverterDisplayView
+        <org.nevack.unitconverter.converter.ConverterDisplayView
             android:id="@+id/display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <org.nevack.unitconverter.KeypadView
+        <org.nevack.unitconverter.converter.KeypadView
             android:id="@+id/keypad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package org.nevack.unitconverter;
+package org.nevack.unitconverter.history;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.database.HistoryContract;
 import org.nevack.unitconverter.database.HistoryDatabaseHelper;
 
@@ -25,12 +26,12 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_categories);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         HistoryDatabaseHelper helper = new HistoryDatabaseHelper(this);
@@ -87,11 +88,11 @@ public class HistoryActivity extends AppCompatActivity {
 
             ViewHolder(View itemView) {
                 super(itemView);
-                category  = (TextView) itemView.findViewById(R.id.category_name);
-                valuefrom = (TextView) itemView.findViewById(R.id.valuefrom);
-                valueto  = (TextView) itemView.findViewById(R.id.valueto);
-                unitfrom = (TextView) itemView.findViewById(R.id.unitnamefrom);
-                unitto = (TextView) itemView.findViewById(R.id.unitnameto);
+                category  = itemView.findViewById(R.id.category_name);
+                valuefrom = itemView.findViewById(R.id.valuefrom);
+                valueto  = itemView.findViewById(R.id.valueto);
+                unitfrom = itemView.findViewById(R.id.unitnamefrom);
+                unitto = itemView.findViewById(R.id.unitnameto);
             }
         }
 

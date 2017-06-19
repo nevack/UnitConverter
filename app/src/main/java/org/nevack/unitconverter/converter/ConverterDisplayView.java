@@ -1,4 +1,4 @@
-package org.nevack.unitconverter;
+package org.nevack.unitconverter.converter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -31,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import org.nevack.unitconverter.R;
+import org.nevack.unitconverter.converter.KeypadView;
 import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;

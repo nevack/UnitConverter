@@ -1,4 +1,4 @@
-package org.nevack.unitconverter;
+package org.nevack.unitconverter.converter;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -18,12 +18,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import org.nevack.unitconverter.history.HistoryActivity;
+import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.database.HistoryContract;
 import org.nevack.unitconverter.database.HistoryDatabaseHelper;
 import org.nevack.unitconverter.model.EUnitCategory;
@@ -59,7 +60,7 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
         converterId = getIntent().getIntExtra(ID_EXTRA, 0);
         setContentView(R.layout.activity_converter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -67,10 +68,10 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        iconImage = (ImageView) findViewById(R.id.converter_icon);
+        iconImage = findViewById(R.id.converter_icon);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        drawerLayout = findViewById(R.id.navigation_drawer);
+        navigationView = findViewById(R.id.navigation_view);
         final Menu menu = navigationView.getMenu();
         for (int i = 0; i < EUnitCategory.values().length; i++) {
             menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getName()));
@@ -89,8 +90,8 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
             }
         });
 
-        display = (ConverterDisplayView) findViewById(R.id.display);
-        keypadView = (KeypadView) findViewById(R.id.keypad);
+        display = findViewById(R.id.display);
+        keypadView = findViewById(R.id.keypad);
         display.setupWithKeypad(keypadView);
 
         setConverter();

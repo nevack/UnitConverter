@@ -136,4 +136,5 @@
     <string name="lightyear">Светлавы год</string>
     <string name="lightyearsymbol">св.г.</string>
     <string name="title_activity_history">History</string>
+    <string name="no_history_items">You haven\'t saved any results yet</string>
 </resources>

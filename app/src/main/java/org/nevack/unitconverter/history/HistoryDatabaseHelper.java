@@ -1,10 +1,10 @@
-package org.nevack.unitconverter.database;
+package org.nevack.unitconverter.history;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import org.nevack.unitconverter.database.HistoryContract.HistoryEntry;
+import org.nevack.unitconverter.history.HistoryContract.HistoryEntry;
 
 public class HistoryDatabaseHelper extends SQLiteOpenHelper {
 

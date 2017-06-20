@@ -71,18 +71,18 @@ public class ConverterDisplayView extends LinearLayout {
 
         inflate(context, display, this);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
-        sourceTextView = (TextView) findViewById(R.id.sourcevaluesymbol);
-        resultTextView = (TextView) findViewById(R.id.resultvaluesymbol);
+        sourceTextView = findViewById(R.id.sourcevaluesymbol);
+        resultTextView = findViewById(R.id.resultvaluesymbol);
 
-        sourceSpinner = (Spinner) findViewById(R.id.sourcespinner);
+        sourceSpinner = findViewById(R.id.sourcespinner);
         sourceSpinner.setOnItemSelectedListener(new SpinnerListener(sourceTextView));
 
-        resultSpinner = (Spinner) findViewById(R.id.resultspinner);
+        resultSpinner = findViewById(R.id.resultspinner);
         resultSpinner.setOnItemSelectedListener(new SpinnerListener(resultTextView));
 
-        sourceEditText = (EditText) findViewById(R.id.sourcevalue);
+        sourceEditText = findViewById(R.id.sourcevalue);
         sourceEditText.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -103,28 +103,21 @@ public class ConverterDisplayView extends LinearLayout {
                 if (!sourceEditText.getText().toString().equals("-")) convert();
             }
         });
-        resultEditText = (EditText) findViewById(R.id.resultvalue);
+        resultEditText = findViewById(R.id.resultvalue);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String temp = sourceEditText.getText().toString();
-                sourceEditText.setText(resultEditText.getText().toString());
-                resultEditText.setText(temp);
-                int position = sourceSpinner.getSelectedItemPosition();
-                sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
-                resultSpinner.setSelection(position);
-                convert();
-            }
+        fab.setOnClickListener(v -> {
+            String temp = sourceEditText.getText().toString();
+            sourceEditText.setText(resultEditText.getText().toString());
+            resultEditText.setText(temp);
+            int position = sourceSpinner.getSelectedItemPosition();
+            sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
+            resultSpinner.setSelection(position);
+            convert();
         });
 
-        sourceTextView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { sourceSpinner.performClick(); }
-        });
+        sourceTextView.setOnClickListener(v -> sourceSpinner.performClick());
 
-        resultTextView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { resultSpinner.performClick(); }
-        });
+        resultTextView.setOnClickListener(v -> resultSpinner.performClick());
     }
 
     private void setSpinnerAdapter(SpinnerAdapter adapter) {
@@ -262,47 +255,33 @@ public class ConverterDisplayView extends LinearLayout {
         view.setEditText(sourceEditText);
 
         view.setOnCopyListeners(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        copyResultToClipboard(false);
-                    }
-                },
-                new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        copyResultToClipboard(true);
-                        return true;
-                    }
+                v -> copyResultToClipboard(false),
+                v -> {
+                    copyResultToClipboard(true);
+                    return true;
                 }
         );
 
         view.setOnPasteListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        double source = 0d;
-                        ClipboardManager clipboard = (ClipboardManager) getContext()
-                                .getSystemService(Context.CLIPBOARD_SERVICE);
+                v -> {
+                    double source = 0d;
+                    ClipboardManager clipboard = (ClipboardManager) getContext()
+                            .getSystemService(Context.CLIPBOARD_SERVICE);
 
-                        if ((clipboard.hasPrimaryClip() && clipboard.getPrimaryClipDescription()
-                                .hasMimeType(MIMETYPE_TEXT_PLAIN))) {
-                            String pasteData = clipboard.getPrimaryClip().getItemAt(0)
-                                    .getText().toString();
-                            if (!pasteData.isEmpty()) source = Double.parseDouble(pasteData);
-                        }
-
-                        if (source != 0d) sourceEditText.setText(String.valueOf(source));
+                    if ((clipboard.hasPrimaryClip() && clipboard.getPrimaryClipDescription()
+                            .hasMimeType(MIMETYPE_TEXT_PLAIN))) {
+                        String pasteData = clipboard.getPrimaryClip().getItemAt(0)
+                                .getText().toString();
+                        if (!pasteData.isEmpty()) source = Double.parseDouble(pasteData);
                     }
+
+                    if (source != 0d) sourceEditText.setText(String.valueOf(source));
                 }
         );
 
-        view.setBackspaceLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                erase();
-                return true;
-            }
+        view.setBackspaceLongClickListener(v -> {
+            erase();
+            return true;
         });
     }
 

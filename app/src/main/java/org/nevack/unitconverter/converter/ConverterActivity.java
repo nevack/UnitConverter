@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -25,8 +24,8 @@ import android.widget.ImageView;
 
 import org.nevack.unitconverter.history.HistoryActivity;
 import org.nevack.unitconverter.R;
-import org.nevack.unitconverter.database.HistoryContract;
-import org.nevack.unitconverter.database.HistoryDatabaseHelper;
+import org.nevack.unitconverter.history.HistoryContract;
+import org.nevack.unitconverter.history.HistoryDatabaseHelper;
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
 
@@ -78,16 +77,13 @@ public class ConverterActivity extends AppCompatActivity implements ConverterDis
             menu.getItem(i).setIcon(EUnitCategory.values()[i].getIcon());
         }
         menu.getItem(converterId).setChecked(true);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                menu.getItem(converterId).setChecked(false);
-                menuItem.setChecked(true);
-                converterId = menuItem.getOrder();
-                drawerLayout.closeDrawers();
-                setConverter();
-                return true;
-            }
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            menu.getItem(converterId).setChecked(false);
+            menuItem.setChecked(true);
+            converterId = menuItem.getOrder();
+            drawerLayout.closeDrawers();
+            setConverter();
+            return true;
         });
 
         display = findViewById(R.id.display);

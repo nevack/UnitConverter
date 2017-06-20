@@ -2,38 +2,38 @@ package org.nevack.unitconverter.model;
 
 import java.io.Serializable;
 
-public class HistoryItem implements Serializable {
-    private EUnitCategory category;
-    private Unit from;
-    private Unit to;
-    private double fromValue;
-    private double toValue;
+public class HistoryItem {
+    String category;
+    String valuefrom;
+    String valueto;
+    String unitfrom;
+    String unitto;
 
-    public HistoryItem(EUnitCategory category, Unit from, Unit to, double fromValue, double toValue) {
+    public HistoryItem(String category, String valuefrom, String valueto, String unitfrom, String unitto) {
         this.category = category;
-        this.from = from;
-        this.to = to;
-        this.fromValue = fromValue;
-        this.toValue = toValue;
+        this.valuefrom = valuefrom;
+        this.valueto = valueto;
+        this.unitfrom = unitfrom;
+        this.unitto = unitto;
     }
 
-    public EUnitCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public Unit getFrom() {
-        return from;
+    public String getValuefrom() {
+        return valuefrom;
     }
 
-    public Unit getTo() {
-        return to;
+    public String getValueto() {
+        return valueto;
     }
 
-    public double getFromValue() {
-        return fromValue;
+    public String getUnitfrom() {
+        return unitfrom;
     }
 
-    public double getToValue() {
-        return toValue;
+    public String getUnitto() {
+        return unitto;
     }
 }

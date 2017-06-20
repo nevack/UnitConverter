@@ -1,6 +1,5 @@
 package org.nevack.unitconverter.categories;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.R;
-import org.nevack.unitconverter.converter.ConverterActivity;
 import org.nevack.unitconverter.model.EUnitCategory;
 
 import java.util.ArrayList;

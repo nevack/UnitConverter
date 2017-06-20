@@ -66,14 +66,11 @@ public class KeypadView extends LinearLayout {
         mButton0.setOnClickListener(new Listener("0"));
         mButtonDot.setOnClickListener(new Listener("."));
         mButtonMinus.setOnClickListener(new Listener("-"));
-        mButtonBackspace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textString = editText.getText().toString();
-                if( textString.length() > 0 ) {
-                    editText.setText(textString.substring(0, textString.length() - 1 ));
-                    editText.setSelection(editText.getText().length());
-                }
+        mButtonBackspace.setOnClickListener(v -> {
+            String textString = editText.getText().toString();
+            if( textString.length() > 0 ) {
+                editText.setText(textString.substring(0, textString.length() - 1 ));
+                editText.setSelection(editText.getText().length());
             }
         });
     }

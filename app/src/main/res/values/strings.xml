@@ -171,5 +171,6 @@
     <string name="history_shortcut_long_label">History</string>
     <string name="history_shortcut_disabled_label">History</string>
     <string name="title_activity_history">History</string>
+    <string name="no_history_items">You haven\'t saved any results yet</string>
 
 </resources>

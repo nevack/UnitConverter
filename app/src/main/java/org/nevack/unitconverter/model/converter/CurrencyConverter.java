@@ -53,12 +53,7 @@ public class CurrencyConverter extends Converter {
 
         units.add(BYN);
 
-        Collections.sort(units, new Comparator<Unit>() {
-            @Override
-            public int compare(Unit lhs, Unit rhs) {
-                return lhs.getName().compareToIgnoreCase(rhs.getName());
-            }
-        });
+        Collections.sort(units, (lhs, rhs) -> lhs.getName().compareToIgnoreCase(rhs.getName()));
     }
 
     private void loadUnitsFromFile() {

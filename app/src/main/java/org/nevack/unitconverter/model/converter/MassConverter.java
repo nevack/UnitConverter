@@ -15,7 +15,7 @@ public class MassConverter extends Converter{
         units.add(new Unit(context.getString(R.string.tonne), 1000d, context.getString(R.string.tonnesymbol)));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.mass;
     }
 }

@@ -172,5 +172,10 @@
     <string name="history_shortcut_disabled_label">History</string>
     <string name="title_activity_history">History</string>
     <string name="no_history_items">You haven\'t saved any results yet</string>
+    <string name="description_no_history_icon">No history icons message icon</string>
+    <string name="description_history_item_icon">History item conversion icon</string>
+    <string name="menu_history_label">History</string>
+    <string name="menu_save_label">Save</string>
+    <string name="message_error">Error</string>
 
 </resources>

@@ -77,9 +77,9 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
         private final List<EUnitCategory> unitCategories;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private FrameLayout mContainer;
-            private TextView mTextView;
-            private ImageView mImageView;
+            private final FrameLayout mContainer;
+            private final TextView mTextView;
+            private final ImageView mImageView;
 
             ViewHolder(View itemView) {
                 super(itemView);

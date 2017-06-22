@@ -24,7 +24,7 @@ public class TemperatureConverter extends Converter {
 
         switch (inputValueType) {
             case 0:
-                if (sourceValue.compareTo(BigDecimal.ZERO) == -1) resultValue =  "Error!";
+                if (sourceValue.compareTo(BigDecimal.ZERO) == -1) throw new ArithmeticException();
                 else {
                     if (outputValueType == 1) {
                         resultValue = sourceValue.add(new BigDecimal("-273"))
@@ -39,7 +39,7 @@ public class TemperatureConverter extends Converter {
                 }
                 break;
             case 1:
-                if (sourceValue.compareTo(new BigDecimal("-273")) == -1) resultValue = "Error!";
+                if (sourceValue.compareTo(new BigDecimal("-273")) == -1) throw new ArithmeticException();
                 else {
                     if (outputValueType == 0) {
                         resultValue = sourceValue.add(new BigDecimal("273"))
@@ -54,31 +54,30 @@ public class TemperatureConverter extends Converter {
                 }
                 break;
             case 2:
-                if (sourceValue.compareTo(new BigDecimal("-459.67")) == -1) resultValue = "Error!";
+                if (sourceValue.compareTo(new BigDecimal("-459.67")) == -1) throw new ArithmeticException();
                 else {
                     if (outputValueType == 0) {
                         resultValue = sourceValue.add(new BigDecimal("459.67"))
                                 .multiply(new BigDecimal("5"))
-                                .divide(new BigDecimal("9"), 3, BigDecimal.ROUND_HALF_UP)
+                                .divide(new BigDecimal("9"), SCALE, BigDecimal.ROUND_HALF_UP)
                                 .stripTrailingZeros()
                                 .toPlainString();
                     } else {
                         resultValue = sourceValue.add(new BigDecimal("-32"))
-                                .divide(new BigDecimal("1.8"), 3, BigDecimal.ROUND_HALF_UP)
+                                .divide(new BigDecimal("1.8"), SCALE, BigDecimal.ROUND_HALF_UP)
                                 .stripTrailingZeros()
                                 .toPlainString();
                     }
                 }
                 break;
             default:
-                resultValue = "Error!";
-                break;
+                throw new ArithmeticException();
         }
 
         return resultValue;
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.temperature;
     }
 }

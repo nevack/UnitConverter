@@ -14,7 +14,7 @@ public class SpeedConverter extends Converter {
         units.add(new Unit(context.getString(R.string.knots), 1.852d, context.getString(R.string.knotssymbol)));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.speed;
     }
 }

@@ -21,7 +21,7 @@ public class AreaConverter extends Converter {
     }
 
     @Override
-    public int getTitle() {
+    public int getName() {
         return R.string.area;
     }
 }

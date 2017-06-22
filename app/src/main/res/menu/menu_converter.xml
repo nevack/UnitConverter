@@ -6,12 +6,12 @@
         android:id="@+id/history"
         android:icon="@drawable/ic_history"
         android:tint="@android:color/white"
-        android:title="History"
+        android:title="@string/menu_history_label"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/save"
         android:icon="@drawable/ic_save"
-        android:title="Save"
+        android:title="@string/menu_save_label"
         app:showAsAction="always" />
 
 </menu>

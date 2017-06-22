@@ -16,7 +16,7 @@ public class MemoryConverter extends Converter {
         units.add(new Unit(context.getString(R.string.terabyte), 1000000000000d, context.getString(R.string.terabytesymbol)));
         units.add(new Unit(context.getString(R.string.petabyte), 1000000000000000d, context.getString(R.string.petabytesymbol)));
     }
-    public int getTitle() {
+    public int getName() {
         return R.string.memory;
     }
 }

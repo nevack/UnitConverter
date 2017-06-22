@@ -21,7 +21,9 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_history" />
+            app:srcCompat="@drawable/ic_history"
+            android:tint="@color/colorPrimary"
+            android:contentDescription="@string/description_no_history_icon"/>
 
         <TextView
             android:id="@+id/noTasksMain"
@@ -29,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/no_history_items"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 

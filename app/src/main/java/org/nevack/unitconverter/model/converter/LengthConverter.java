@@ -22,7 +22,7 @@ public class LengthConverter extends Converter{
         units.add(new Unit(context.getString(R.string.lightyear), 9460730472580800d, context.getString(R.string.lightyearsymbol)));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.length;
     }
 }

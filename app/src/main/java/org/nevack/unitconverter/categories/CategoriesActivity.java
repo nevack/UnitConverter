@@ -9,8 +9,6 @@ import org.nevack.unitconverter.R;
 
 public class CategoriesActivity extends AppCompatActivity {
 
-    private CategoriesPresenter mPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +26,6 @@ public class CategoriesActivity extends AppCompatActivity {
             transaction.commit();
         }
 
-        mPresenter = new CategoriesPresenter(this, fragment);
+        new CategoriesPresenter(this, fragment);
     }
 }

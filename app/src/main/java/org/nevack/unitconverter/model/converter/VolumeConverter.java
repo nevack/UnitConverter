@@ -15,7 +15,7 @@ public class VolumeConverter extends Converter{
         units.add(new Unit(context.getString(R.string.barrel), 0.158988d, context.getString(R.string.barrelsymbol)));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.volume;
     }
 }

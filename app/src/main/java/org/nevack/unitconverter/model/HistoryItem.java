@@ -1,13 +1,11 @@
 package org.nevack.unitconverter.model;
 
-import java.io.Serializable;
-
 public class HistoryItem {
-    String category;
-    String valuefrom;
-    String valueto;
-    String unitfrom;
-    String unitto;
+    private final String category;
+    private final String valuefrom;
+    private final String valueto;
+    private final String unitfrom;
+    private final String unitto;
 
     public HistoryItem(String category, String valuefrom, String valueto, String unitfrom, String unitto) {
         this.category = category;

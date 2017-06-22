@@ -18,7 +18,7 @@ public class TimeConverter extends Converter
         units.add(new Unit(context.getString(R.string.year), 31557600d, context.getString(R.string.yearsymbol)));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.time;
     }
 }

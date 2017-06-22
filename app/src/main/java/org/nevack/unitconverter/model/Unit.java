@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.Set;
 
 public class Unit {
-    private String name;
-    private double factor;
-    private String unitSymbol;
+    private final String name;
+    private final double factor;
+    private final String unitSymbol;
 
     private int nameRes;
     private Set<Object> symbolList;

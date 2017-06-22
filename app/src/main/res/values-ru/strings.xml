@@ -135,6 +135,14 @@
     <string name="parsecsymbol">пк</string>
     <string name="lightyear">Световой год</string>
     <string name="lightyearsymbol">св.г.</string>
-    <string name="title_activity_history">History</string>
+    <string name="title_activity_history">История</string>
     <string name="no_history_items">You haven\'t saved any results yet</string>
+    <string name="description_no_history_icon">No history icons message icon</string>
+    <string name="description_history_item_icon">History item conversion icon</string>
+    <string name="history_shortcut_short_label">История</string>
+    <string name="history_shortcut_long_label">История</string>
+    <string name="history_shortcut_disabled_label">История</string>
+    <string name="menu_history_label">История</string>
+    <string name="menu_save_label">Сохранить</string>
+    <string name="message_error">Ошибка</string>
 </resources>

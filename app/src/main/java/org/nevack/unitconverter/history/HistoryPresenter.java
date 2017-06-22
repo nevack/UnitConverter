@@ -11,24 +11,24 @@ import java.util.List;
 
 public class HistoryPresenter implements HistoryContract.Presenter {
 
-    private List<HistoryItem> mItems;
+    private List<HistoryItem> items;
 
-    private final HistoryContract.View mView;
+    private final HistoryContract.View view;
 
-    private final Context mContext;
+    private final Context context;
 
     public HistoryPresenter(Context context, HistoryContract.View view) {
-        mView = view;
-        mContext = context;
+        this.view = view;
+        this.context = context;
 
-        mView.setPresenter(this);
+        this.view.setPresenter(this);
 
-        mItems = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
     @Override
     public void start() {
-        HistoryDatabaseHelper helper = new HistoryDatabaseHelper(mContext);
+        HistoryDatabaseHelper helper = new HistoryDatabaseHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -48,16 +48,21 @@ public class HistoryPresenter implements HistoryContract.Presenter {
             String unitfrom = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM));
             String unitto = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO));
 
-            mItems.add(new HistoryItem(category, valuefrom, valueto, unitfrom, unitto));
+            items.add(new HistoryItem(category, valuefrom, valueto, unitfrom, unitto));
         }
         cursor.close();
 
-        mView.showHistoryItems(mItems);
+        if (items.isEmpty()) {
+            view.showNoItems();
+            return;
+        }
+
+        view.showHistoryItems(items);
     }
 
     @Override
     public void clearItems() {
-        mView.showNoItems();
+        view.showNoItems();
     }
 
     @Override

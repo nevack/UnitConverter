@@ -86,11 +86,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         private final List<HistoryItem> items;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView category;
-            private TextView valuefrom;
-            private TextView valueto;
-            private TextView unitfrom;
-            private TextView unitto;
+            private final TextView category;
+            private final TextView valuefrom;
+            private final TextView valueto;
+            private final TextView unitfrom;
+            private final TextView unitto;
 
             ViewHolder(View itemView) {
                 super(itemView);

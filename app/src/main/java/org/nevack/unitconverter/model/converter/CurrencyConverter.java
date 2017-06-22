@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -98,7 +97,7 @@ public class CurrencyConverter extends Converter {
     }
 
     @Override
-    public int getTitle() {
+    public int getName() {
         return R.string.currency;
     }
 }

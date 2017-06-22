@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_other"
             android:layout_gravity="center_vertical"
-            android:tint="@color/colorPrimaryDark" />
+            android:tint="@color/colorPrimaryDark"
+            android:contentDescription="@string/description_history_item_icon"/>
 
         <TextView
             android:id="@+id/valueto"

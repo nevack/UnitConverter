@@ -1,6 +1,9 @@
 package org.nevack.unitconverter.model;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.converter.*;
@@ -17,27 +20,27 @@ public enum EUnitCategory {
     CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.material_green_800, CurrencyConverter::new),
     OTHER(R.string.other, R.drawable.ic_other, R.color.material_deep_purple_500, OtherConverter::new);
 
-    private final int name;
-    private final int icon;
-    private final int color;
+    private final @StringRes int name;
+    private final @DrawableRes int icon;
+    private final @ColorRes int color;
     private final Creator creator;
 
-    EUnitCategory(int name, int icon, int color, Creator<? extends Converter> converterCreator) {
+    EUnitCategory(int name, int icon, int color, Creator converterCreator) {
         this.name = name;
         this.icon = icon;
         this.color = color;
         this.creator = converterCreator;
     }
 
-    public int getName() {
+    public @StringRes int getName() {
         return name;
     }
 
-    public int getIcon() {
+    public @DrawableRes int getIcon() {
         return icon;
     }
 
-    public int getColor() {
+    public @ColorRes int getColor() {
         return color;
     }
 

@@ -1,36 +1,35 @@
 package org.nevack.unitconverter.converter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.view.View;
+import android.view.WindowInsets;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import org.nevack.unitconverter.R;
 
-public class KeypadView extends LinearLayout {
+public class KeypadView extends LinearLayoutCompat {
 
-    private Button mButton2;
-    private Button mButton1;
-    private Button mButton4;
-    private Button mButton3;
-    private Button mButton5;
-    private Button mButton6;
-    private Button mButton7;
-    private Button mButton8;
-    private Button mButton9;
-    private Button mButton0;
-    private Button mButtonDot;
-    private Button mButtonMinus;
-    private Button mButtonBackspace;
+    private final Button mButton1;
+    private final Button mButton2;
+    private final Button mButton3;
+    private final Button mButton4;
+    private final Button mButton5;
+    private final Button mButton6;
+    private final Button mButton7;
+    private final Button mButton8;
+    private final Button mButton9;
+    private final Button mButton0;
+    private final Button mButtonDot;
+    private final Button mButtonMinus;
+    private final Button mButtonBackspace;
 
     private ImageButton mButtonCopy;
     private ImageButton mButtonPaste;
-
-    private EditText editText;
 
     public KeypadView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -38,45 +37,21 @@ public class KeypadView extends LinearLayout {
 
         inflate(context, R.layout.keypad, this);
 
-        mButton1 = (Button) findViewById(R.id.button1);
-        mButton2 = (Button) findViewById(R.id.button2);
-        mButton3 = (Button) findViewById(R.id.button3);
-        mButton4 = (Button) findViewById(R.id.button4);
-        mButton5 = (Button) findViewById(R.id.button5);
-        mButton6 = (Button) findViewById(R.id.button6);
-        mButton7 = (Button) findViewById(R.id.button7);
-        mButton8 = (Button) findViewById(R.id.button8);
-        mButton9 = (Button) findViewById(R.id.button9);
-        mButton0 = (Button) findViewById(R.id.button0);
-        mButtonDot = (Button) findViewById(R.id.button_dot);
-        mButtonMinus = (Button) findViewById(R.id.button_minus);
-        mButtonBackspace = (Button) findViewById(R.id.button_backspace);
-        mButtonCopy = (ImageButton) findViewById(R.id.button_copy);
-        mButtonPaste = (ImageButton) findViewById(R.id.button_paste);
-
-        mButton1.setOnClickListener(new Listener("1"));
-        mButton2.setOnClickListener(new Listener("2"));
-        mButton3.setOnClickListener(new Listener("3"));
-        mButton4.setOnClickListener(new Listener("4"));
-        mButton5.setOnClickListener(new Listener("5"));
-        mButton6.setOnClickListener(new Listener("6"));
-        mButton7.setOnClickListener(new Listener("7"));
-        mButton8.setOnClickListener(new Listener("8"));
-        mButton9.setOnClickListener(new Listener("9"));
-        mButton0.setOnClickListener(new Listener("0"));
-        mButtonDot.setOnClickListener(new Listener("."));
-        mButtonMinus.setOnClickListener(new Listener("-"));
-        mButtonBackspace.setOnClickListener(v -> {
-            String textString = editText.getText().toString();
-            if( textString.length() > 0 ) {
-                editText.setText(textString.substring(0, textString.length() - 1 ));
-                editText.setSelection(editText.getText().length());
-            }
-        });
-    }
-
-    public void setEditText(EditText editText) {
-        this.editText = editText;
+        mButton1 = findViewById(R.id.button1);
+        mButton2 = findViewById(R.id.button2);
+        mButton3 = findViewById(R.id.button3);
+        mButton4 = findViewById(R.id.button4);
+        mButton5 = findViewById(R.id.button5);
+        mButton6 = findViewById(R.id.button6);
+        mButton7 = findViewById(R.id.button7);
+        mButton8 = findViewById(R.id.button8);
+        mButton9 = findViewById(R.id.button9);
+        mButton0 = findViewById(R.id.button0);
+        mButtonDot = findViewById(R.id.button_dot);
+        mButtonMinus = findViewById(R.id.button_minus);
+        mButtonBackspace = findViewById(R.id.button_backspace);
+        mButtonCopy = findViewById(R.id.button_copy);
+        mButtonPaste = findViewById(R.id.button_paste);
     }
 
     public void setOnCopyListeners(OnClickListener click, OnLongClickListener longClick) {
@@ -88,19 +63,33 @@ public class KeypadView extends LinearLayout {
         mButtonPaste.setOnClickListener(listener);
     }
 
-    public void setBackspaceLongClickListener(OnLongClickListener listener) {
-        mButtonBackspace.setOnLongClickListener(listener);
+    public void setBackspaceListeners(OnClickListener click, OnLongClickListener longClick) {
+        mButtonBackspace.setOnClickListener(click);
+        mButtonBackspace.setOnLongClickListener(longClick);
     }
 
-    private class Listener implements View.OnClickListener {
-        final String text;
-        Listener(String text)
-        {
-            this.text = text;
-        }
-        @Override
-        public void onClick(View v) {
-            editText.append(text);
-        }
+    public void setNumericListener(OnClickListener listener) {
+        mButton1.setOnClickListener(listener);
+        mButton2.setOnClickListener(listener);
+        mButton3.setOnClickListener(listener);
+        mButton4.setOnClickListener(listener);
+        mButton5.setOnClickListener(listener);
+        mButton6.setOnClickListener(listener);
+        mButton7.setOnClickListener(listener);
+        mButton8.setOnClickListener(listener);
+        mButton9.setOnClickListener(listener);
+        mButton0.setOnClickListener(listener);
+        mButtonDot.setOnClickListener(listener);
+        mButtonMinus.setOnClickListener(listener);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        int childCount = getChildCount();
+        for (int index = 0; index < childCount; index++)
+            getChildAt(index).dispatchApplyWindowInsets(insets);
+
+        return insets;
     }
 }

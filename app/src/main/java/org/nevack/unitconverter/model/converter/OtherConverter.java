@@ -19,7 +19,7 @@ public class OtherConverter extends Converter {
         units.add(new Unit(context.getString(R.string.tera), 1000000000000d, "×10<sup><small>12</small></sup>"));
     }
 
-    public int getTitle() {
+    public int getName() {
         return R.string.other;
     }
 }

@@ -5,17 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -32,44 +28,29 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.R;
-import org.nevack.unitconverter.converter.KeypadView;
+import org.nevack.unitconverter.converter.ConverterContract.ConvertData;
 import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;
 
-import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
-import static android.content.Context.CLIPBOARD_SERVICE;
-import static org.nevack.unitconverter.R.layout.display;
-
-
 public class ConverterDisplayView extends LinearLayout {
 
-    private static final String COPY_RESULT = "converter_result";
+    private final Spinner sourceSpinner;
+    private final EditText sourceEditText;
+    private final TextView sourceTextView;
+    private final EditText resultEditText;
+    private final TextView resultTextView;
+    private final Spinner resultSpinner;
+    private final FloatingActionButton fab;
 
-    private Spinner sourceSpinner;
-    private EditText sourceEditText;
-    private TextView sourceTextView;
-    private EditText resultEditText;
-    private TextView resultTextView;
-    private Spinner resultSpinner;
-    private FloatingActionButton fab;
-
-    private List<Unit> units;
-
-    interface DisplayCallback {
-        String convert(String value, int from, int to);
-    }
-
-    private DisplayCallback callback;
+    private static List<Unit> units;
 
     public ConverterDisplayView(final Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        if (context instanceof DisplayCallback) callback = (DisplayCallback) context;
-
         setOrientation(VERTICAL);
 
-        inflate(context, display, this);
+        inflate(context, R.layout.display, this);
 
         fab = findViewById(R.id.fab);
 
@@ -77,32 +58,9 @@ public class ConverterDisplayView extends LinearLayout {
         resultTextView = findViewById(R.id.resultvaluesymbol);
 
         sourceSpinner = findViewById(R.id.sourcespinner);
-        sourceSpinner.setOnItemSelectedListener(new SpinnerListener(sourceTextView));
-
         resultSpinner = findViewById(R.id.resultspinner);
-        resultSpinner.setOnItemSelectedListener(new SpinnerListener(resultTextView));
 
         sourceEditText = findViewById(R.id.sourcevalue);
-        sourceEditText.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (sourceEditText.getText().toString().equals(".")) {
-                    sourceEditText.setText("0.");
-                    sourceEditText.setSelection(sourceEditText.getText().toString().length());
-                }
-
-                if (sourceEditText.getText().toString().equals("-.")) {
-                    sourceEditText.setText("-0.");
-                    sourceEditText.setSelection(sourceEditText.getText().toString().length());
-                }
-
-                if (!sourceEditText.getText().toString().equals("-")) convert();
-            }
-        });
         resultEditText = findViewById(R.id.resultvalue);
 
         fab.setOnClickListener(v -> {
@@ -112,12 +70,37 @@ public class ConverterDisplayView extends LinearLayout {
             int position = sourceSpinner.getSelectedItemPosition();
             sourceSpinner.setSelection(resultSpinner.getSelectedItemPosition());
             resultSpinner.setSelection(position);
-            convert();
         });
 
         sourceTextView.setOnClickListener(v -> sourceSpinner.performClick());
 
         resultTextView.setOnClickListener(v -> resultSpinner.performClick());
+    }
+
+    public void setTextWatcher(TextWatcher watcher) {
+        sourceEditText.addTextChangedListener(watcher);
+    }
+
+    public void showResult(String result) {
+        resultEditText.setText(result);
+    }
+
+    public ConvertData getConvertData(){
+        return new ConvertData(
+                sourceEditText.getText().toString(),
+                resultEditText.getText().toString(),
+                sourceSpinner.getSelectedItemPosition(),
+                resultSpinner.getSelectedItemPosition()
+        );
+    }
+
+    public String getCopyResult(boolean withUnitSymbols) {
+        return resultEditText.getText().toString()
+                + (withUnitSymbols ? resultTextView.getText().toString() : "");
+    }
+
+    public void showError() {
+        resultEditText.setText(R.string.message_error);
     }
 
     private void setSpinnerAdapter(SpinnerAdapter adapter) {
@@ -126,10 +109,10 @@ public class ConverterDisplayView extends LinearLayout {
     }
 
     public void setUnits(List<Unit> units) {
-        this.units = units;
+        ConverterDisplayView.units = units;
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
-        for (Unit unit : this.units) {
+        for (Unit unit : ConverterDisplayView.units) {
             adapter.add(unit.getName());
         }
 
@@ -154,7 +137,7 @@ public class ConverterDisplayView extends LinearLayout {
             groupOverlay = (ViewGroupOverlay) ((Activity) getContext()).getWindow().getDecorView().getOverlay();
             groupOverlay.add(revealView);
         }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final int[] clearLocation = new int[2];
             this.getLocationInWindow(clearLocation);
             clearLocation[0] += this.getWidth();
@@ -181,8 +164,7 @@ public class ConverterDisplayView extends LinearLayout {
         alphaAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                resultEditText.getEditableText().clear();
-                sourceEditText.getEditableText().clear();
+                clear();
             }
         });
 
@@ -212,84 +194,47 @@ public class ConverterDisplayView extends LinearLayout {
         animatorSet.start();
     }
 
-    private void convert() {
-        resultEditText.setText(
-                callback.convert(sourceEditText.getText().toString(),
-                        sourceSpinner.getSelectedItemPosition(),
-                        resultSpinner.getSelectedItemPosition())
-        );
+    public void clear() {
+        resultEditText.getEditableText().clear();
+        sourceEditText.getEditableText().clear();
     }
 
-    public String getSelectedSourceUnit() {
-        return sourceSpinner.getSelectedItem().toString();
+    public void appendText(String text) {
+        sourceEditText.append(text);
     }
 
-    public String getSelectedResultUnit() {
-        return resultSpinner.getSelectedItem().toString();
-    }
-
-    public String getSourceValue() {
-        return resultEditText.getText().toString();
-    }
-
-    public String getResultValue() {
-        return sourceEditText.getText().toString();
-    }
-
-    private void copyResultToClipboard(boolean withUnitSymbol) {
-        String textToCopy = "";
-        if (!resultEditText.getText().toString().equals("")) {
-            textToCopy = resultEditText.getText().toString();
+    public void removeLastDigit() {
+        String textString = sourceEditText.getText().toString();
+        if( textString.length() > 0 ) {
+            sourceEditText.setText(textString.substring(0, textString.length() - 1 ));
+            sourceEditText.setSelection(sourceEditText.getText().length());
         }
-        if (withUnitSymbol)
-        {
-            textToCopy += resultTextView.getText().toString();
+    }
+
+    public void setSpinnersCallback(SpinnerListener.Callback callback) {
+        resultSpinner.setOnItemSelectedListener(new SpinnerListener(resultTextView, callback));
+        sourceSpinner.setOnItemSelectedListener(new SpinnerListener(sourceTextView, callback));
+    }
+
+    public void setConvertData(ConvertData convertData) {
+        sourceEditText.setText(convertData.getValue());
+        resultEditText.setText(convertData.getResult());
+        sourceSpinner.setSelection(convertData.getFrom());
+        resultSpinner.setSelection(convertData.getTo());
+    }
+
+    static class SpinnerListener implements Spinner.OnItemSelectedListener {
+
+        interface Callback {
+            void convert();
         }
-        ClipboardManager clipboard = (ClipboardManager)
-                getContext().getSystemService(CLIPBOARD_SERVICE);
-        clipboard.setPrimaryClip(ClipData.newPlainText(COPY_RESULT, textToCopy));
-        Snackbar.make(this, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
-    }
 
-    public void setupWithKeypad(KeypadView view) {
-        view.setEditText(sourceEditText);
+        private final Callback callback;
 
-        view.setOnCopyListeners(
-                v -> copyResultToClipboard(false),
-                v -> {
-                    copyResultToClipboard(true);
-                    return true;
-                }
-        );
+        private final TextView textView;
 
-        view.setOnPasteListener(
-                v -> {
-                    double source = 0d;
-                    ClipboardManager clipboard = (ClipboardManager) getContext()
-                            .getSystemService(Context.CLIPBOARD_SERVICE);
-
-                    if ((clipboard.hasPrimaryClip() && clipboard.getPrimaryClipDescription()
-                            .hasMimeType(MIMETYPE_TEXT_PLAIN))) {
-                        String pasteData = clipboard.getPrimaryClip().getItemAt(0)
-                                .getText().toString();
-                        if (!pasteData.isEmpty()) source = Double.parseDouble(pasteData);
-                    }
-
-                    if (source != 0d) sourceEditText.setText(String.valueOf(source));
-                }
-        );
-
-        view.setBackspaceLongClickListener(v -> {
-            erase();
-            return true;
-        });
-    }
-
-    private class SpinnerListener implements Spinner.OnItemSelectedListener {
-
-        private TextView textView;
-
-        SpinnerListener(TextView textView) {
+        SpinnerListener(TextView textView, Callback callback) {
+            this.callback = callback;
             this.textView = textView;
         }
 
@@ -297,9 +242,9 @@ public class ConverterDisplayView extends LinearLayout {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
             textView.setText(Html.fromHtml(units.get(parent.getSelectedItemPosition()).getUnitSymbol()));
-            convert();
+            callback.convert();
         }
 
-        @Override public void onNothingSelected(AdapterView<?> parent) { convert(); }
+        @Override public void onNothingSelected(AdapterView<?> parent) { callback.convert(); }
     }
 }

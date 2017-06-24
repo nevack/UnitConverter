@@ -16,6 +16,7 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     private final HistoryContract.View view;
 
     private final Context context;
+    private HistoryDatabaseHelper helper;
 
     public HistoryPresenter(Context context, HistoryContract.View view) {
         this.view = view;
@@ -28,7 +29,7 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
     @Override
     public void start() {
-        HistoryDatabaseHelper helper = new HistoryDatabaseHelper(context);
+        helper = new HistoryDatabaseHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -62,6 +63,8 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
     @Override
     public void clearItems() {
+        //remove all entries
+        helper.getWritableDatabase().delete(HistoryContract.HistoryEntry.TABLE_NAME, null, null);
         view.showNoItems();
     }
 

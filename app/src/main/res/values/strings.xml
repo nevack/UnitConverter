@@ -177,5 +177,6 @@
     <string name="menu_history_label">History</string>
     <string name="menu_save_label">Save</string>
     <string name="message_error">Error</string>
+    <string name="menu_delete_label">Delete history</string>
 
 </resources>

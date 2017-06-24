@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,11 +23,11 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment implements HistoryContract.View {
 
-    private HistoryContract.Presenter mPresenter;
+    private HistoryContract.Presenter presenter;
 
-    private HistoryFragment.HistoryAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-    private View mNoHistoryView;
+    private HistoryFragment.HistoryAdapter adapter;
+    private RecyclerView recyclerView;
+    private View noHistoryView;
 
     public HistoryFragment() {
         // Requires empty public constructor
@@ -38,18 +41,18 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new HistoryFragment.HistoryAdapter(new ArrayList<>());
+        adapter = new HistoryFragment.HistoryAdapter(new ArrayList<>());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        presenter.start();
     }
 
     @Override
     public void setPresenter(@NonNull HistoryContract.Presenter presenter) {
-        mPresenter = presenter;
+        this.presenter = presenter;
     }
 
     @Nullable
@@ -58,27 +61,45 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
-        mNoHistoryView = root.findViewById(R.id.nohistory);
+        noHistoryView = root.findViewById(R.id.nohistory);
         // Set up tasks view
-        mRecyclerView = root.findViewById(R.id.recycler);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = root.findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        setHasOptionsMenu(true);
 
         return root;
     }
 
     @Override
-    public void showHistoryItems(List<HistoryItem> items) {
-        mAdapter = new HistoryAdapter(items);
-        mRecyclerView.setAdapter(mAdapter);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_history, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-        mNoHistoryView.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                presenter.clearItems();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showHistoryItems(List<HistoryItem> items) {
+        adapter = new HistoryAdapter(items);
+        recyclerView.setAdapter(adapter);
+
+        noHistoryView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showNoItems() {
-        mRecyclerView.setVisibility(View.GONE);
-        mNoHistoryView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        noHistoryView.setVisibility(View.VISIBLE);
     }
 
     class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {

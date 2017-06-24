@@ -145,4 +145,5 @@
     <string name="menu_history_label">Гісторыя</string>
     <string name="menu_save_label">Захаваць</string>
     <string name="message_error">Памылка</string>
+    <string name="menu_delete_label">Delete history</string>
 </resources>

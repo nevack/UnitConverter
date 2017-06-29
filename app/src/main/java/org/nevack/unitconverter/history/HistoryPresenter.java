@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HistoryPresenter implements HistoryContract.Presenter {
 
-    private List<HistoryItem> items;
+    private final List<HistoryItem> items;
 
     private final HistoryContract.View view;
 

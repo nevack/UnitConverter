@@ -28,8 +28,8 @@ public class KeypadView extends LinearLayoutCompat {
     private final Button mButtonMinus;
     private final Button mButtonBackspace;
 
-    private ImageButton mButtonCopy;
-    private ImageButton mButtonPaste;
+    private final ImageButton mButtonCopy;
+    private final ImageButton mButtonPaste;
 
     public KeypadView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);

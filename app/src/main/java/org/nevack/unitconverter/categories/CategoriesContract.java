@@ -5,7 +5,7 @@ import org.nevack.unitconverter.BaseView;
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
 
-public interface CategoriesContract {
+interface CategoriesContract {
 
     interface View extends BaseView<Presenter> {
 

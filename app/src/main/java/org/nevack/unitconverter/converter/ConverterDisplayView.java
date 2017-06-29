@@ -240,7 +240,8 @@ public class ConverterDisplayView extends LinearLayout {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            TextView childAt = (TextView) parent.getChildAt(0);
+            if (childAt != null) childAt.setTextColor(Color.WHITE);
             textView.setText(Html.fromHtml(units.get(parent.getSelectedItemPosition()).getUnitSymbol()));
             callback.convert();
         }

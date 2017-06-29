@@ -6,6 +6,9 @@ import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData;
 import org.nevack.unitconverter.history.HistoryContract;
@@ -13,21 +16,28 @@ import org.nevack.unitconverter.history.HistoryDatabaseHelper;
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;
 
-public class ConverterPresenter implements ConverterContract.Presenter{
+public class ConverterPresenter implements ConverterContract.Presenter,
+        LoaderManager.LoaderCallbacks<Converter> {
 
-    private static final String COPY_RESULT = "converter_result";
+    private final static String COPY_RESULT = "converter_result";
+    private final static int LOADER_CONVERTER = 1;
 
     private Converter currentConverter;
     private ConvertData data;
 
     private final ConverterContract.View view;
+    private final LoaderManager loaderManager;
+    private final ConverterLoader loader;
 
     private final Context context;
     private final SQLiteDatabase db;
 
-    public ConverterPresenter(Context context, ConverterContract.View view) {
+    public ConverterPresenter(Context context, ConverterContract.View view, LoaderManager loaderManager) {
         this.view = view;
         this.context = context;
+        this.loaderManager = loaderManager;
+
+        loader = new ConverterLoader(context);
 
         HistoryDatabaseHelper helper = new HistoryDatabaseHelper(context);
         db = helper.getWritableDatabase();
@@ -37,15 +47,18 @@ public class ConverterPresenter implements ConverterContract.Presenter{
 
     @Override
     public void start() {
+//        Bundle args = new Bundle();
+//        args.putSerializable("KEY", EUnitCategory.AREA);
+//        loaderManager.initLoader(LOADER_CONVERTER, null, this);
+        loaderManager.initLoader(LOADER_CONVERTER, null, this);
     }
 
     @Override
     public void setConverter(EUnitCategory category) {
-        currentConverter = category.getConverter(context);
-        view.setUnits(currentConverter.getUnits());
         view.setBackgroundColor(category.getColor());
 
-        if (data != null) view.setConvertData(data);
+        //loaderManager.destroyLoader(LOADER_CONVERTER);
+        loader.setCategory(category);
     }
 
     @Override
@@ -113,5 +126,24 @@ public class ConverterPresenter implements ConverterContract.Presenter{
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM, data.getValue());
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO, data.getResult());
         db.insert(HistoryContract.HistoryEntry.TABLE_NAME, null, values);
+    }
+
+    @Override
+    public Loader<Converter> onCreateLoader(int id, Bundle args) {
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Converter> loader, Converter converter) {
+        currentConverter = converter;
+
+        view.setUnits(currentConverter.getUnits());
+
+        if (data != null) view.setConvertData(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Converter> loader) {
+
     }
 }

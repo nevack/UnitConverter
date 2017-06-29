@@ -62,7 +62,7 @@ public class ConverterActivity extends AppCompatActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        mPresenter = new ConverterPresenter(this, fragment);
+        mPresenter = new ConverterPresenter(this, fragment, getSupportLoaderManager());
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

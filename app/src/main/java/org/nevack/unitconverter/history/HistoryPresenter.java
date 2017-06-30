@@ -17,6 +17,7 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
     private final Context context;
     private HistoryDatabaseHelper helper;
+    private SQLiteDatabase db;
 
     public HistoryPresenter(Context context, HistoryContract.View view) {
         this.view = view;
@@ -30,8 +31,12 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     @Override
     public void start() {
         helper = new HistoryDatabaseHelper(context);
-        SQLiteDatabase db = helper.getReadableDatabase();
+        db = helper.getWritableDatabase();
 
+        fetch();
+    }
+
+    private void fetch() {
         Cursor cursor = db.query(
                 HistoryContract.HistoryEntry.TABLE_NAME,                     // The table to query
                 null,                               // The columns to return
@@ -64,12 +69,16 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     @Override
     public void clearItems() {
         //remove all entries
-        helper.getWritableDatabase().delete(HistoryContract.HistoryEntry.TABLE_NAME, null, null);
+        db.delete(HistoryContract.HistoryEntry.TABLE_NAME, null, null);
         view.showNoItems();
     }
 
     @Override
     public void removeItem(HistoryItem item) {
-
+        String selection = HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM + " = ? AND "
+                + HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO + " = ?";
+        String[] selectionArgs = { item.getUnitfrom(), item.getUnitto() };
+        db.delete(HistoryContract.HistoryEntry.TABLE_NAME, selection, selectionArgs);
+        fetch();
     }
 }

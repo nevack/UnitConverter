@@ -142,6 +142,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             holder.valueto.setText(items.get(position).getValueto());
             holder.unitfrom.setText(items.get(position).getUnitfrom());
             holder.unitto.setText(items.get(position).getUnitto());
+
+            holder.itemView.setOnLongClickListener(v -> {
+                presenter.removeItem(items.get(position));
+                return true;
+            });
         }
 
         @Override

@@ -75,9 +75,9 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
     @Override
     public void removeItem(HistoryItem item) {
-        String selection = HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM + " = ? AND "
-                + HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO + " = ?";
-        String[] selectionArgs = { item.getUnitfrom(), item.getUnitto() };
+        String selection = HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM + " = ? AND "
+                + HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO + " = ?";
+        String[] selectionArgs = { item.getValuefrom(), item.getValueto() };
         db.delete(HistoryContract.HistoryEntry.TABLE_NAME, selection, selectionArgs);
         fetch();
     }

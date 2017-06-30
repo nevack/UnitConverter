@@ -139,6 +139,11 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     }
 
     @Override
+    public void setTitle(int title) {
+        getActivity().setTitle(title);
+    }
+
+    @Override
     public void setUnits(List<Unit> units) {
         displayView.setUnits(units);
     }

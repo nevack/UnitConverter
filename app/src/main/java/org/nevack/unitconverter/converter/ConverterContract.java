@@ -13,6 +13,8 @@ public interface ConverterContract {
 
     interface View extends BaseView<Presenter> {
 
+        void setTitle(int title);
+
         void setUnits(List<Unit> units);
 
         ConvertData getConvertData();

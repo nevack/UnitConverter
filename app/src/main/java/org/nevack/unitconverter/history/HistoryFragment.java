@@ -65,6 +65,8 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         // Set up tasks view
         recyclerView = root.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new HistoryAdapter(null);
+        recyclerView.setAdapter(adapter);
 
         setHasOptionsMenu(true);
 
@@ -89,8 +91,8 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
     @Override
     public void showHistoryItems(List<HistoryItem> items) {
-        adapter = new HistoryAdapter(items);
-        recyclerView.setAdapter(adapter);
+        adapter.setItems(items);
+        adapter.notifyDataSetChanged();
 
         noHistoryView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
@@ -104,7 +106,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
     class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
-        private final List<HistoryItem> items;
+        private List<HistoryItem> items;
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView category;
@@ -152,6 +154,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         @Override
         public int getItemCount() {
             return items.size();
+        }
+
+        public void setItems(List<HistoryItem> items) {
+            this.items = items;
         }
     }
 }

@@ -56,8 +56,7 @@ public class ConverterPresenter implements ConverterContract.Presenter,
     @Override
     public void setConverter(EUnitCategory category) {
         view.setBackgroundColor(category.getColor());
-
-        //loaderManager.destroyLoader(LOADER_CONVERTER);
+        view.setTitle(category.getName());
         loader.setCategory(category);
     }
 

@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.R;
@@ -65,6 +67,9 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         // Set up tasks view
         recyclerView = root.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(),
+                R.anim.layout_animation_fall_down);
+        recyclerView.setLayoutAnimation(animation);
         adapter = new HistoryAdapter(null);
         recyclerView.setAdapter(adapter);
 

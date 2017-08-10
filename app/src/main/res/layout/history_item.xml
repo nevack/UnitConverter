@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="bottom"
+        android:background="@color/divider_color_dark"/>
+
     <TextView
         android:id="@+id/category_name"
         android:layout_width="match_parent"
@@ -68,7 +74,7 @@
         android:background="#32000000"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="7dp"
+        android:layout_height="3dp"
         android:layout_gravity="bottom"
         android:background="@color/divider_color_dark"/>
 </LinearLayout>

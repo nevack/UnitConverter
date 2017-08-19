@@ -24,6 +24,8 @@ public interface HistoryContract {
 
         void removeItem(HistoryItem item);
 
+        void filterItems(int mask);
+
     }
 
     /* Inner class that defines the table contents */

@@ -118,6 +118,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         private List<HistoryItem> items;
 
         class ViewHolder extends RecyclerView.ViewHolder {
+
             private final TextView categoryName;
             private final ImageView categoryIcon;
             private final ImageView removeItem;

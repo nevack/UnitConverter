@@ -37,16 +37,31 @@ public class HistoryPresenter implements HistoryContract.Presenter {
         fetch();
     }
 
+    @Override
+    public void filterItems(int mask) {
+        List<HistoryItem> items = new ArrayList<>();
+        for (HistoryItem item : this.items) {
+            if (item.getCategory() == mask) items.add(item);
+        }
+
+        if (items.isEmpty()) {
+            view.showNoItems();
+            return;
+        }
+
+        view.showHistoryItems(items);
+    }
+
     private void fetch() {
         items.clear();
         Cursor cursor = db.query(
-                HistoryEntry.TABLE_NAME,                     // The table to query
-                null,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                 // The sort order
+                HistoryEntry.TABLE_NAME,                 // The table to query
+                null,                          // The columns to return
+                null,                        // The columns for the WHERE clause
+                null,                   // The values for the WHERE clause
+                null,                     // don't group the rows
+                null,                     // don't filter by row groups
+                null                    // The sort order
         );
 
         while(cursor.moveToNext()) {

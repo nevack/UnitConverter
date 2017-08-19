@@ -93,8 +93,15 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             case R.id.delete:
                 presenter.clearItems();
                 return true;
+            case R.id.filter:
+                showFilterDialog();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showFilterDialog() {
+
     }
 
     @Override

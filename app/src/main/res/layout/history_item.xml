@@ -10,7 +10,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+        android:background="@color/quoter_transparent">
 
         <TextView
             android:id="@+id/category_name"
@@ -22,8 +23,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
-            tools:text="Temperature"
-            android:background="#33000000"/>
+            tools:text="Temperature"/>
 
         <ImageView
             android:id="@+id/remove_item"

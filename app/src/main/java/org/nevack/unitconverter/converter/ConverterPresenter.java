@@ -119,7 +119,9 @@ public class ConverterPresenter implements ConverterContract.Presenter,
     @Override
     public void saveResultToHistory() {
         ContentValues values = new ContentValues();
-        values.put(HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY, context.getString(currentConverter.getName()));
+        values.put(HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY,
+                EUnitCategory.valueOf(context.getString(currentConverter.getName()).toUpperCase().split(" ")[0])
+                        .ordinal());
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM, currentConverter.getUnits().get(data.getFrom()).getName());
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO, currentConverter.getUnits().get(data.getTo()).getName());
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM, data.getValue());

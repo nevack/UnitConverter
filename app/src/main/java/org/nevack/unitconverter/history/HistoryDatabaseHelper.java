@@ -14,7 +14,7 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + HistoryEntry.TABLE_NAME + " (" +
                     HistoryEntry._ID + " INTEGER PRIMARY KEY," +
-                    HistoryEntry.COLUMN_NAME_CATEGORY + " TEXT," +
+                    HistoryEntry.COLUMN_NAME_CATEGORY + " INTEGER," +
                     HistoryEntry.COLUMN_NAME_UNIT_FROM + " TEXT," +
                     HistoryEntry.COLUMN_NAME_UNIT_TO + " TEXT," +
                     HistoryEntry.COLUMN_NAME_VALUE_FROM+ " TEXT," +

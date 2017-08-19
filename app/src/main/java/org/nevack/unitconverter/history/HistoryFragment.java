@@ -1,9 +1,11 @@
 package org.nevack.unitconverter.history;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.nevack.unitconverter.R;
+import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.HistoryItem;
 
 import java.util.ArrayList;
@@ -114,19 +118,23 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         private List<HistoryItem> items;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView category;
-            private final TextView valuefrom;
-            private final TextView valueto;
-            private final TextView unitfrom;
-            private final TextView unitto;
+            private final TextView categoryName;
+            private final ImageView categoryIcon;
+            private final ImageView removeItem;
+            private final TextView valueFrom;
+            private final TextView valueTo;
+            private final TextView unitFrom;
+            private final TextView unitTo;
 
             ViewHolder(View itemView) {
                 super(itemView);
-                category  = itemView.findViewById(R.id.category_name);
-                valuefrom = itemView.findViewById(R.id.valuefrom);
-                valueto  = itemView.findViewById(R.id.valueto);
-                unitfrom = itemView.findViewById(R.id.unitnamefrom);
-                unitto = itemView.findViewById(R.id.unitnameto);
+                categoryName = itemView.findViewById(R.id.category_name);
+                categoryIcon = itemView.findViewById(R.id.category_icon);
+                removeItem = itemView.findViewById(R.id.remove_item);
+                valueFrom = itemView.findViewById(R.id.valuefrom);
+                valueTo = itemView.findViewById(R.id.valueto);
+                unitFrom = itemView.findViewById(R.id.unitnamefrom);
+                unitTo = itemView.findViewById(R.id.unitnameto);
             }
         }
 
@@ -144,15 +152,22 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.category.setText(items.get(position).getCategory());
-            holder.valuefrom.setText(items.get(position).getValuefrom());
-            holder.valueto.setText(items.get(position).getValueto());
-            holder.unitfrom.setText(items.get(position).getUnitfrom());
-            holder.unitto.setText(items.get(position).getUnitto());
+            EUnitCategory category = EUnitCategory.values()[items.get(position).getCategory()];
+            holder.categoryName.setText(category.getName());
+            holder.valueFrom.setText(items.get(position).getValuefrom());
+            holder.valueTo.setText(items.get(position).getValueto());
+            holder.unitFrom.setText(items.get(position).getUnitfrom());
+            holder.unitTo.setText(items.get(position).getUnitto());
 
-            holder.itemView.setOnLongClickListener(v -> {
+            holder.itemView.setBackgroundColor(
+                    ContextCompat.getColor(getContext(), category.getColor()));
+            holder.categoryIcon.setBackground(
+                    ContextCompat.getDrawable(getContext(), category.getIcon()));
+
+            holder.removeItem.setOnClickListener(v -> {
                 presenter.removeItem(items.get(position));
-                return true;
+                items.remove(position);
+                notifyItemRemoved(position);
             });
         }
 

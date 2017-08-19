@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.nevack.unitconverter.history.HistoryContract.HistoryEntry;
 import org.nevack.unitconverter.model.HistoryItem;
 
 import java.util.ArrayList;
@@ -26,19 +27,20 @@ public class HistoryPresenter implements HistoryContract.Presenter {
         this.view.setPresenter(this);
 
         items = new ArrayList<>();
+
+        helper = new HistoryDatabaseHelper(context);
+        db = helper.getWritableDatabase();
     }
 
     @Override
     public void start() {
-        helper = new HistoryDatabaseHelper(context);
-        db = helper.getWritableDatabase();
-
         fetch();
     }
 
     private void fetch() {
+        items.clear();
         Cursor cursor = db.query(
-                HistoryContract.HistoryEntry.TABLE_NAME,                     // The table to query
+                HistoryEntry.TABLE_NAME,                     // The table to query
                 null,                               // The columns to return
                 null,                                // The columns for the WHERE clause
                 null,                            // The values for the WHERE clause
@@ -48,11 +50,11 @@ public class HistoryPresenter implements HistoryContract.Presenter {
         );
 
         while(cursor.moveToNext()) {
-            String category = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY));
-            String valuefrom = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM));
-            String valueto = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO));
-            String unitfrom = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM));
-            String unitto = cursor.getString(cursor.getColumnIndex(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO));
+            int category = cursor.getInt(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_CATEGORY));
+            String valuefrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_FROM));
+            String valueto = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_TO));
+            String unitfrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_FROM));
+            String unitto = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_TO));
 
             items.add(new HistoryItem(category, valuefrom, valueto, unitfrom, unitto));
         }
@@ -69,16 +71,15 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     @Override
     public void clearItems() {
         //remove all entries
-        db.delete(HistoryContract.HistoryEntry.TABLE_NAME, null, null);
+        db.delete(HistoryEntry.TABLE_NAME, null, null);
         view.showNoItems();
     }
 
     @Override
     public void removeItem(HistoryItem item) {
-        String selection = HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_FROM + " = ? AND "
-                + HistoryContract.HistoryEntry.COLUMN_NAME_VALUE_TO + " = ?";
+        String selection = HistoryEntry.COLUMN_NAME_VALUE_FROM + " = ? AND "
+                + HistoryEntry.COLUMN_NAME_VALUE_TO + " = ?";
         String[] selectionArgs = { item.getValuefrom(), item.getValueto() };
-        db.delete(HistoryContract.HistoryEntry.TABLE_NAME, selection, selectionArgs);
-        fetch();
+        db.delete(HistoryEntry.TABLE_NAME, selection, selectionArgs);
     }
 }

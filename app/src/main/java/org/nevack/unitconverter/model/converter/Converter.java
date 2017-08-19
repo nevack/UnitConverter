@@ -12,7 +12,7 @@ public abstract class Converter {
     static final String CUBIC_POSTFIX = "<sup><small>3</small></sup>";
     static final String SQUARE_POSTFIX = "<sup><small>2</small></sup>";
 
-    protected final List<Unit> units = new ArrayList<>();
+    final List<Unit> units = new ArrayList<>();
 
     public String convert(String inputValue, int inputValueType, int outputValueType)
             throws ArithmeticException{

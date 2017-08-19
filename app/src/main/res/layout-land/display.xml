@@ -8,7 +8,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/sourcevalue"
+            android:id="@+id/source_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -27,7 +27,7 @@
             android:textSize="34sp" />
 
         <TextView
-            android:id="@+id/sourcevaluesymbol"
+            android:id="@+id/source_value_symbol"
             style="@style/ConverterSymbol"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/sourcespinner"
+        android:id="@+id/source_spinner"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:spinnerMode="dialog" />
@@ -51,7 +51,7 @@
         app:fabSize="normal" />
 
     <Spinner
-        android:id="@+id/resultspinner"
+        android:id="@+id/result_spinner"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:spinnerMode="dialog" />
@@ -62,7 +62,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/resultvalue"
+            android:id="@+id/result_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -80,7 +80,7 @@
             android:textSize="34sp" />
 
         <TextView
-            android:id="@+id/resultvaluesymbol"
+            android:id="@+id/result_value_symbol"
             style="@style/ConverterSymbol"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

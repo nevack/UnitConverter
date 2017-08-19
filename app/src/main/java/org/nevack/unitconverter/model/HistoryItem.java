@@ -2,36 +2,37 @@ package org.nevack.unitconverter.model;
 
 public class HistoryItem {
     private final int category;
-    private final String valuefrom;
-    private final String valueto;
-    private final String unitfrom;
-    private final String unitto;
+    private final String valueFrom;
+    private final String valueTo;
+    private final String unitFrom;
+    private final String unitTo;
 
-    public HistoryItem(int category, String valuefrom, String valueto, String unitfrom, String unitto) {
+    public HistoryItem
+            (int category, String valueFrom, String valueTo, String unitFrom, String unitTo) {
         this.category = category;
-        this.valuefrom = valuefrom;
-        this.valueto = valueto;
-        this.unitfrom = unitfrom;
-        this.unitto = unitto;
+        this.valueFrom = valueFrom;
+        this.valueTo = valueTo;
+        this.unitFrom = unitFrom;
+        this.unitTo = unitTo;
     }
 
     public int getCategory() {
         return category;
     }
 
-    public String getValuefrom() {
-        return valuefrom;
+    public String getValueFrom() {
+        return valueFrom;
     }
 
-    public String getValueto() {
-        return valueto;
+    public String getValueTo() {
+        return valueTo;
     }
 
-    public String getUnitfrom() {
-        return unitfrom;
+    public String getUnitFrom() {
+        return unitFrom;
     }
 
-    public String getUnitto() {
-        return unitto;
+    public String getUnitTo() {
+        return unitTo;
     }
 }

@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Канвертар</string>
     <string name="acre">Акры</string>
-    <string name="action_settings">Налады</string>
     <string name="acresymbol">акр</string>
     <string name="are">Ары</string>
     <string name="area">Плошча</string>
@@ -92,10 +91,8 @@
     <string name="petabyte">Петабайты</string>
     <string name="petabytesymbol">ПБ</string>
     <string name="pico">Пікабайты</string>
-    <string name="result_value">Вынік</string>
     <string name="second">Секунды</string>
     <string name="secondsymbol">с</string>
-    <string name="source_value">Дадзеныя</string>
     <string name="speed">Хуткасць</string>
     <string name="squarecentimetre">Квадратныя сантыметры</string>
     <string name="year">Гады</string>
@@ -113,7 +110,6 @@
     <string name="terabyte">Тэрабайты</string>
     <string name="tera">Тэра</string>
     <string name="temperature">Тэмпература</string>
-    <string name="swap">Памяняць месцамі</string>
     <string name="squarefoot">Квадратныя футы</string>
     <string name="squareinch">Квадратныя цалі</string>
     <string name="squarekilometre">Квадратныя кіламетры</string>
@@ -121,7 +117,6 @@
     <string name="squaremile">Квадратныя мілі</string>
     <string name="squaremillimetre">Квадратныя міліметры</string>
     <string name="squareyard">Квадратныя ярды</string>
-    <string name="description_application_icon">Іконка прыкладання</string>
     <string name="description_copy_button">Кнопка скапіяваць вынік</string>
     <string name="description_paste_button">Кнопка ўставіць значэнне</string>
     <string name="zero_hint">0</string>
@@ -138,7 +133,6 @@
     <string name="title_activity_history">Гісторыя</string>
     <string name="no_history_items">You haven\'t saved any results yet</string>
     <string name="description_no_history_icon">No history icons message icon</string>
-    <string name="description_history_item_icon">History item conversion icon</string>
     <string name="history_shortcut_short_label">Гісторыя</string>
     <string name="history_shortcut_long_label">Гісторыя</string>
     <string name="history_shortcut_disabled_label">Гісторыя</string>
@@ -146,4 +140,5 @@
     <string name="menu_save_label">Захаваць</string>
     <string name="message_error">Памылка</string>
     <string name="menu_delete_label">Delete history</string>
+    <string name="menu_filter_label">Фільтр вынікаў</string>
 </resources>

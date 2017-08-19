@@ -62,7 +62,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/unitnamefrom"
+                android:id="@+id/unit_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -70,7 +70,7 @@
                 tools:text="Kelvin"/>
 
             <TextView
-                android:id="@+id/unitnameto"
+                android:id="@+id/unit_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
@@ -89,7 +89,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/valuefrom"
+                android:id="@+id/value_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
@@ -97,7 +97,7 @@
                 tools:text="20K"/>
 
             <TextView
-                android:id="@+id/valueto"
+                android:id="@+id/value_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"

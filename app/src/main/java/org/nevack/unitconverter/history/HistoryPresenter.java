@@ -17,8 +17,8 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     private final HistoryContract.View view;
 
     private final Context context;
-    private HistoryDatabaseHelper helper;
-    private SQLiteDatabase db;
+    private final HistoryDatabaseHelper helper;
+    private final SQLiteDatabase db;
 
     public HistoryPresenter(Context context, HistoryContract.View view) {
         this.view = view;
@@ -66,12 +66,12 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
         while(cursor.moveToNext()) {
             int category = cursor.getInt(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_CATEGORY));
-            String valuefrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_FROM));
-            String valueto = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_TO));
-            String unitfrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_FROM));
-            String unitto = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_TO));
+            String valueFrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_FROM));
+            String valueTo = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_TO));
+            String unitFrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_FROM));
+            String unitTo = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_TO));
 
-            items.add(new HistoryItem(category, valuefrom, valueto, unitfrom, unitto));
+            items.add(new HistoryItem(category, valueFrom, valueTo, unitFrom, unitTo));
         }
         cursor.close();
 
@@ -94,7 +94,7 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     public void removeItem(HistoryItem item) {
         String selection = HistoryEntry.COLUMN_NAME_VALUE_FROM + " = ? AND "
                 + HistoryEntry.COLUMN_NAME_VALUE_TO + " = ?";
-        String[] selectionArgs = { item.getValuefrom(), item.getValueto() };
+        String[] selectionArgs = { item.getValueFrom(), item.getValueTo() };
         db.delete(HistoryEntry.TABLE_NAME, selection, selectionArgs);
     }
 }

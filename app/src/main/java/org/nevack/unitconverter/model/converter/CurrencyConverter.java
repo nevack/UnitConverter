@@ -79,8 +79,10 @@ public class CurrencyConverter extends Converter {
             Response<List<Rate>> response = call.execute();
             if (response.isSuccessful()) {
                 List<Rate> rates = response.body();
-                for (Rate rate : rates) {
-                    units.add(rate.toUnit());
+                if (rates != null) {
+                    for (Rate rate : rates) {
+                        units.add(rate.toUnit());
+                    }
                 }
 
                 Type type = new TypeToken<List<Rate>>() {}.getType();

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Конвертер</string>
-    <string name="action_settings">Настройки</string>
     <string name="celsius">Градусы Цельсия</string>
     <string name="celsiussymbol">°C</string>
     <string name="centimetre">Сантиметр</string>
@@ -68,10 +67,8 @@
     <string name="nano">Нано</string>
     <string name="other">Другие</string>
     <string name="pico">Пико</string>
-    <string name="result_value">Результат</string>
     <string name="second">Секунды</string>
     <string name="secondsymbol">с</string>
-    <string name="source_value">Данные</string>
     <string name="speed">Скорость</string>
     <string name="temperature">Температура</string>
     <string name="tera">Тера</string>
@@ -119,9 +116,7 @@
     <string name="squarecentimetre">Квадратные сантиметры</string>
     <string name="squaremillimetre">Квадратные миллиметры</string>
     <string name="loading_data">Загрузка данных</string>
-    <string name="swap">Поменять местами</string>
     <string name="unit_icon_description">Иконка единицы измерения</string>
-    <string name="description_application_icon">Иконка приложения</string>
     <string name="description_copy_button">Кнопка скопировать релультат</string>
     <string name="description_paste_button">Кнопка вставить значение</string>
     <string name="zero_hint">0</string>
@@ -138,7 +133,6 @@
     <string name="title_activity_history">История</string>
     <string name="no_history_items">You haven\'t saved any results yet</string>
     <string name="description_no_history_icon">No history icons message icon</string>
-    <string name="description_history_item_icon">History item conversion icon</string>
     <string name="history_shortcut_short_label">История</string>
     <string name="history_shortcut_long_label">История</string>
     <string name="history_shortcut_disabled_label">История</string>
@@ -146,4 +140,5 @@
     <string name="menu_save_label">Сохранить</string>
     <string name="message_error">Ошибка</string>
     <string name="menu_delete_label">Delete history</string>
+    <string name="menu_filter_label">Фильтр результатов</string>
 </resources>

@@ -1,6 +1,5 @@
 package org.nevack.unitconverter.history;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -132,10 +131,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                 categoryName = itemView.findViewById(R.id.category_name);
                 categoryIcon = itemView.findViewById(R.id.category_icon);
                 removeItem = itemView.findViewById(R.id.remove_item);
-                valueFrom = itemView.findViewById(R.id.valuefrom);
-                valueTo = itemView.findViewById(R.id.valueto);
-                unitFrom = itemView.findViewById(R.id.unitnamefrom);
-                unitTo = itemView.findViewById(R.id.unitnameto);
+                valueFrom = itemView.findViewById(R.id.value_from);
+                valueTo = itemView.findViewById(R.id.value_to);
+                unitFrom = itemView.findViewById(R.id.unit_from);
+                unitTo = itemView.findViewById(R.id.unit_to);
             }
         }
 
@@ -155,10 +154,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         public void onBindViewHolder(ViewHolder holder, int position) {
             EUnitCategory category = EUnitCategory.values()[items.get(position).getCategory()];
             holder.categoryName.setText(category.getName());
-            holder.valueFrom.setText(items.get(position).getValuefrom());
-            holder.valueTo.setText(items.get(position).getValueto());
-            holder.unitFrom.setText(items.get(position).getUnitfrom());
-            holder.unitTo.setText(items.get(position).getUnitto());
+            holder.valueFrom.setText(items.get(position).getValueFrom());
+            holder.valueTo.setText(items.get(position).getValueTo());
+            holder.unitFrom.setText(items.get(position).getUnitFrom());
+            holder.unitTo.setText(items.get(position).getUnitTo());
 
             holder.itemView.setBackgroundColor(
                     ContextCompat.getColor(getContext(), category.getColor()));
@@ -177,7 +176,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             return items.size();
         }
 
-        public void setItems(List<HistoryItem> items) {
+        void setItems(List<HistoryItem> items) {
             this.items = items;
         }
     }

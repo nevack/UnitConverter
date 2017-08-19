@@ -54,14 +54,14 @@ public class ConverterDisplayView extends LinearLayout {
 
         fab = findViewById(R.id.fab);
 
-        sourceTextView = findViewById(R.id.sourcevaluesymbol);
-        resultTextView = findViewById(R.id.resultvaluesymbol);
+        sourceTextView = findViewById(R.id.source_value_symbol);
+        resultTextView = findViewById(R.id.result_value_symbol);
 
-        sourceSpinner = findViewById(R.id.sourcespinner);
-        resultSpinner = findViewById(R.id.resultspinner);
+        sourceSpinner = findViewById(R.id.source_spinner);
+        resultSpinner = findViewById(R.id.result_spinner);
 
-        sourceEditText = findViewById(R.id.sourcevalue);
-        resultEditText = findViewById(R.id.resultvalue);
+        sourceEditText = findViewById(R.id.source_value);
+        resultEditText = findViewById(R.id.result_value);
 
         fab.setOnClickListener(v -> {
             String temp = sourceEditText.getText().toString();

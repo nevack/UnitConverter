@@ -31,10 +31,10 @@ public interface HistoryContract {
     /* Inner class that defines the table contents */
     class HistoryEntry implements BaseColumns {
         public static final String TABLE_NAME = "history";
-        public static final String COLUMN_NAME_UNIT_FROM = "unitfrom";
-        public static final String COLUMN_NAME_UNIT_TO = "unitto";
-        public static final String COLUMN_NAME_VALUE_TO = "valueto";
-        public static final String COLUMN_NAME_VALUE_FROM = "valuefrom";
+        public static final String COLUMN_NAME_UNIT_FROM = "unit_from";
+        public static final String COLUMN_NAME_UNIT_TO = "unit_to";
+        public static final String COLUMN_NAME_VALUE_TO = "value_to";
+        public static final String COLUMN_NAME_VALUE_FROM = "value_from";
         public static final String COLUMN_NAME_CATEGORY = "category";
     }
 

@@ -1,6 +1,7 @@
 package org.nevack.unitconverter.history;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -50,6 +51,23 @@ public class HistoryPresenter implements HistoryContract.Presenter {
         }
 
         view.showHistoryItems(items);
+    }
+
+    @Override
+    public void shareItem(HistoryItem item) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+
+        String message = String.format("%s %s = %s %s",
+                item.getValueFrom(),
+                item.getUnitFrom(),
+                item.getValueTo(),
+                item.getUnitTo()
+        );
+
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        context.startActivity(sendIntent);
     }
 
     private void fetch() {

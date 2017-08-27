@@ -1,9 +1,12 @@
 package org.nevack.unitconverter.history;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -101,7 +104,19 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     }
 
     private void showFilterDialog() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            transaction.remove(prev);
+        }
+        transaction.addToBackStack(null);
 
+        // Create and show the dialog.
+        HistoryFilterDialog newFragment = new HistoryFilterDialog();
+        newFragment.setListener(dialog -> {
+            presenter.filterItems(newFragment.mask);
+        });
+        newFragment.show(transaction, "dialog");
     }
 
     @Override
@@ -128,6 +143,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             private final TextView categoryName;
             private final ImageView categoryIcon;
             private final ImageView removeItem;
+            private final ImageView shareItem;
             private final TextView valueFrom;
             private final TextView valueTo;
             private final TextView unitFrom;
@@ -138,6 +154,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                 categoryName = itemView.findViewById(R.id.category_name);
                 categoryIcon = itemView.findViewById(R.id.category_icon);
                 removeItem = itemView.findViewById(R.id.remove_item);
+                shareItem = itemView.findViewById(R.id.share_item);
                 valueFrom = itemView.findViewById(R.id.value_from);
                 valueTo = itemView.findViewById(R.id.value_to);
                 unitFrom = itemView.findViewById(R.id.unit_from);
@@ -175,6 +192,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                 presenter.removeItem(items.get(position));
                 items.remove(position);
                 notifyItemRemoved(position);
+            });
+
+            holder.shareItem.setOnClickListener(v -> {
+                presenter.shareItem(items.get(position));
             });
         }
 

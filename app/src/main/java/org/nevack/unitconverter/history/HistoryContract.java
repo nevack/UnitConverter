@@ -26,6 +26,8 @@ public interface HistoryContract {
 
         void filterItems(int mask);
 
+        void shareItem(HistoryItem item);
+
     }
 
     /* Inner class that defines the table contents */

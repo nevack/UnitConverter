@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.EUnitCategory;
 
 import java.util.ArrayList;
@@ -36,9 +35,7 @@ public class HistoryFilterDialog extends DialogFragment {
 
         builder.setOnDismissListener(listener);
 
-        builder.setItems(names.toArray(new String[names.size()]), (dialog, which) -> {
-            mask = which - 1;
-        });
+        builder.setItems(names.toArray(new String[names.size()]), (dialog, which) -> mask = which - 1);
         // Create the AlertDialog object and return it
         return builder.create();
     }

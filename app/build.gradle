@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "org.nevack.unitconverter"
-        minSdkVersion 17
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 27
         versionCode 3
         versionName "1.0.0"
-        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -30,12 +29,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:$rootProject.supportlibraryversion"
-    compile "com.android.support:design:$rootProject.supportlibraryversion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportlibraryversion"
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'junit:junit:4.12'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportlibraryversion"
+    implementation "com.android.support:design:$rootProject.supportlibraryversion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportlibraryversion"
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

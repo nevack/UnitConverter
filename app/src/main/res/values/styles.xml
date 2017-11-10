@@ -20,6 +20,8 @@
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
     
-    <style name="KeyPadButton" parent="Widget.AppCompat.Button.Borderless"/>
+    <style name="KeyPadButton" parent="Widget.AppCompat.Button.Borderless">
+        ?attr/selectableItemBackgroundBorderless
+    </style>
 
 </resources>

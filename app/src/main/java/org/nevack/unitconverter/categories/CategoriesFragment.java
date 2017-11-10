@@ -54,7 +54,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
 

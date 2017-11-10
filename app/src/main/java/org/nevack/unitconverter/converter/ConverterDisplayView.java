@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -120,9 +119,9 @@ public class ConverterDisplayView extends LinearLayout {
     }
 
     public void erase() {
-        ViewGroupOverlay groupOverlay = null;
+        ViewGroupOverlay groupOverlay;
         View revealView = new View(getContext());
-        Animator revealAnimator = null;
+        Animator revealAnimator;
 
         final Rect displayRect = new Rect();
         this.getGlobalVisibleRect(displayRect);
@@ -133,30 +132,27 @@ public class ConverterDisplayView extends LinearLayout {
         revealView.setRight(displayRect.right);
         revealView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            groupOverlay = (ViewGroupOverlay) ((Activity) getContext()).getWindow().getDecorView().getOverlay();
-            groupOverlay.add(revealView);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final int[] clearLocation = new int[2];
-            this.getLocationInWindow(clearLocation);
-            clearLocation[0] += this.getWidth();
-            clearLocation[1] += this.getHeight();
+        groupOverlay = (ViewGroupOverlay) ((Activity) getContext()).getWindow().getDecorView().getOverlay();
+        groupOverlay.add(revealView);
 
-            final int revealCenterX = clearLocation[0] - revealView.getLeft();
-            final int revealCenterY = clearLocation[1] - revealView.getTop();
+        final int[] clearLocation = new int[2];
+        this.getLocationInWindow(clearLocation);
+        clearLocation[0] += this.getWidth();
+        clearLocation[1] += this.getHeight();
 
-            final double x1_2 = Math.pow(revealView.getLeft() - revealCenterX, 2);
-            final double x2_2 = Math.pow(revealView.getRight() - revealCenterX, 2);
-            final double y_2 = Math.pow(revealView.getTop() - revealCenterY, 2);
-            final float revealRadius = (float) Math.max(Math.sqrt(x1_2 + y_2), Math.sqrt(x2_2 + y_2));
+        final int revealCenterX = clearLocation[0] - revealView.getLeft();
+        final int revealCenterY = clearLocation[1] - revealView.getTop();
 
-            revealAnimator = ViewAnimationUtils.createCircularReveal(revealView,
-                    revealCenterX, revealCenterY, 0.0f, revealRadius);
+        final double x1_2 = Math.pow(revealView.getLeft() - revealCenterX, 2);
+        final double x2_2 = Math.pow(revealView.getRight() - revealCenterX, 2);
+        final double y_2 = Math.pow(revealView.getTop() - revealCenterY, 2);
+        final float revealRadius = (float) Math.max(Math.sqrt(x1_2 + y_2), Math.sqrt(x2_2 + y_2));
 
-            revealAnimator.setDuration(
-                    getResources().getInteger(android.R.integer.config_longAnimTime));
-        }
+        revealAnimator = ViewAnimationUtils.createCircularReveal(revealView,
+                revealCenterX, revealCenterY, 0.0f, revealRadius);
+
+        revealAnimator.setDuration(
+                getResources().getInteger(android.R.integer.config_longAnimTime));
 
         final Animator alphaAnimator = ObjectAnimator.ofFloat(revealView, View.ALPHA, 0.0f);
         alphaAnimator.setDuration(
@@ -171,9 +167,7 @@ public class ConverterDisplayView extends LinearLayout {
         final AnimatorSet animatorSet = new AnimatorSet();
 
         //Play Reveal Animation if Lollipop or higher, and only alpha animation for others
-        if (revealAnimator != null) {
-            animatorSet.play(revealAnimator).before(alphaAnimator);
-        } else animatorSet.play(alphaAnimator);
+        animatorSet.play(revealAnimator).before(alphaAnimator);
 
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
 
@@ -183,11 +177,7 @@ public class ConverterDisplayView extends LinearLayout {
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    if (finalGroupOverlay != null) {
-                        finalGroupOverlay.remove(finalRevealView);
-                    }
-                }
+                finalGroupOverlay.remove(finalRevealView);
             }
         });
 

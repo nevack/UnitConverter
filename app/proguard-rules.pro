@@ -18,3 +18,15 @@
 
 -dontwarn okio.**
 -dontwarn retrofit2.Platform$Java8
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }

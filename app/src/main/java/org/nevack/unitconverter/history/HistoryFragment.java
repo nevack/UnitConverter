@@ -1,10 +1,8 @@
 package org.nevack.unitconverter.history;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -65,7 +63,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
@@ -113,9 +111,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
         // Create and show the dialog.
         HistoryFilterDialog newFragment = new HistoryFilterDialog();
-        newFragment.setListener(dialog -> {
-            presenter.filterItems(newFragment.mask);
-        });
+        newFragment.setListener(dialog -> presenter.filterItems(newFragment.mask));
         newFragment.show(transaction, "dialog");
     }
 
@@ -194,9 +190,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                 notifyItemRemoved(position);
             });
 
-            holder.shareItem.setOnClickListener(v -> {
-                presenter.shareItem(items.get(position));
-            });
+            holder.shareItem.setOnClickListener(v -> presenter.shareItem(items.get(position)));
         }
 
         @Override

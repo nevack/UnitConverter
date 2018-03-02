@@ -3,9 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-alpha03'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha04'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,7 +21,7 @@ allprojects {
 }
 
 ext {
-    supportlibraryversion = '27.0.0'
+    supportlibraryversion = '27.1.0'
 }
 
 task clean(type: Delete) {

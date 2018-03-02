@@ -24,7 +24,7 @@ public class TemperatureConverter extends Converter {
 
         switch (inputValueType) {
             case 0:
-                if (sourceValue.compareTo(BigDecimal.ZERO) == -1) throw new ArithmeticException();
+                if (sourceValue.compareTo(BigDecimal.ZERO) < 0) throw new ArithmeticException();
                 else {
                     if (outputValueType == 1) {
                         resultValue = sourceValue.add(new BigDecimal("-273"))
@@ -39,7 +39,7 @@ public class TemperatureConverter extends Converter {
                 }
                 break;
             case 1:
-                if (sourceValue.compareTo(new BigDecimal("-273")) == -1) throw new ArithmeticException();
+                if (sourceValue.compareTo(new BigDecimal("-273")) < 0) throw new ArithmeticException();
                 else {
                     if (outputValueType == 0) {
                         resultValue = sourceValue.add(new BigDecimal("273"))
@@ -54,7 +54,7 @@ public class TemperatureConverter extends Converter {
                 }
                 break;
             case 2:
-                if (sourceValue.compareTo(new BigDecimal("-459.67")) == -1) throw new ArithmeticException();
+                if (sourceValue.compareTo(new BigDecimal("-459.67")) < 0) throw new ArithmeticException();
                 else {
                     if (outputValueType == 0) {
                         resultValue = sourceValue.add(new BigDecimal("459.67"))

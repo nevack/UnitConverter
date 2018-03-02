@@ -52,12 +52,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
             <Spinner
                 android:id="@+id/source_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"/>
+                android:layout_height="32dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
             <View
                 android:layout_width="match_parent"

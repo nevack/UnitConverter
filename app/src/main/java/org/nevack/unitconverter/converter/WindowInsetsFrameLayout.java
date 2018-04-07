@@ -26,7 +26,6 @@ public class WindowInsetsFrameLayout extends FrameLayout {
 		super(context, attrs, defStyleAttr);
 	}
 
-	@TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
 	@Override
 	public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 		int childCount = getChildCount();

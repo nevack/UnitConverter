@@ -26,7 +26,7 @@ public class ConverterActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
     private int converterId;
-    private ConverterContract.Presenter mPresenter;
+    private ConverterContract.Presenter presenter;
 
     public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
@@ -41,12 +41,9 @@ public class ConverterActivity extends AppCompatActivity {
         converterId = getIntent().getIntExtra(CONVERTER_ID_EXTRA, 0);
         setContentView(R.layout.activity_converter);
 
-        // Setup transparent status bar
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setStatusBarColor(Color.TRANSPARENT);
 
         drawerLayout = findViewById(R.id.navigation_drawer);
         navigationView = findViewById(R.id.navigation_view);
@@ -62,7 +59,7 @@ public class ConverterActivity extends AppCompatActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        mPresenter = new ConverterPresenter(this, fragment, getSupportLoaderManager());
+        presenter = new ConverterPresenter(this, fragment, getSupportLoaderManager());
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -76,7 +73,7 @@ public class ConverterActivity extends AppCompatActivity {
                 menuItem -> {
                     menu.getItem(converterId).setChecked(false);
                     converterId = menuItem.getOrder();
-                    mPresenter.setConverter(EUnitCategory.values()[converterId]);
+                    presenter.setConverter(EUnitCategory.values()[converterId]);
 
                     menuItem.setChecked(true);
                     drawerLayout.closeDrawers();
@@ -87,7 +84,7 @@ public class ConverterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.setConverter(EUnitCategory.values()[converterId]);
+        presenter.setConverter(EUnitCategory.values()[converterId]);
     }
 
 

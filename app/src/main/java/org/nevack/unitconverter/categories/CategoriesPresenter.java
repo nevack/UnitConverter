@@ -8,15 +8,15 @@ import org.nevack.unitconverter.model.converter.Converter;
 
 public class CategoriesPresenter implements CategoriesContract.Presenter {
 
-    private final Context mContext;
+    private final Context context;
 
-    private final CategoriesContract.View mView;
+    private final CategoriesContract.View view;
 
-    public CategoriesPresenter(Context context, CategoriesContract.View view){
-        mContext = context;
-        mView = view;
+    CategoriesPresenter(Context context, CategoriesContract.View view) {
+        this.context = context;
+        this.view = view;
 
-        mView.setPresenter(this);
+        this.view.setPresenter(this);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CategoriesPresenter implements CategoriesContract.Presenter {
 
     @Override
     public void openConverter(EUnitCategory converterCategory) {
-        mContext.startActivity(ConverterActivity.getIntent(mContext, converterCategory.ordinal()));
+        context.startActivity(ConverterActivity.getIntent(context, converterCategory.ordinal()));
     }
 
     @Override

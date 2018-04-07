@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -102,8 +103,9 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     }
 
     private void showFilterDialog() {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        FragmentManager manager = requireFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        Fragment prev = manager.findFragmentByTag("dialog");
         if (prev != null) {
             transaction.remove(prev);
         }
@@ -162,8 +164,9 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             this.items = items;
         }
 
+        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.history_item, viewGroup, false);
 
@@ -171,7 +174,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             EUnitCategory category = EUnitCategory.values()[items.get(position).getCategory()];
             holder.categoryName.setText(category.getName());
             holder.valueFrom.setText(items.get(position).getValueFrom());
@@ -180,9 +183,9 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             holder.unitTo.setText(items.get(position).getUnitTo());
 
             holder.itemView.setBackgroundColor(
-                    ContextCompat.getColor(getContext(), category.getColor()));
+                    ContextCompat.getColor(requireContext(), category.getColor()));
             holder.categoryIcon.setBackground(
-                    ContextCompat.getDrawable(getContext(), category.getIcon()));
+                    ContextCompat.getDrawable(requireContext(), category.getIcon()));
 
             holder.removeItem.setOnClickListener(v -> {
                 presenter.removeItem(items.get(position));

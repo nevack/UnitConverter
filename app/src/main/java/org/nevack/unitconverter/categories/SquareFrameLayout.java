@@ -15,7 +15,10 @@ public class SquareFrameLayout extends FrameLayout{
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = width * 3 / 4;
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.getMode(widthMeasureSpec));
+
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
+                MeasureSpec.getMode(widthMeasureSpec));
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

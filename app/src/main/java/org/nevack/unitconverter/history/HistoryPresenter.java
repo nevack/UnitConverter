@@ -21,7 +21,7 @@ public class HistoryPresenter implements HistoryContract.Presenter {
     private final HistoryDatabaseHelper helper;
     private final SQLiteDatabase db;
 
-    public HistoryPresenter(Context context, HistoryContract.View view) {
+    HistoryPresenter(Context context, HistoryContract.View view) {
         this.view = view;
         this.context = context;
 
@@ -67,31 +67,13 @@ public class HistoryPresenter implements HistoryContract.Presenter {
 
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
+
         context.startActivity(sendIntent);
     }
 
     private void fetch() {
         items.clear();
-        Cursor cursor = db.query(
-                HistoryEntry.TABLE_NAME,                 // The table to query
-                null,                          // The columns to return
-                null,                        // The columns for the WHERE clause
-                null,                   // The values for the WHERE clause
-                null,                     // don't group the rows
-                null,                     // don't filter by row groups
-                null                    // The sort order
-        );
-
-        while(cursor.moveToNext()) {
-            int category = cursor.getInt(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_CATEGORY));
-            String valueFrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_FROM));
-            String valueTo = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_VALUE_TO));
-            String unitFrom = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_FROM));
-            String unitTo = cursor.getString(cursor.getColumnIndex(HistoryEntry.COLUMN_NAME_UNIT_TO));
-
-            items.add(new HistoryItem(category, valueFrom, valueTo, unitFrom, unitTo));
-        }
-        cursor.close();
+        items.addAll(helper.getAllItems(db));
 
         if (items.isEmpty()) {
             view.showNoItems();

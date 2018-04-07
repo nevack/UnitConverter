@@ -8,10 +8,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
@@ -228,11 +230,22 @@ public class ConverterDisplayView extends LinearLayout {
             this.textView = textView;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             TextView childAt = (TextView) parent.getChildAt(0);
             if (childAt != null) childAt.setTextColor(Color.WHITE);
-            textView.setText(Html.fromHtml(units.get(parent.getSelectedItemPosition()).getUnitSymbol()));
+
+            String html = units.get(parent.getSelectedItemPosition()).getUnitSymbol();
+            Spanned spanned;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                spanned = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+            } else {
+                spanned = Html.fromHtml(html);
+            }
+
+            textView.setText(spanned);
             callback.convert();
         }
 

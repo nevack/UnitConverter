@@ -48,13 +48,13 @@ public interface ConverterContract {
 
     }
 
-    class ConvertData{
+    class ConvertData {
         private final String value;
         private final String result;
         private final int from;
         private final int to;
 
-        public ConvertData(String value, String result, int from, int to) {
+        ConvertData(String value, String result, int from, int to) {
             this.value = value;
             this.result = result;
             this.from = from;

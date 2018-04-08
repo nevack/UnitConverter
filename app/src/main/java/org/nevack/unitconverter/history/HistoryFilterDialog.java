@@ -28,7 +28,7 @@ public class HistoryFilterDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
         List<String> names = new ArrayList<>();
-        names.add("NONE");
+        names.add("None");
         for (EUnitCategory category : EUnitCategory.values()){
             names.add(getString(category.getName()));
         }
@@ -36,6 +36,7 @@ public class HistoryFilterDialog extends DialogFragment {
         builder.setOnDismissListener(listener);
 
         builder.setItems(names.toArray(new String[names.size()]), (dialog, which) -> mask = which - 1);
+
         // Create the AlertDialog object and return it
         return builder.create();
     }

@@ -2,8 +2,6 @@ package org.nevack.unitconverter.converter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -47,10 +45,12 @@ public class ConverterActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.navigation_drawer);
         navigationView = findViewById(R.id.navigation_view);
-        setupDrawerContent(navigationView);
+
+        setupDrawerContent();
 
         ConverterFragment fragment =
                 (ConverterFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+
         if (fragment == null) {
             fragment = ConverterFragment.newInstance();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -62,23 +62,29 @@ public class ConverterActivity extends AppCompatActivity {
         presenter = new ConverterPresenter(this, fragment, getSupportLoaderManager());
     }
 
-    private void setupDrawerContent(NavigationView navigationView) {
+    private void setupDrawerContent() {
+        EUnitCategory[] units = EUnitCategory.values();
+
         Menu menu = navigationView.getMenu();
-        for (int i = 0; i < EUnitCategory.values().length; i++) {
-            menu.add(Menu.NONE, Menu.NONE, i, getString(EUnitCategory.values()[i].getName()));
-            menu.getItem(i).setIcon(EUnitCategory.values()[i].getIcon());
+
+        for (int i = 0; i < units.length; i++) {
+            menu.add(Menu.NONE, Menu.NONE, i, getString(units[i].getName()));
+            menu.getItem(i).setIcon(units[i].getIcon());
         }
+
+        menu.setGroupCheckable(Menu.NONE, true, true);
+        menu.getItem(converterId).setChecked(true);
 
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    menu.getItem(converterId).setChecked(false);
                     converterId = menuItem.getOrder();
-                    presenter.setConverter(EUnitCategory.values()[converterId]);
+                    presenter.setConverter(units[converterId]);
 
                     menuItem.setChecked(true);
                     drawerLayout.closeDrawers();
                     return true;
-                });
+                }
+        );
     }
 
     @Override
@@ -91,6 +97,7 @@ public class ConverterActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // Open drawer when hamburger menu button (☰) pressed in actionbar
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;

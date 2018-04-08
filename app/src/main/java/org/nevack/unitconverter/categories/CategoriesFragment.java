@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -80,14 +79,12 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
         private final List<EUnitCategory> unitCategories;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final FrameLayout container;
             private final TextView textView;
             private final ImageView imageView;
 
             ViewHolder(View itemView) {
                 super(itemView);
 
-                container = itemView.findViewById(R.id.category_container);
                 textView = itemView.findViewById(R.id.category_name);
                 imageView = itemView.findViewById(R.id.category_icon);
             }

@@ -170,30 +170,47 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.history_item, viewGroup, false);
 
-            return new ViewHolder(view);
+            ViewHolder holder = new ViewHolder(view);
+
+            holder.removeItem.setOnClickListener(v -> {
+                int position = holder.getAdapterPosition();
+
+                if (position != RecyclerView.NO_POSITION)
+                {
+                    presenter.removeItem(items.get(position));
+                    items.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
+
+            holder.shareItem.setOnClickListener(v -> {
+                int position = holder.getAdapterPosition();
+
+                if (position != RecyclerView.NO_POSITION)
+                {
+                    presenter.shareItem(items.get(position));
+                }
+            });
+
+            return holder;
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            EUnitCategory category = EUnitCategory.values()[items.get(position).getCategory()];
+
+            HistoryItem item = items.get(holder.getAdapterPosition());
+            EUnitCategory category = EUnitCategory.values()[item.getCategory()];
+
             holder.categoryName.setText(category.getName());
-            holder.valueFrom.setText(items.get(position).getValueFrom());
-            holder.valueTo.setText(items.get(position).getValueTo());
-            holder.unitFrom.setText(items.get(position).getUnitFrom());
-            holder.unitTo.setText(items.get(position).getUnitTo());
+            holder.valueFrom.setText(item.getValueFrom());
+            holder.valueTo.setText(item.getValueTo());
+            holder.unitFrom.setText(item.getUnitFrom());
+            holder.unitTo.setText(item.getUnitTo());
 
             holder.itemView.setBackgroundColor(
                     ContextCompat.getColor(requireContext(), category.getColor()));
             holder.categoryIcon.setBackground(
                     ContextCompat.getDrawable(requireContext(), category.getIcon()));
-
-            holder.removeItem.setOnClickListener(v -> {
-                presenter.removeItem(items.get(position));
-                items.remove(position);
-                notifyItemRemoved(position);
-            });
-
-            holder.shareItem.setOnClickListener(v -> presenter.shareItem(items.get(position)));
         }
 
         @Override

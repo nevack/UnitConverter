@@ -7,8 +7,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+
+import androidx.annotation.NonNull;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData;
 import org.nevack.unitconverter.history.HistoryContract;
@@ -47,9 +49,6 @@ public class ConverterPresenter implements ConverterContract.Presenter,
 
     @Override
     public void start() {
-//        Bundle args = new Bundle();
-//        args.putSerializable("KEY", EUnitCategory.AREA);
-//        loaderManager.initLoader(LOADER_CONVERTER, null, this);
         loaderManager.initLoader(LOADER_CONVERTER, null, this);
     }
 
@@ -90,30 +89,41 @@ public class ConverterPresenter implements ConverterContract.Presenter,
 
     @Override
     public void copyResultToClipboard(String result) {
-        if (!result.isEmpty()) {
-            ClipboardManager clipboard = (ClipboardManager)
-                    context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager)
+                context.getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard != null && !result.isEmpty()) {
             clipboard.setPrimaryClip(ClipData.newPlainText(COPY_RESULT, result));
         }
     }
 
     @Override
     public void pasteFromClipboard() {
-        double source = 0d;
         ClipboardManager clipboard =
                 (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-        if ((clipboard.hasPrimaryClip() && clipboard.getPrimaryClipDescription()
-                .hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN))) {
-            String pasteData = clipboard.getPrimaryClip().getItemAt(0)
-                    .getText().toString();
-            if (!pasteData.isEmpty()) source = Double.parseDouble(pasteData);
+        if (clipboard == null) {
+            return;
         }
 
-        if (source != 0d) {
-            view.clear();
-            view.appendText(String.valueOf(source));
+        final ClipData clip = clipboard.getPrimaryClip();
+
+        if (clip == null) {
+            return;
         }
+
+        if (clip.getDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+            String pasteData = clipboard.getPrimaryClip().getItemAt(0)
+                    .getText().toString();
+            if (!pasteData.isEmpty()) {
+                try {
+                    final double source = Double.parseDouble(pasteData);
+                    view.clear();
+                    view.appendText(String.valueOf(source));
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+
+
     }
 
     @Override
@@ -124,6 +134,7 @@ public class ConverterPresenter implements ConverterContract.Presenter,
                 currentConverter.getClass().getSimpleName().replace("Converter", "")
                         .toUpperCase().split(" ")[0]
         ).ordinal();
+
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_CATEGORY, name);
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_FROM, currentConverter.getUnits().get(data.getFrom()).getName());
         values.put(HistoryContract.HistoryEntry.COLUMN_NAME_UNIT_TO, currentConverter.getUnits().get(data.getTo()).getName());
@@ -133,22 +144,25 @@ public class ConverterPresenter implements ConverterContract.Presenter,
         db.insert(HistoryContract.HistoryEntry.TABLE_NAME, null, values);
     }
 
+    @NonNull
     @Override
     public Loader<Converter> onCreateLoader(int id, Bundle args) {
         return loader;
     }
 
     @Override
-    public void onLoadFinished(Loader<Converter> loader, Converter converter) {
+    public void onLoadFinished(@NonNull Loader<Converter> loader, Converter converter) {
         currentConverter = converter;
 
         view.setUnits(currentConverter.getUnits());
 
-        if (data != null) view.setConvertData(data);
+        if (data != null) {
+            view.setConvertData(data);
+        }
     }
 
     @Override
-    public void onLoaderReset(Loader<Converter> loader) {
+    public void onLoaderReset(@NonNull Loader<Converter> loader) {
 
     }
 }

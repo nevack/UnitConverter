@@ -43,8 +43,7 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public List<HistoryItem> getAllItems(SQLiteDatabase db)
-    {
+    public List<HistoryItem> getAllItems(SQLiteDatabase db) {
         List<HistoryItem> items = new ArrayList<>();
         Cursor cursor = db.query(
                 HistoryEntry.TABLE_NAME,                 // The table to query

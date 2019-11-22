@@ -1,9 +1,9 @@
 package org.nevack.unitconverter.model;
 
 import android.content.Context;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.converter.*;

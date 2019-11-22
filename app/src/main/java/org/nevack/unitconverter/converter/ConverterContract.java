@@ -1,6 +1,6 @@
 package org.nevack.unitconverter.converter;
 
-import android.support.annotation.ColorRes;
+import androidx.annotation.ColorRes;
 
 import org.nevack.unitconverter.BasePresenter;
 import org.nevack.unitconverter.BaseView;
@@ -23,9 +23,9 @@ public interface ConverterContract {
 
         void appendText(String digit);
 
-        void showResult(String result);
-
         void clear();
+
+        void showResult(String result);
 
         void showError();
 
@@ -37,8 +37,6 @@ public interface ConverterContract {
         void setConverter(EUnitCategory converter);
 
         void convert(ConvertData data);
-
-        //String convert(String data, int input, int output);
 
         void copyResultToClipboard(String result);
 

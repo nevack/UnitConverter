@@ -1,14 +1,6 @@
 package org.nevack.unitconverter.history;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +11,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.EUnitCategory;
@@ -84,7 +85,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_history, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -113,7 +114,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
         // Create and show the dialog.
         HistoryFilterDialog newFragment = new HistoryFilterDialog();
-        newFragment.setListener(dialog -> presenter.filterItems(newFragment.mask));
+        newFragment.setListener(presenter::filterItems);
         newFragment.show(transaction, "dialog");
     }
 
@@ -132,11 +133,11 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
         noHistoryView.setVisibility(View.VISIBLE);
     }
 
-    class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
+    private class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
         private List<HistoryItem> items;
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        private class ViewHolder extends RecyclerView.ViewHolder {
 
             private final TextView categoryName;
             private final ImageView categoryIcon;
@@ -147,7 +148,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             private final TextView unitFrom;
             private final TextView unitTo;
 
-            ViewHolder(View itemView) {
+            private ViewHolder(View itemView) {
                 super(itemView);
                 categoryName = itemView.findViewById(R.id.category_name);
                 categoryIcon = itemView.findViewById(R.id.category_icon);
@@ -157,6 +158,19 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
                 valueTo = itemView.findViewById(R.id.value_to);
                 unitFrom = itemView.findViewById(R.id.unit_from);
                 unitTo = itemView.findViewById(R.id.unit_to);
+            }
+
+            private void bind(EUnitCategory category, HistoryItem item) {
+                categoryName.setText(category.getName());
+                valueFrom.setText(item.getValueFrom());
+                valueTo.setText(item.getValueTo());
+                unitFrom.setText(item.getUnitFrom());
+                unitTo.setText(item.getUnitTo());
+
+                itemView.setBackgroundColor(
+                        ContextCompat.getColor(itemView.getContext(), category.getColor()));
+                categoryIcon.setBackground(
+                        itemView.getContext().getDrawable(category.getIcon()));
             }
         }
 
@@ -175,8 +189,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             holder.removeItem.setOnClickListener(v -> {
                 int position = holder.getAdapterPosition();
 
-                if (position != RecyclerView.NO_POSITION)
-                {
+                if (position != RecyclerView.NO_POSITION) {
                     presenter.removeItem(items.get(position));
                     items.remove(position);
                     notifyItemRemoved(position);
@@ -186,8 +199,7 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
             holder.shareItem.setOnClickListener(v -> {
                 int position = holder.getAdapterPosition();
 
-                if (position != RecyclerView.NO_POSITION)
-                {
+                if (position != RecyclerView.NO_POSITION) {
                     presenter.shareItem(items.get(position));
                 }
             });
@@ -197,20 +209,10 @@ public class HistoryFragment extends Fragment implements HistoryContract.View {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
             HistoryItem item = items.get(holder.getAdapterPosition());
             EUnitCategory category = EUnitCategory.values()[item.getCategory()];
 
-            holder.categoryName.setText(category.getName());
-            holder.valueFrom.setText(item.getValueFrom());
-            holder.valueTo.setText(item.getValueTo());
-            holder.unitFrom.setText(item.getUnitFrom());
-            holder.unitTo.setText(item.getUnitTo());
-
-            holder.itemView.setBackgroundColor(
-                    ContextCompat.getColor(requireContext(), category.getColor()));
-            holder.categoryIcon.setBackground(
-                    ContextCompat.getDrawable(requireContext(), category.getIcon()));
+            holder.bind(category, item);
         }
 
         @Override

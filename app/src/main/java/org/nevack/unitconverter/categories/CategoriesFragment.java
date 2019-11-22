@@ -1,17 +1,18 @@
 package org.nevack.unitconverter.categories;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.EUnitCategory;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class CategoriesFragment extends Fragment implements CategoriesContract.View {
 
-    private CategoriesContract.Presenter mPresenter;
+    private CategoriesContract.Presenter presenter;
 
     private CategoriesAdapter adapter;
     private RecyclerView recyclerView;
@@ -39,19 +40,18 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new CategoriesAdapter();
         columns = getResources().getInteger(R.integer.column_count);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        presenter.start();
     }
 
     @Override
     public void setPresenter(@NonNull CategoriesContract.Presenter presenter) {
-        mPresenter = presenter;
+        this.presenter = presenter;
     }
 
     @Nullable
@@ -71,6 +71,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
 
     @Override
     public void showCategories() {
+        adapter = new CategoriesAdapter();
         recyclerView.setAdapter(adapter);
     }
 
@@ -87,6 +88,13 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
 
                 textView = itemView.findViewById(R.id.category_name);
                 imageView = itemView.findViewById(R.id.category_icon);
+            }
+
+            private void bind(EUnitCategory category) {
+                textView.setText(category.getName());
+                imageView.setImageResource(category.getIcon());
+                itemView.setBackgroundColor(
+                        ContextCompat.getColor(requireContext(), category.getColor()));
             }
         }
 
@@ -105,9 +113,8 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
             view.setOnClickListener(v -> {
                 int position = holder.getAdapterPosition();
 
-                if (position != RecyclerView.NO_POSITION)
-                {
-                    mPresenter.openConverter(unitCategories.get(position));
+                if (position != RecyclerView.NO_POSITION) {
+                    presenter.openConverter(unitCategories.get(position));
                 }
             });
 
@@ -118,10 +125,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             EUnitCategory category = unitCategories.get(holder.getAdapterPosition());
 
-            holder.textView.setText(category.getName());
-            holder.imageView.setImageResource(category.getIcon());
-            holder.itemView.setBackgroundColor(
-                    ContextCompat.getColor(requireContext(), category.getColor()));
+            holder.bind(category);
         }
 
         @Override

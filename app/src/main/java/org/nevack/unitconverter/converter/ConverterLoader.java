@@ -1,7 +1,7 @@
 package org.nevack.unitconverter.converter;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 
 import org.nevack.unitconverter.model.EUnitCategory;
 import org.nevack.unitconverter.model.converter.Converter;

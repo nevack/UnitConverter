@@ -2,14 +2,6 @@ package org.nevack.unitconverter.converter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,7 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData;
@@ -27,7 +28,7 @@ import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;
 
-public class ConverterFragment extends Fragment implements ConverterContract.View{
+public class ConverterFragment extends Fragment implements ConverterContract.View {
 
     private KeypadView keypadView;
     private ConverterDisplayView displayView;
@@ -58,11 +59,13 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_converter, container, false);
+        final View root = inflater.inflate(R.layout.fragment_converter, container, false);
 
-        Toolbar toolbar = root.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
+        final AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        activity.setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -73,10 +76,12 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
 
         displayView.setTextWatcher(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -103,16 +108,23 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
         );
 
         keypadView.setBackspaceListeners(
-                v -> displayView.removeLastDigit(),
-                v -> {
-                    displayView.erase();
-                    return true;
+                new KeypadView.BackspaceListener() {
+                    @Override
+                    public void longClick() {
+                        displayView.erase();
+                    }
+
+                    @Override
+                    public void singleClick() {
+                        displayView.removeLastDigit();
+
+                    }
                 }
         );
 
         keypadView.setOnPasteListener(v -> presenter.pasteFromClipboard());
 
-        keypadView.setNumericListener(v -> displayView.appendText(((Button) v).getText().toString()));
+        keypadView.setNumericListener(number -> displayView.appendText(String.valueOf(number)));
 
         setHasOptionsMenu(true);
 
@@ -120,7 +132,7 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_converter, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -132,7 +144,7 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
                 presenter.saveResultToHistory();
                 break;
             case R.id.history:
-                startActivity(new Intent(getContext(), HistoryActivity.class));
+                startActivity(new Intent(requireContext(), HistoryActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -140,7 +152,7 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
 
     @Override
     public void setTitle(int title) {
-        getActivity().setTitle(title);
+        requireActivity().setTitle(title);
     }
 
     @Override
@@ -180,6 +192,6 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
 
     @Override
     public void setBackgroundColor(int color) {
-        background.setBackgroundColor(ContextCompat.getColor(getContext(), color));
+        background.setBackgroundColor(ContextCompat.getColor(requireContext(), color));
     }
 }

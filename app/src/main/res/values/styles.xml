@@ -9,6 +9,7 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ConverterSymbol" parent="TextAppearance.AppCompat">
@@ -16,12 +17,14 @@
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingStart">8dp</item>
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
-    
+
     <style name="KeyPadButton" parent="Widget.AppCompat.Button.Borderless">
-        ?attr/selectableItemBackgroundBorderless
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
 </resources>

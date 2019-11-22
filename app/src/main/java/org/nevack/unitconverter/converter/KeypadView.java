@@ -1,18 +1,43 @@
 package org.nevack.unitconverter.converter;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.util.SparseIntArray;
+import android.view.View;
 import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
+
 import org.nevack.unitconverter.R;
 
 public class KeypadView extends LinearLayoutCompat {
+
+    public interface BackspaceListener {
+        void longClick();
+        void singleClick();
+    }
+
+    public interface NumberListener {
+        void click(int number);
+    }
+
+    private static final SparseIntArray mapper = new SparseIntArray(10);
+
+    static {
+        mapper.append(R.id.button0, 0);
+        mapper.append(R.id.button1, 1);
+        mapper.append(R.id.button2, 2);
+        mapper.append(R.id.button3, 3);
+        mapper.append(R.id.button4, 4);
+        mapper.append(R.id.button5, 5);
+        mapper.append(R.id.button6, 6);
+        mapper.append(R.id.button7, 7);
+        mapper.append(R.id.button8, 8);
+        mapper.append(R.id.button9, 9);
+    }
 
     private final Button mButton1;
     private final Button mButton2;
@@ -63,27 +88,37 @@ public class KeypadView extends LinearLayoutCompat {
         mButtonPaste.setOnClickListener(listener);
     }
 
-    public void setBackspaceListeners(OnClickListener click, OnLongClickListener longClick) {
-        mButtonBackspace.setOnClickListener(click);
-        mButtonBackspace.setOnLongClickListener(longClick);
+    public void setBackspaceListeners(BackspaceListener listener) {
+        mButtonBackspace.setOnClickListener(v -> listener.singleClick());
+        mButtonBackspace.setOnLongClickListener(v -> {
+            listener.longClick();
+            return true;
+        });
     }
 
-    public void setNumericListener(OnClickListener listener) {
-        mButton1.setOnClickListener(listener);
-        mButton2.setOnClickListener(listener);
-        mButton3.setOnClickListener(listener);
-        mButton4.setOnClickListener(listener);
-        mButton5.setOnClickListener(listener);
-        mButton6.setOnClickListener(listener);
-        mButton7.setOnClickListener(listener);
-        mButton8.setOnClickListener(listener);
-        mButton9.setOnClickListener(listener);
-        mButton0.setOnClickListener(listener);
-        mButtonDot.setOnClickListener(listener);
-        mButtonMinus.setOnClickListener(listener);
+    public void setNumericListener(NumberListener listener) {
+        final View.OnClickListener clickListener = v -> {
+            final int id = v.getId();
+            final int value = mapper.get(id, -1);
+            if (value != -1) {
+                listener.click(value);
+            }
+        };
+
+        mButton1.setOnClickListener(clickListener);
+        mButton2.setOnClickListener(clickListener);
+        mButton3.setOnClickListener(clickListener);
+        mButton4.setOnClickListener(clickListener);
+        mButton5.setOnClickListener(clickListener);
+        mButton6.setOnClickListener(clickListener);
+        mButton7.setOnClickListener(clickListener);
+        mButton8.setOnClickListener(clickListener);
+        mButton9.setOnClickListener(clickListener);
+        mButton0.setOnClickListener(clickListener);
+        mButtonDot.setOnClickListener(clickListener);
+        mButtonMinus.setOnClickListener(clickListener);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     @Override
     public WindowInsets onApplyWindowInsets(WindowInsets insets) {
         int childCount = getChildCount();

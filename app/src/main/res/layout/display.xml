@@ -11,8 +11,7 @@
             android:id="@+id/source_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
             android:background="@null"
             android:focusable="false"
@@ -20,9 +19,10 @@
             android:gravity="end"
             android:hint="@string/zero_hint"
             android:imeOptions="actionNone"
+            android:importantForAutofill="no"
             android:inputType="numberDecimal|numberSigned"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:textColor="@android:color/white"
             android:textSize="34sp" />
 
@@ -37,42 +37,44 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="8dp"
-            app:srcCompat="@drawable/ic_swap_vert"
-            app:fabSize="mini" />
+            android:layout_marginStart="8dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_swap_vert" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
             <Spinner
                 android:id="@+id/source_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:layout_height="48dp"
+                android:layout_gravity="top"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@android:color/white" />
+                android:layout_gravity="center"
+                android:background="@color/colorAccent" />
 
             <Spinner
                 android:id="@+id/result_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"
                 android:spinnerMode="dropdown" />
 
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -85,17 +87,17 @@
             android:id="@+id/result_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
             android:background="@null"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:gravity="end"
             android:hint="@string/zero_hint"
+            android:importantForAutofill="no"
             android:inputType="numberDecimal|numberSigned"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:textColor="@android:color/white"
             android:textSize="34sp" />
 

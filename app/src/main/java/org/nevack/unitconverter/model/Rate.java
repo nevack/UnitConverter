@@ -3,6 +3,7 @@ package org.nevack.unitconverter.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("unused")
 public class Rate {
     @SerializedName("Cur_ID")
     @Expose

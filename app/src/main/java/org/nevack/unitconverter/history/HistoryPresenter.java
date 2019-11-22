@@ -2,7 +2,6 @@ package org.nevack.unitconverter.history;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import org.nevack.unitconverter.history.HistoryContract.HistoryEntry;

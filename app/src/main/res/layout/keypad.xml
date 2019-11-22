@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="HardcodedText" >
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -16,9 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="1"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="1" />
 
         <Button
             android:id="@+id/button4"
@@ -26,9 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="4"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="4" />
 
         <Button
             android:id="@+id/button7"
@@ -36,9 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="7"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="7" />
 
         <Button
             android:id="@+id/button_dot"
@@ -46,9 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="."
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="." />
 
     </LinearLayout>
 
@@ -65,9 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="2"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="2" />
 
         <Button
             android:id="@+id/button5"
@@ -75,9 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="5"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="5" />
 
         <Button
             android:id="@+id/button8"
@@ -85,9 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="8"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="8" />
 
         <Button
             android:id="@+id/button0"
@@ -95,9 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="0"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="0" />
 
     </LinearLayout>
 
@@ -113,9 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="3"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="3" />
 
         <Button
             android:id="@+id/button6"
@@ -123,9 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="6"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="6" />
 
         <Button
             android:id="@+id/button9"
@@ -133,9 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="9"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="9" />
 
         <Button
             android:id="@+id/button_minus"
@@ -143,9 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="-"
-            android:textColor="@android:color/white"
-            android:textSize="35sp"/>
+            android:text="-" />
 
     </LinearLayout>
 
@@ -153,35 +129,35 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:orientation="vertical"
-        android:background="@color/keypad_light_color">
+        android:background="@color/keypad_light_color"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/button_backspace"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:text="C"
-            android:textSize="35sp"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:textSize="35sp" />
 
         <ImageButton
             android:id="@+id/button_copy"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_content_copy"
             android:contentDescription="@string/description_copy_button"
-            style="@style/KeyPadButton"/>
+            app:srcCompat="@drawable/ic_content_copy" />
 
         <ImageButton
             android:id="@+id/button_paste"
+            style="@style/KeyPadButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_content_paste"
             android:contentDescription="@string/description_paste_button"
-            style="@style/KeyPadButton"/>
+            app:srcCompat="@drawable/ic_content_paste" />
 
     </LinearLayout>
 

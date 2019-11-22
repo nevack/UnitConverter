@@ -3,11 +3,15 @@ package org.nevack.unitconverter.converter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -59,7 +63,7 @@ public class ConverterActivity extends AppCompatActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        presenter = new ConverterPresenter(this, fragment, getSupportLoaderManager());
+        presenter = new ConverterPresenter(this, fragment, LoaderManager.getInstance(this));
     }
 
     private void setupDrawerContent() {
@@ -96,11 +100,10 @@ public class ConverterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Open drawer when hamburger menu button (☰) pressed in actionbar
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        // Open drawer when hamburger menu button (☰) pressed in actionbar
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -121,7 +124,7 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         converterId = savedInstanceState.getInt(CONVERTER_ID_EXTRA);
     }

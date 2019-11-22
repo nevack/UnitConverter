@@ -1,11 +1,10 @@
 package org.nevack.unitconverter.history;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
 
 import org.nevack.unitconverter.model.EUnitCategory;
 
@@ -14,10 +13,16 @@ import java.util.List;
 
 public class HistoryFilterDialog extends DialogFragment {
 
-    public int mask = 0;
-    private DialogInterface.OnDismissListener listener;
 
-    public void setListener(DialogInterface.OnDismissListener listener) {
+
+    public interface Listener {
+        void OnResult(int result);
+    }
+
+    private Listener listener;
+    private int mask = 0;
+
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
@@ -33,9 +38,9 @@ public class HistoryFilterDialog extends DialogFragment {
             names.add(getString(category.getName()));
         }
 
-        builder.setOnDismissListener(listener);
 
-        builder.setItems(names.toArray(new String[names.size()]), (dialog, which) -> mask = which - 1);
+        builder.setItems(names.toArray(new String[0]), (dialog, which) -> mask = which - 1);
+        builder.setOnDismissListener(dialog -> listener.OnResult(mask));
 
         // Create the AlertDialog object and return it
         return builder.create();

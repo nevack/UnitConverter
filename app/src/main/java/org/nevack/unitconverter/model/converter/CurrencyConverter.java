@@ -69,7 +69,7 @@ public class CurrencyConverter extends Converter {
 
     private void loadUnitsFromWeb() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.nbrb.by/API/ExRates/")
+                .baseUrl("https://www.nbrb.by/API/ExRates/")
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
         NBRBService service = retrofit.create(NBRBService.class);

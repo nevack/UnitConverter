@@ -63,7 +63,6 @@ public class ConverterPresenter implements ConverterContract.Presenter,
     public void convert(ConvertData data) {
         this.data = data;
 
-        String result;
         switch (data.getValue()) {
             case ".":
                 view.clear();
@@ -79,7 +78,7 @@ public class ConverterPresenter implements ConverterContract.Presenter,
                 return;
         }
         try {
-            result = currentConverter.convert(data.getValue(), data.getFrom(), data.getTo());
+            String result = currentConverter.convert(data.getValue(), data.getFrom(), data.getTo());
             view.showResult(result);
             this.data = view.getConvertData();
         } catch (ArithmeticException ex) {

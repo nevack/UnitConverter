@@ -20,12 +20,12 @@ public enum EUnitCategory {
     CURRENCY(R.string.currency, R.drawable.ic_currency_usd, R.color.material_green_800, CurrencyConverter::new),
     OTHER(R.string.other, R.drawable.ic_other, R.color.material_deep_purple_500, OtherConverter::new);
 
-    private final @StringRes int name;
-    private final @DrawableRes int icon;
-    private final @ColorRes int color;
-    private final Creator creator;
+    @StringRes private final int name;
+    @DrawableRes private final int icon;
+    @ColorRes private final int color;
+    private final Creator<Converter> creator;
 
-    EUnitCategory(int name, int icon, int color, Creator converterCreator) {
+    EUnitCategory(int name, int icon, int color, Creator<Converter> converterCreator) {
         this.name = name;
         this.icon = icon;
         this.color = color;

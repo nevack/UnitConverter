@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +35,16 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     private ConverterContract.Presenter presenter;
 
     public ConverterFragment() {
-        // Requires empty public constructor
+        super(R.layout.fragment_converter);
     }
 
     public static ConverterFragment newInstance() {
         return new ConverterFragment();
+    }
+
+    @Override
+    public void setPresenter(@NonNull ConverterContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -51,17 +54,14 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     }
 
     @Override
-    public void setPresenter(@NonNull ConverterContract.Presenter presenter) {
-        this.presenter = presenter;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View root = inflater.inflate(R.layout.fragment_converter, container, false);
-
-        final Toolbar toolbar = root.findViewById(R.id.toolbar);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
         final AppCompatActivity activity = (AppCompatActivity) requireActivity();
         activity.setSupportActionBar(toolbar);
 
@@ -71,44 +71,31 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        keypadView = root.findViewById(R.id.keypad);
-        displayView = root.findViewById(R.id.display);
+        keypadView = view.findViewById(R.id.keypad);
+        displayView = view.findViewById(R.id.display);
 
-        displayView.setTextWatcher(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                presenter.convert(displayView.getConvertData());
-            }
-        });
+        displayView.setTextWatcher(new TextChangedWatcher(s -> presenter.convert(displayView.getConvertData())));
 
         displayView.setSpinnersCallback(() -> presenter.convert(displayView.getConvertData()));
 
-        background = root.findViewById(R.id.background);
+        background = view.findViewById(R.id.background);
 
         keypadView.setOnCopyListeners(
-                v -> {
-                    presenter.copyResultToClipboard(displayView.getCopyResult(false));
-                    Snackbar.make(background,
-                            R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
-                },
-                v -> {
-                    presenter.copyResultToClipboard(displayView.getCopyResult(true));
-                    Snackbar.make(background,
-                            R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
-                    return true;
+                new KeypadView.ActionListener() {
+                    @Override
+                    public void longClick() {
+                        copyWithNotification(true);
+                    }
+
+                    @Override
+                    public void singleClick() {
+                        copyWithNotification(false);
+                    }
                 }
         );
 
         keypadView.setBackspaceListeners(
-                new KeypadView.BackspaceListener() {
+                new KeypadView.ActionListener() {
                     @Override
                     public void longClick() {
                         displayView.erase();
@@ -117,7 +104,6 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
                     @Override
                     public void singleClick() {
                         displayView.removeLastDigit();
-
                     }
                 }
         );
@@ -125,10 +111,6 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
         keypadView.setOnPasteListener(v -> presenter.pasteFromClipboard());
 
         keypadView.setNumericListener(number -> displayView.appendText(String.valueOf(number)));
-
-        setHasOptionsMenu(true);
-
-        return root;
     }
 
     @Override
@@ -193,5 +175,38 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
     @Override
     public void setBackgroundColor(int color) {
         background.setBackgroundColor(ContextCompat.getColor(requireContext(), color));
+    }
+
+    private void copyWithNotification(boolean shouldIncludeUnit) {
+        presenter.copyResultToClipboard(displayView.getCopyResult(shouldIncludeUnit));
+        Snackbar.make(background, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private static class TextChangedWatcher implements TextWatcher {
+
+        private interface Callback {
+            void onTextChanged(String netText);
+        }
+
+        private Callback callback;
+
+        TextChangedWatcher(Callback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // No-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // No-op
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            callback.onTextChanged(s.toString());
+        }
     }
 }

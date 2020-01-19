@@ -15,7 +15,7 @@ import org.nevack.unitconverter.R;
 
 public class KeypadView extends LinearLayoutCompat {
 
-    public interface BackspaceListener {
+    public interface ActionListener {
         void longClick();
         void singleClick();
     }
@@ -79,21 +79,16 @@ public class KeypadView extends LinearLayoutCompat {
         mButtonPaste = findViewById(R.id.button_paste);
     }
 
-    public void setOnCopyListeners(OnClickListener click, OnLongClickListener longClick) {
-        mButtonCopy.setOnClickListener(click);
-        mButtonCopy.setOnLongClickListener(longClick);
+    public void setOnCopyListeners(ActionListener listener) {
+        setActionListener(mButtonCopy, listener);
     }
 
     public void setOnPasteListener(OnClickListener listener) {
         mButtonPaste.setOnClickListener(listener);
     }
 
-    public void setBackspaceListeners(BackspaceListener listener) {
-        mButtonBackspace.setOnClickListener(v -> listener.singleClick());
-        mButtonBackspace.setOnLongClickListener(v -> {
-            listener.longClick();
-            return true;
-        });
+    public void setBackspaceListeners(ActionListener listener) {
+        setActionListener(mButtonBackspace, listener);
     }
 
     public void setNumericListener(NumberListener listener) {
@@ -126,5 +121,13 @@ public class KeypadView extends LinearLayoutCompat {
             getChildAt(index).dispatchApplyWindowInsets(insets);
 
         return insets;
+    }
+
+    private static void setActionListener(View view, ActionListener listener) {
+        view.setOnClickListener(v -> listener.singleClick());
+        view.setOnLongClickListener(v -> {
+            listener.longClick();
+            return true;
+        });
     }
 }

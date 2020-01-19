@@ -9,9 +9,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
+
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -33,6 +38,8 @@ import org.nevack.unitconverter.converter.ConverterContract.ConvertData;
 import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;
+
+import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 
 public class ConverterDisplayView extends LinearLayout {
 
@@ -86,7 +93,7 @@ public class ConverterDisplayView extends LinearLayout {
         resultEditText.setText(result);
     }
 
-    public ConvertData getConvertData(){
+    public ConvertData getConvertData() {
         return new ConvertData(
                 sourceEditText.getText().toString(),
                 resultEditText.getText().toString(),
@@ -197,8 +204,8 @@ public class ConverterDisplayView extends LinearLayout {
 
     public void removeLastDigit() {
         String textString = sourceEditText.getText().toString();
-        if( textString.length() > 0 ) {
-            sourceEditText.setText(textString.substring(0, textString.length() - 1 ));
+        if (textString.length() > 0) {
+            sourceEditText.setText(textString.substring(0, textString.length() - 1));
             sourceEditText.setSelection(sourceEditText.getText().length());
         }
     }
@@ -230,25 +237,21 @@ public class ConverterDisplayView extends LinearLayout {
             this.textView = textView;
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             TextView childAt = (TextView) parent.getChildAt(0);
             if (childAt != null) childAt.setTextColor(Color.WHITE);
 
             String html = units.get(parent.getSelectedItemPosition()).getUnitSymbol();
-            Spanned spanned;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                spanned = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
-            } else {
-                spanned = Html.fromHtml(html);
-            }
+            Spanned spanned = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY);
 
             textView.setText(spanned);
             callback.convert();
         }
 
-        @Override public void onNothingSelected(AdapterView<?> parent) { callback.convert(); }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            callback.convert();
+        }
     }
 }

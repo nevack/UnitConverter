@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 import org.nevack.unitconverter.BasePresenter;
 import org.nevack.unitconverter.BaseView;
-import org.nevack.unitconverter.model.HistoryItem;
+import org.nevack.unitconverter.history.db.HistoryItem;
 
 import java.util.List;
 

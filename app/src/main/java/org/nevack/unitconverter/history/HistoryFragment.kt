@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.databinding.FragmentHistoryBinding
 import org.nevack.unitconverter.databinding.HistoryItemBinding
+import org.nevack.unitconverter.history.db.HistoryItem
 import org.nevack.unitconverter.model.EUnitCategory
-import org.nevack.unitconverter.model.HistoryItem
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
     private lateinit var binding: FragmentHistoryBinding
@@ -132,7 +132,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = items[holder.bindingAdapterPosition]
-            val category = EUnitCategory.values()[item.category]
+            val category = EUnitCategory.values()[item.category!!]
             holder.bind(category, item)
         }
 

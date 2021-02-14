@@ -2,26 +2,30 @@ package org.nevack.unitconverter.converter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.view.GravityCompat;
-import androidx.core.view.WindowCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.loader.app.LoaderManager;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.nevack.unitconverter.R;
+import org.nevack.unitconverter.history.db.HistoryDatabase;
 import org.nevack.unitconverter.model.EUnitCategory;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ConverterActivity extends AppCompatActivity {
 
     private static final String CONVERTER_ID_EXTRA = "converter_id";
@@ -31,6 +35,9 @@ public class ConverterActivity extends AppCompatActivity {
 
     private int converterId;
     private ConverterContract.Presenter presenter;
+
+    @Inject
+    public HistoryDatabase database;
 
     public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
@@ -67,7 +74,7 @@ public class ConverterActivity extends AppCompatActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        presenter = new ConverterPresenter(this, fragment, LoaderManager.getInstance(this));
+        presenter = new ConverterPresenter(this, fragment, LoaderManager.getInstance(this), database.dao());
     }
 
     private void setupDrawerContent() {

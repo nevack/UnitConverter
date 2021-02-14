@@ -5,22 +5,27 @@ import android.os.Bundle
 import androidx.core.content.getSystemService
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.nevack.unitconverter.NBRBService
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.history.db.HistoryDao
 import org.nevack.unitconverter.history.db.HistoryItem
 import org.nevack.unitconverter.model.EUnitCategory
 import org.nevack.unitconverter.model.converter.Converter
+import org.nevack.unitconverter.model.converter.CurrencyConverter
 import java.util.*
 
 class ConverterPresenter(
     private val context: Context,
     private val view: ConverterContract.View,
     private val loaderManager: LoaderManager,
-    private val db: HistoryDao
+    private val db: HistoryDao,
+    private val moshi: Moshi,
+    private val service: NBRBService,
 ) : ConverterContract.Presenter, LoaderManager.LoaderCallbacks<Converter> {
     private var currentConverter: Converter? = null
     private var data: ConvertData? = null
@@ -106,6 +111,10 @@ class ConverterPresenter(
     }
 
     override fun onLoadFinished(loader: Loader<Converter>, converter: Converter) {
+        if (converter is CurrencyConverter) {
+            converter.service = service
+            converter.moshi = moshi
+        }
         currentConverter = converter
         view.setUnits(currentConverter!!.units)
         if (data != null) {

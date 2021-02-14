@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 /**
  * A FrameLayout subclass that dispatches WindowInsets to its children instead of adjusting its padding. 
@@ -11,7 +12,7 @@ import android.widget.FrameLayout;
  * 
  * @author Pkmmte Xeleon
  */
-public class WindowInsetsFrameLayout extends FrameLayout {
+public class WindowInsetsFrameLayout extends LinearLayout {
 	public WindowInsetsFrameLayout(Context context) {
 		super(context);
 	}

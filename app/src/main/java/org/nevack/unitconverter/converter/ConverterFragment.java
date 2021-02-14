@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +26,9 @@ import org.nevack.unitconverter.history.HistoryActivity;
 import org.nevack.unitconverter.model.Unit;
 
 import java.util.List;
+
+import dev.chrisbanes.insetter.Insetter;
+import dev.chrisbanes.insetter.Side;
 
 public class ConverterFragment extends Fragment implements ConverterContract.View {
 
@@ -93,6 +97,22 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
                     }
                 }
         );
+        View container = view.findViewById(R.id.converter_display_container);
+        if (container != null) {
+            Insetter build = Insetter.builder()
+                    .applySystemWindowInsetsToPadding(Side.TOP)
+                    .applyToView(container);
+        }
+
+        Insetter.builder()
+                .applySystemWindowInsetsToPadding(Side.TOP | Side.RIGHT | Side.LEFT)
+                .applyToView(keypadView);
+//        Log.d("NEVACK", "displayView before: " + displayView.getPaddingTop());
+//        build.applyToView(displayView);
+//        Log.d("NEVACK", "displayView after: " + displayView.getPaddingTop());
+//        Log.d("NEVACK", "keypadView before: " + keypadView.getPaddingTop());
+//        build.applyToView(keypadView);
+//        Log.d("NEVACK", "keypadView after: " + keypadView.getPaddingTop());
 
         keypadView.setBackspaceListeners(
                 new KeypadView.ActionListener() {

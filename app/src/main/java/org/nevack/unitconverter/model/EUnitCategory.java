@@ -1,9 +1,11 @@
 package org.nevack.unitconverter.model;
 
 import android.content.Context;
+
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
+import androidx.arch.core.util.Function;
 
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.model.converter.*;
@@ -23,9 +25,9 @@ public enum EUnitCategory {
     @StringRes private final int name;
     @DrawableRes private final int icon;
     @ColorRes private final int color;
-    private final Creator<Converter> creator;
+    private final Function<Context, Converter> creator;
 
-    EUnitCategory(int name, int icon, int color, Creator<Converter> converterCreator) {
+    EUnitCategory(int name, int icon, int color, Function<Context, Converter> converterCreator) {
         this.name = name;
         this.icon = icon;
         this.color = color;
@@ -45,6 +47,6 @@ public enum EUnitCategory {
     }
 
     public Converter getConverter(Context context) {
-        return creator.create(context);
+        return creator.apply(context);
     }
 }

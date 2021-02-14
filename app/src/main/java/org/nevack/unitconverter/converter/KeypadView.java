@@ -1,10 +1,12 @@
 package org.nevack.unitconverter.converter;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.SparseIntArray;
 import android.view.View;
-import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -25,6 +27,8 @@ public class KeypadView extends LinearLayoutCompat {
     }
 
     private static final SparseIntArray mapper = new SparseIntArray(10);
+    private final Paint paint = new Paint();
+    private final Rect rect = new Rect();
 
     static {
         mapper.append(R.id.button0, 0);
@@ -77,6 +81,8 @@ public class KeypadView extends LinearLayoutCompat {
         mButtonBackspace = findViewById(R.id.button_backspace);
         mButtonCopy = findViewById(R.id.button_copy);
         mButtonPaste = findViewById(R.id.button_paste);
+
+        paint.setColor(context.getColor(R.color.keypad_light_color));
     }
 
     public void setOnCopyListeners(ActionListener listener) {
@@ -115,12 +121,15 @@ public class KeypadView extends LinearLayoutCompat {
     }
 
     @Override
-    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
-        int childCount = getChildCount();
-        for (int index = 0; index < childCount; index++)
-            getChildAt(index).dispatchApplyWindowInsets(insets);
-
-        return insets;
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        rect.set(
+                getWidth() - mButtonPaste.getWidth() - getPaddingRight(),
+                0,
+                getWidth(),
+                getHeight()
+        );
+        canvas.drawRect(rect, paint);
     }
 
     private static void setActionListener(View view, ActionListener listener) {

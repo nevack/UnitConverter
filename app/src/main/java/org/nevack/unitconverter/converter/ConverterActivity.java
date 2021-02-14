@@ -2,12 +2,14 @@ package org.nevack.unitconverter.converter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
@@ -44,9 +46,11 @@ public class ConverterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_converter);
 
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(0x3F000000);
+        window.setNavigationBarColor(0x3F000000);
 //        window.setStatusBarColor(Color.TRANSPARENT);
-
+        WindowCompat.setDecorFitsSystemWindows(window, false);
         drawerLayout = findViewById(R.id.navigation_drawer);
         navigationView = findViewById(R.id.navigation_view);
 

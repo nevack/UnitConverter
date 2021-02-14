@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -100,12 +101,12 @@ public class ConverterFragment extends Fragment implements ConverterContract.Vie
         View container = view.findViewById(R.id.converter_display_container);
         if (container != null) {
             Insetter build = Insetter.builder()
-                    .applySystemWindowInsetsToPadding(Side.TOP)
+                    .padding(WindowInsetsCompat.Type.statusBars())
                     .applyToView(container);
         }
 
         Insetter.builder()
-                .applySystemWindowInsetsToPadding(Side.TOP | Side.RIGHT | Side.LEFT)
+                .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(keypadView);
 //        Log.d("NEVACK", "displayView before: " + displayView.getPaddingTop());
 //        build.applyToView(displayView);

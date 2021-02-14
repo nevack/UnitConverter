@@ -27,7 +27,7 @@
             android:layout_height="96dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_history"
-            android:tint="@color/colorPrimary"
+            app:tint="@color/colorPrimary"
             android:contentDescription="@string/description_no_history_icon"/>
 
         <TextView

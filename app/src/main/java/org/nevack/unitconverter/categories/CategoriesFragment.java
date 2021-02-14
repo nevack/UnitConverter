@@ -111,7 +111,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
             ViewHolder holder = new ViewHolder(view);
 
             view.setOnClickListener(v -> {
-                int position = holder.getAdapterPosition();
+                int position = holder.getBindingAdapterPosition();
 
                 if (position != RecyclerView.NO_POSITION) {
                     presenter.openConverter(unitCategories.get(position));
@@ -123,7 +123,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-            EUnitCategory category = unitCategories.get(holder.getAdapterPosition());
+            EUnitCategory category = unitCategories.get(holder.getBindingAdapterPosition());
 
             holder.bind(category);
         }

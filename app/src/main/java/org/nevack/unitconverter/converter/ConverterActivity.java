@@ -16,7 +16,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.loader.app.LoaderManager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.moshi.Moshi;
 
+import org.nevack.unitconverter.NBRBService;
 import org.nevack.unitconverter.R;
 import org.nevack.unitconverter.history.db.HistoryDatabase;
 import org.nevack.unitconverter.model.EUnitCategory;
@@ -38,6 +40,10 @@ public class ConverterActivity extends AppCompatActivity {
 
     @Inject
     public HistoryDatabase database;
+    @Inject
+    public Moshi moshi;
+    @Inject
+    public NBRBService service;
 
     public static Intent getIntent(Context context, int converterId) {
         Intent intent = new Intent(context, ConverterActivity.class);
@@ -74,7 +80,7 @@ public class ConverterActivity extends AppCompatActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        presenter = new ConverterPresenter(this, fragment, LoaderManager.getInstance(this), database.dao());
+        presenter = new ConverterPresenter(this, fragment, LoaderManager.getInstance(this), database.dao(), moshi, service);
     }
 
     private void setupDrawerContent() {

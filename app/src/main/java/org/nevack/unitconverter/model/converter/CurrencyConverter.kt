@@ -22,6 +22,22 @@ class CurrencyConverter(context: Context) : Converter() {
 
     private val file: File = File(context.filesDir, FILE)
 
+    internal fun load() {
+        if (file.exists()) {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = file.lastModified()
+            if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
+                loadUnitsFromFile()
+            } else {
+                loadUnitsFromWeb()
+            }
+        } else {
+            loadUnitsFromWeb()
+        }
+        units.add(BYN)
+        units.sortWith { lhs: Unit, rhs: Unit -> lhs.name.compareTo(rhs.name, ignoreCase = true) }
+    }
+
     @Throws(IOException::class)
     private fun loadUnitsFromFile() {
         val rates = adapter.fromJson(file.source().buffer())
@@ -53,21 +69,5 @@ class CurrencyConverter(context: Context) : Converter() {
         private val TYPE = Types.newParameterizedType(List::class.java, Rate::class.java)
         private const val FILE = "rates.json"
         private val BYN = Unit("Белорусский рубль", 1.0, "BYN")
-    }
-
-    init {
-        if (file.exists()) {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = file.lastModified()
-            if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
-                loadUnitsFromFile()
-            } else {
-                loadUnitsFromWeb()
-            }
-        } else {
-            loadUnitsFromWeb()
-        }
-        units.add(BYN)
-        units.sortWith { lhs: Unit, rhs: Unit -> lhs.name.compareTo(rhs.name, ignoreCase = true) }
     }
 }

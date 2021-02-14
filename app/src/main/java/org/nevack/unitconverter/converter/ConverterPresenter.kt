@@ -114,6 +114,9 @@ class ConverterPresenter(
         if (converter is CurrencyConverter) {
             converter.service = service
             converter.moshi = moshi
+            scope.launch(Dispatchers.IO) {
+                converter.load()
+            }
         }
         currentConverter = converter
         view.setUnits(currentConverter!!.units)

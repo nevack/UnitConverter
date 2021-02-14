@@ -25,11 +25,17 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-v2-
       - name: Build APK
         run: ./gradlew :app:assembleDebug
+      - name: Cleanup Gradle Cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:

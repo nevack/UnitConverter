@@ -1,0 +1,29 @@
+# Workflow name
+name: Build app
+on:
+  # Trigger on every pull request and on push
+  # to the `main` branch.
+  pull_request:
+  push:
+    branches:
+      - master
+
+# Where will they run
+jobs:
+  build:
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build the app
+        run: ./gradlew build
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk

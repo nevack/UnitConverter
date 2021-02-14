@@ -94,7 +94,7 @@ class ConverterPresenter(
                 .toUpperCase(Locale.ROOT).split(" ").toTypedArray()[0]
         ).ordinal
         val item = HistoryItem(
-            -1,
+            0,
             currentConverter!!.units[data!!.from].name,
             currentConverter!!.units[data!!.to].name,
             data!!.value,

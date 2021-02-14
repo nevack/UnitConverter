@@ -22,6 +22,8 @@ class CurrencyConverter(context: Context) : Converter() {
 
     private val file: File = File(context.filesDir, FILE)
 
+    override val name = R.string.currency
+
     internal fun load() {
         if (file.exists()) {
             val calendar = Calendar.getInstance()
@@ -59,10 +61,6 @@ class CurrencyConverter(context: Context) : Converter() {
             e.printStackTrace()
             loadUnitsFromFile()
         }
-    }
-
-    override fun getName(): Int {
-        return R.string.currency
     }
 
     companion object {

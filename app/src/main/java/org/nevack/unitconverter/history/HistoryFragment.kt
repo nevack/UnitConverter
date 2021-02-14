@@ -1,46 +1,48 @@
 package org.nevack.unitconverter.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnimationUtils
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.databinding.FragmentHistoryBinding
-import org.nevack.unitconverter.databinding.HistoryItemBinding
 import org.nevack.unitconverter.history.db.HistoryItem
-import org.nevack.unitconverter.model.EUnitCategory
 
-class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.View {
+class HistoryFragment : Fragment(R.layout.fragment_history) {
     private lateinit var binding: FragmentHistoryBinding
-    private lateinit var presenter: HistoryContract.Presenter
+    private lateinit var adapter: HistoryAdapter
+
+    private val model: HistoryViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.start()
-    }
-
-    override fun setPresenter(presenter: HistoryContract.Presenter) {
-        this.presenter = presenter
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHistoryBinding.bind(view)
-        binding.recycler.layoutManager = LinearLayoutManager(context)
-        val animation = AnimationUtils.loadLayoutAnimation(
-            context,
-            R.anim.layout_animation_fall_down
-        )
-        binding.recycler.layoutAnimation = animation
+        with(binding.recycler) {
+            layoutManager = LinearLayoutManager(context)
+            val animation = AnimationUtils.loadLayoutAnimation(
+                context,
+                R.anim.layout_animation_fall_down
+            )
+            layoutAnimation = animation
+        }
+        adapter = HistoryAdapter(model::removeItem, ::shareItem)
+        binding.recycler.adapter = adapter
+
+        model.items.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                showHistoryItems(it)
+            } else {
+                showNoItems()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -51,7 +53,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete -> {
-                presenter.clearItems()
+                model.removeAll()
                 return true
             }
             R.id.filter -> {
@@ -73,72 +75,28 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryContract.Vie
 
         // Create and show the dialog.
         val newFragment = HistoryFilterDialog()
-        newFragment.setListener { mask: Int -> presenter.filterItems(mask) }
+        newFragment.setListener(model::filter)
         newFragment.show(transaction, "dialog")
     }
 
-    override fun showHistoryItems(items: List<HistoryItem>) {
-        binding.recycler.adapter = HistoryAdapter(items.toMutableList())
+    private fun showHistoryItems(items: List<HistoryItem>) {
+        adapter.submitList(items)
         binding.nohistory.visibility = View.GONE
         binding.recycler.visibility = View.VISIBLE
     }
 
-    override fun showNoItems() {
+    private fun showNoItems() {
         binding.recycler.visibility = View.GONE
         binding.nohistory.visibility = View.VISIBLE
     }
 
-    private inner class HistoryAdapter constructor(private var items: MutableList<HistoryItem>) :
-        RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
-        private inner class ViewHolder constructor(val binding: HistoryItemBinding) :
-            RecyclerView.ViewHolder(binding.root) {
-
-            fun bind(category: EUnitCategory, item: HistoryItem) {
-                binding.categoryName.setText(category.getName())
-                binding.valueFrom.text = item.valueFrom
-                binding.valueTo.text = item.valueTo
-                binding.unitFrom.text = item.unitFrom
-                binding.unitTo.text = item.unitTo
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(itemView.context, category.color)
-                )
-                binding.categoryIcon.setImageDrawable(
-                    AppCompatResources.getDrawable(itemView.context, category.icon)
-                )
-            }
-
-        }
-
-        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-            val binding =
-                HistoryItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-            val holder = ViewHolder(binding)
-            holder.binding.removeItem.setOnClickListener {
-                val position = holder.bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    presenter.removeItem(items[position])
-                    items.removeAt(position)
-                    notifyItemRemoved(position)
-                }
-            }
-            holder.binding.shareItem.setOnClickListener {
-                val position = holder.bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    presenter.shareItem(items[position])
-                }
-            }
-            return holder
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = items[holder.bindingAdapterPosition]
-            val category = EUnitCategory.values()[item.category!!]
-            holder.bind(category, item)
-        }
-
-        override fun getItemCount(): Int {
-            return items.size
-        }
+    private fun shareItem(item: HistoryItem) {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        val message = "${item.valueFrom} ${item.unitFrom} = ${item.valueTo} ${item.unitTo}"
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message)
+        sendIntent.type = "text/plain"
+        requireContext().startActivity(sendIntent)
     }
 
     companion object {

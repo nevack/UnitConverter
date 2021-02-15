@@ -2,7 +2,8 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
         android:layout_width="0dp"

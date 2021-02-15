@@ -27,6 +27,7 @@
             android:name=".converter.ConverterActivity"
             android:label="@string/title_activity_convert"
             android:parentActivityName=".categories.CategoriesActivity"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".history.HistoryActivity"
             android:label="@string/title_activity_history"/>

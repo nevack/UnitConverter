@@ -18,7 +18,7 @@
     <color name="divider_color_dark">#1E000000</color>
     <color name="divider_color_light">#1EFFFFFF</color>
 
-    <color name="keypad_background_color">#212121</color>
-    <color name="keypad_light_color">#424242</color>
+    <color name="keypad_background_color">#BF212121</color>
+    <color name="keypad_light_color">#40424242</color>
     <color name="quoter_transparent">#3F000000</color>
 </resources>

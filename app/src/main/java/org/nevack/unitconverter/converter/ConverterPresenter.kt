@@ -6,10 +6,7 @@ import androidx.core.content.getSystemService
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.Loader
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.nevack.unitconverter.NBRBService
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.history.db.HistoryDao
@@ -27,7 +24,7 @@ class ConverterPresenter(
     private val moshi: Moshi,
     private val service: NBRBService,
 ) : ConverterContract.Presenter, LoaderManager.LoaderCallbacks<Converter> {
-    private var currentConverter: Converter? = null
+    private lateinit var currentConverter: Converter
     private var data: ConvertData? = null
     private val loader: ConverterLoader = ConverterLoader(context)
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
@@ -56,7 +53,7 @@ class ConverterPresenter(
             }
         }
         try {
-            val result = currentConverter!!.convert(data.value, data.from, data.to)
+            val result = currentConverter.convert(data.value, data.from, data.to)
             view.showResult(result)
             this.data = view.convertData
         } catch (ex: ArithmeticException) {
@@ -90,13 +87,13 @@ class ConverterPresenter(
 
     override fun saveResultToHistory() {
         val name = EUnitCategory.valueOf(
-            currentConverter!!.javaClass.simpleName.replace("Converter", "")
+            currentConverter.javaClass.simpleName.replace("Converter", "")
                 .toUpperCase(Locale.ROOT).split(" ").toTypedArray()[0]
         ).ordinal
         val item = HistoryItem(
             0,
-            currentConverter!!.units[data!!.from].name,
-            currentConverter!!.units[data!!.to].name,
+            currentConverter.units[data!!.from].name,
+            currentConverter.units[data!!.to].name,
             data!!.value,
             data!!.result,
             name
@@ -111,15 +108,19 @@ class ConverterPresenter(
     }
 
     override fun onLoadFinished(loader: Loader<Converter>, converter: Converter) {
+        currentConverter = converter
         if (converter is CurrencyConverter) {
             converter.service = service
             converter.moshi = moshi
             scope.launch(Dispatchers.IO) {
                 converter.load()
+                withContext(Dispatchers.Main) {
+                    view.setUnits(currentConverter.units)
+                }
             }
+        } else {
+            view.setUnits(currentConverter.units)
         }
-        currentConverter = converter
-        view.setUnits(currentConverter!!.units)
         if (data != null) {
             view.convertData = data
         }

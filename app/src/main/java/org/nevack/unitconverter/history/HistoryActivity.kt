@@ -2,8 +2,8 @@ package org.nevack.unitconverter.history
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.databinding.ActivityHistoryBinding
@@ -21,7 +21,7 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportFragmentManager.commit {
-            replace<HistoryFragment>(R.id.container)
+            add<HistoryFragment>(R.id.container)
             setReorderingAllowed(true)
         }
     }

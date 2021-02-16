@@ -1,42 +1,29 @@
 package org.nevack.unitconverter.converter
 
-import android.content.*
-import android.os.Bundle
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.core.content.getSystemService
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
-import com.squareup.moshi.Moshi
-import kotlinx.coroutines.*
-import org.nevack.unitconverter.NBRBService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.history.db.HistoryDao
 import org.nevack.unitconverter.history.db.HistoryItem
-import org.nevack.unitconverter.model.EUnitCategory
+import org.nevack.unitconverter.model.ConverterCategory
 import org.nevack.unitconverter.model.converter.Converter
-import org.nevack.unitconverter.model.converter.CurrencyConverter
 import java.util.*
 
 class ConverterPresenter(
     private val context: Context,
-    private val loaderManager: LoaderManager,
     private val view: ConverterContract.View,
     private val db: HistoryDao,
-    private val moshi: Moshi,
-    private val service: NBRBService,
-) : ConverterContract.Presenter, LoaderManager.LoaderCallbacks<Converter> {
+) : ConverterContract.Presenter {
     private lateinit var currentConverter: Converter
     private var data: ConvertData? = null
-    private val loader: ConverterLoader = ConverterLoader(context)
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
-    override fun start() {
-        loaderManager.initLoader(LOADER_CONVERTER, null, this)
-    }
-
-    override fun setConverter(category: EUnitCategory) {
-        view.setBackgroundColor(category.color)
-        view.setTitle(category.categoryName)
-        loader.setCategory(category)
-    }
 
     override fun convert(data: ConvertData) {
         this.data = data
@@ -55,7 +42,7 @@ class ConverterPresenter(
         try {
             val result = currentConverter.convert(data.value, data.from, data.to)
             view.showResult(result)
-            this.data = view.convertData
+            this.data = view.getConvertData()
         } catch (ex: ArithmeticException) {
             view.showError()
         }
@@ -86,14 +73,14 @@ class ConverterPresenter(
     }
 
     override fun saveResultToHistory() {
-        val name = EUnitCategory.valueOf(
+        val name = ConverterCategory.valueOf(
             currentConverter.javaClass.simpleName.replace("Converter", "")
                 .toUpperCase(Locale.ROOT).split(" ").toTypedArray()[0]
         ).ordinal
         val item = HistoryItem(
             0,
-            currentConverter.units[data!!.from].name,
-            currentConverter.units[data!!.to].name,
+            currentConverter[data!!.from].name,
+            currentConverter[data!!.to].name,
             data!!.value,
             data!!.result,
             name
@@ -103,37 +90,26 @@ class ConverterPresenter(
         }
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Converter> {
-        return loader
-    }
-
-    override fun onLoadFinished(loader: Loader<Converter>, converter: Converter) {
-        currentConverter = converter
-        if (converter is CurrencyConverter) {
-            converter.service = service
-            converter.moshi = moshi
-            scope.launch(Dispatchers.IO) {
-                converter.load()
-                withContext(Dispatchers.Main) {
-                    view.setUnits(currentConverter.units)
-                }
-            }
-        } else {
-            view.setUnits(currentConverter.units)
-        }
-        if (data != null) {
-            view.convertData = data
-        }
-    }
-
-    override fun onLoaderReset(loader: Loader<Converter>) {}
+//    override fun onLoadFinished(loader: Loader<Converter>, converter: Converter) {
+//        currentConverter = converter
+//        if (converter is CurrencyConverter) {
+//            converter.service = service
+//            converter.moshi = moshi
+//            scope.launch(Dispatchers.IO) {
+//                converter.load()
+//                withContext(Dispatchers.Main) {
+//                    view.setUnits(currentConverter.conversionUnits)
+//                }
+//            }
+//        } else {
+//            view.setUnits(currentConverter.conversionUnits)
+//        }
+//        if (data != null) {
+//            view.convertData = data
+//        }
+//    }
 
     companion object {
         private const val COPY_RESULT = "converter_result"
-        private const val LOADER_CONVERTER = 1
-    }
-
-    init {
-        view.setPresenter(this)
     }
 }

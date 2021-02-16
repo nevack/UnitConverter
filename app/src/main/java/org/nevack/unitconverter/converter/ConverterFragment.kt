@@ -10,42 +10,47 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import dev.chrisbanes.insetter.applyInsetter
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.databinding.FragmentConverterBinding
 import org.nevack.unitconverter.history.HistoryActivity
-import org.nevack.unitconverter.model.Unit
+import org.nevack.unitconverter.model.ConversionUnit
 
 class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContract.View {
     private var presenter: ConverterContract.Presenter? = null
     private lateinit var binding: FragmentConverterBinding
 
-    override fun setPresenter(presenter: ConverterContract.Presenter) {
+    private val viewModel: ConverterViewModel by activityViewModels()
+
+    fun setPresenter(presenter: ConverterContract.Presenter) {
         this.presenter = presenter
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter!!.start()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentConverterBinding.bind(view)
 
-        val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(binding.toolbar)
-        val actionBar = activity.supportActionBar
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu)
-            actionBar.setDisplayHomeAsUpEnabled(true)
+        binding.toolbar.inflateMenu(R.menu.menu_converter)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.save -> {
+                    presenter!!.saveResultToHistory()
+                    true
+                }
+                R.id.history -> {
+                    startActivity(Intent(requireContext(), HistoryActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
+        binding.toolbar.setNavigationIcon(R.drawable.ic_menu)
+        binding.toolbar.setNavigationOnClickListener {
+            viewModel.setDrawerOpened(true)
+        }
+
         binding.display.setTextWatcher {
             presenter?.convert(binding.display.convertData)
         }
@@ -80,24 +85,17 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
         )
         binding.keypad.setOnPasteListener { presenter!!.pasteFromClipboard() }
         binding.keypad.setNumericListener { number -> binding.display.appendText(number.toString()) }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_converter, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.save -> presenter!!.saveResultToHistory()
-            R.id.history -> startActivity(Intent(requireContext(), HistoryActivity::class.java))
+        viewModel.backgroundColor.observe(viewLifecycleOwner) {
+            binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
         }
-        return super.onOptionsItemSelected(item)
+
+        viewModel.title.observe(viewLifecycleOwner) {
+            binding.toolbar.setTitle(it)
+        }
     }
 
-    override fun setTitle(title: Int) = requireActivity().setTitle(title)
-
-    override fun setUnits(units: List<Unit>) = binding.display.setUnits(units)
+    override fun setUnits(conversionUnits: List<ConversionUnit>) = binding.display.setUnits(conversionUnits)
 
     override fun getConvertData(): ConvertData = binding.display.convertData
 
@@ -105,17 +103,13 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
         binding.display.convertData = data
     }
 
-    override fun appendText(text: String) = binding.display.appendText(text)
+    override fun appendText(digit: String) = binding.display.appendText(digit)
 
     override fun showResult(result: String) = binding.display.showResult(result)
 
     override fun clear() = binding.display.clear()
 
     override fun showError() = binding.display.showError()
-
-    override fun setBackgroundColor(color: Int) {
-        binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
-    }
 
     private fun copyWithNotification(shouldIncludeUnit: Boolean) {
         presenter!!.copyResultToClipboard(binding.display.getCopyResult(shouldIncludeUnit))

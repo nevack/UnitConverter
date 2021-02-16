@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.nevack.unitconverter.databinding.HistoryItemBinding
 import org.nevack.unitconverter.history.db.HistoryItem
-import org.nevack.unitconverter.model.EUnitCategory
+import org.nevack.unitconverter.model.ConverterCategory
 
 internal class Differ: DiffUtil.ItemCallback<HistoryItem>() {
     override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
@@ -46,7 +46,7 @@ internal class HistoryAdapter constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(holder.bindingAdapterPosition)
-        val category = EUnitCategory.values()[item.category!!]
+        val category = ConverterCategory.values()[item.category!!]
         holder.bind(category, item)
     }
 }
@@ -54,7 +54,7 @@ internal class HistoryAdapter constructor(
 internal class ViewHolder constructor(val binding: HistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(category: EUnitCategory, item: HistoryItem) {
+    fun bind(category: ConverterCategory, item: HistoryItem) {
         binding.categoryName.setText(category.categoryName)
         binding.valueFrom.text = item.valueFrom
         binding.valueTo.text = item.valueTo

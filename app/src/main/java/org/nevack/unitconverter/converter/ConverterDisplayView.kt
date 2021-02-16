@@ -8,8 +8,6 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +22,7 @@ import androidx.core.widget.doAfterTextChanged
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.databinding.DisplayBinding
-import org.nevack.unitconverter.model.Unit
+import org.nevack.unitconverter.model.ConversionUnit
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -36,7 +34,7 @@ class ConverterDisplayView @JvmOverloads constructor(
     defStyleRes: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
     private val binding: DisplayBinding
-    private var units: MutableList<Unit> = mutableListOf()
+    private var conversionUnits: MutableList<ConversionUnit> = mutableListOf()
 
     init {
         orientation = VERTICAL
@@ -96,11 +94,11 @@ class ConverterDisplayView @JvmOverloads constructor(
         binding.resultSpinner.adapter = adapter
     }
 
-    fun setUnits(units: List<Unit>) {
-        this.units.clear()
-        this.units.addAll(units)
+    fun setUnits(conversionUnits: List<ConversionUnit>) {
+        this.conversionUnits.clear()
+        this.conversionUnits.addAll(conversionUnits)
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1)
-        this.units.forEach { adapter.add(it.name) }
+        this.conversionUnits.forEach { adapter.add(it.name) }
         setSpinnerAdapter(adapter)
     }
 
@@ -115,19 +113,17 @@ class ConverterDisplayView @JvmOverloads constructor(
         revealView.left = displayRect.left
         revealView.right = displayRect.right
         revealView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
-        val groupOverlay: ViewGroupOverlay =
-            (context as Activity).window.decorView.overlay as ViewGroupOverlay
+        val groupOverlay = (context as Activity).window.decorView.overlay as ViewGroupOverlay
         groupOverlay.add(revealView)
-        val clearLocation = IntArray(2)
-        getLocationInWindow(clearLocation)
-        clearLocation[0] += this.width
-        clearLocation[1] += this.height
-        val revealCenterX = clearLocation[0] - revealView.left
-        val revealCenterY = clearLocation[1] - revealView.top
-        val x1_2 = (revealView.left - revealCenterX).toDouble().pow(2)
-        val x2_2 = (revealView.right - revealCenterX).toDouble().pow(2)
-        val y_2 = (revealView.top - revealCenterY).toDouble().pow(2)
-        val revealRadius = max(sqrt(x1_2 + y_2), sqrt(x2_2 + y_2)).toFloat()
+        var (width, height) = IntArray(2).apply(::getLocationInWindow)
+        width += this.width
+        height += this.height
+        val revealCenterX = width - revealView.left
+        val revealCenterY = height - revealView.top
+        val x1 = (revealView.left - revealCenterX).toDouble().pow(2)
+        val x2 = (revealView.right - revealCenterX).toDouble().pow(2)
+        val y = (revealView.top - revealCenterY).toDouble().pow(2)
+        val revealRadius = max(sqrt(x1 + y), sqrt(x2 + y)).toFloat()
         revealAnimator = ViewAnimationUtils.createCircularReveal(
             revealView,
             revealCenterX, revealCenterY, 0.0f, revealRadius
@@ -187,7 +183,7 @@ class ConverterDisplayView @JvmOverloads constructor(
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             val childAt = parent.getChildAt(0) as TextView
             childAt.setTextColor(Color.WHITE)
-            val html = units[parent.selectedItemPosition].unitSymbol
+            val html = conversionUnits[parent.selectedItemPosition].unitSymbol
             val spanned = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
             textView.text = spanned
             callback()

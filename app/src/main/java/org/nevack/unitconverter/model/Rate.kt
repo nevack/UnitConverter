@@ -12,8 +12,8 @@ data class Rate(
     @Json(name = "Cur_Name") var curName: String,
     @Json(name = "Cur_OfficialRate") var curOfficialRate: Double,
 ) {
-    fun toUnit(): Unit {
-        return Unit(
+    fun toUnit(): ConversionUnit {
+        return ConversionUnit(
             curName,
             curOfficialRate / curScale,
             curAbbreviation

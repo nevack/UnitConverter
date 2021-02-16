@@ -2,85 +2,83 @@ package org.nevack.unitconverter.model.converter
 
 import android.content.Context
 import org.nevack.unitconverter.R
-import org.nevack.unitconverter.model.Unit
+import org.nevack.unitconverter.model.ConversionUnit
 
-class AreaConverter(context: Context) : Converter() {
-    override val name: Int
-        get() = R.string.area
+class AreaConverter(private val context: Context) : Converter(R.string.area) {
 
-    init {
-        units.add(
-            Unit(
+    override suspend fun load() {
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squaremetre),
                 1.0,
                 context.getString(R.string.metresymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squarecentimetre),
                 0.0001,
                 context.getString(R.string.centimetresymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squaremillimetre),
                 0.000001,
                 context.getString(R.string.millimetresymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squarekilometre),
                 1000000.0,
                 context.getString(R.string.kilometresymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squarefoot),
                 0.09290304,
                 context.getString(R.string.footsymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squareyard),
                 0.83612736,
                 context.getString(R.string.yardsymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squaremile),
                 2589988.0,
                 context.getString(R.string.milesymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.squareinch),
                 0.00064516,
                 context.getString(R.string.inchsymbol) + SQUARE_POSTFIX
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.hectare),
                 10000.0,
                 context.getString(R.string.hectaresymbol)
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.are),
                 100.0,
                 context.getString(R.string.aresymbol)
             )
         )
-        units.add(
-            Unit(
+        registerUnit(
+            ConversionUnit(
                 context.getString(R.string.acre),
                 4.047,
                 context.getString(R.string.acresymbol)

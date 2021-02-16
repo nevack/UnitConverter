@@ -7,7 +7,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.ColorRes
 import org.nevack.unitconverter.model.converter.*
 
-enum class EUnitCategory(
+inline class CategoryIndex(val index: Int)
+
+enum class ConverterCategory(
     @StringRes val categoryName: Int,
     @DrawableRes val icon: Int,
     @ColorRes val color: Int,
@@ -74,5 +76,13 @@ enum class EUnitCategory(
         ::OtherConverter
     );
 
+    val index = CategoryIndex(nextIndex)
+
     fun getConverter(context: Context): Converter = creator(context)
+
+    private companion object {
+        private var index = 0
+        private val nextIndex: Int
+            get() = index++
+    }
 }

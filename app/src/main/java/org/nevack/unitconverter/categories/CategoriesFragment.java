@@ -91,7 +91,7 @@ public class CategoriesFragment extends Fragment implements CategoriesContract.V
             }
 
             private void bind(EUnitCategory category) {
-                textView.setText(category.getName());
+                textView.setText(category.getCategoryName());
                 imageView.setImageResource(category.getIcon());
                 itemView.setBackgroundColor(
                         ContextCompat.getColor(requireContext(), category.getColor()));

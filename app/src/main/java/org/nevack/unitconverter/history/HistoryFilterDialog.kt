@@ -2,7 +2,6 @@ package org.nevack.unitconverter.history
 
 import android.os.Bundle
 import android.app.Dialog
-import java.util.ArrayList
 import org.nevack.unitconverter.model.EUnitCategory
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
@@ -20,7 +19,7 @@ class HistoryFilterDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         val names: MutableList<String> = mutableListOf("None")
-        EUnitCategory.values().mapTo(names) { getString(it.getName()) }
+        EUnitCategory.values().mapTo(names) { getString(it.categoryName) }
         builder.setItems(names.toTypedArray()) { _: DialogInterface?, which: Int ->
             mask = which - 1
         }

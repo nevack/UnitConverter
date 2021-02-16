@@ -34,7 +34,7 @@ class ConverterPresenter(
 
     override fun setConverter(category: EUnitCategory) {
         view.setBackgroundColor(category.color)
-        view.setTitle(category.getName())
+        view.setTitle(category.categoryName)
         loader.setCategory(category)
     }
 

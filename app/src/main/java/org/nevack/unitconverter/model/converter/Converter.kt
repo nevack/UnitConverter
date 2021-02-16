@@ -7,6 +7,7 @@ import java.util.*
 abstract class Converter {
     @JvmField
     val units: MutableList<Unit> = ArrayList()
+
     @Throws(ArithmeticException::class)
     open fun convert(inputValue: String?, inputValueType: Int, outputValueType: Int): String? {
         val source = BigDecimal(inputValue)

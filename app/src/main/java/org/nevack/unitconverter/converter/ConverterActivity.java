@@ -89,7 +89,7 @@ public class ConverterActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
 
         for (int i = 0; i < units.length; i++) {
-            menu.add(Menu.NONE, Menu.NONE, i, getString(units[i].getName()));
+            menu.add(Menu.NONE, Menu.NONE, i, getString(units[i].getCategoryName()));
             menu.getItem(i).setIcon(units[i].getIcon());
         }
 

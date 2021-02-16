@@ -55,7 +55,7 @@ internal class ViewHolder constructor(val binding: HistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(category: EUnitCategory, item: HistoryItem) {
-        binding.categoryName.setText(category.getName())
+        binding.categoryName.setText(category.categoryName)
         binding.valueFrom.text = item.valueFrom
         binding.valueTo.text = item.valueTo
         binding.unitFrom.text = item.unitFrom

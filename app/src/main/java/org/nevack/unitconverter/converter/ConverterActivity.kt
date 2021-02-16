@@ -53,17 +53,18 @@ class ConverterActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         supportFragmentManager.commit {
-            add<ConverterFragment>(R.id.container)
+            val fragment = ConverterFragment()
+            add(R.id.container, fragment)
             setReorderingAllowed(true)
+
+            presenter = ConverterPresenter(
+                this@ConverterActivity,
+                fragment,
+                database.dao(),
+                moshi,
+                service
+            )
         }
-        presenter = ConverterPresenter(
-            this,
-            fragment!!,
-            LoaderManager.getInstance(this),
-            database.dao(),
-            moshi,
-            service
-        )
     }
 
     private fun setupDrawerContent() = with(binding.navigationView) {

@@ -19,12 +19,12 @@ import java.util.*
 class ConverterPresenter(
     private val context: Context,
     private val view: ConverterContract.View,
-    private val loaderManager: LoaderManager,
     private val db: HistoryDao,
     private val moshi: Moshi,
     private val service: NBRBService,
 ) : ConverterContract.Presenter, LoaderManager.LoaderCallbacks<Converter> {
     private lateinit var currentConverter: Converter
+    private val loaderManager = LoaderManager.getInstance(context)
     private var data: ConvertData? = null
     private val loader: ConverterLoader = ConverterLoader(context)
     private val scope = CoroutineScope(Job() + Dispatchers.Main)

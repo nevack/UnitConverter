@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint
 import org.nevack.unitconverter.R
@@ -18,7 +19,6 @@ import org.nevack.unitconverter.model.ConverterCategory
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityConverterBinding
     private var converterId = 0
     private val viewModel: ConverterViewModel by viewModels()
 
@@ -33,7 +33,7 @@ class ConverterActivity : AppCompatActivity() {
         window.navigationBarColor = 0x3F000000
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        setupDrawerContent()
+        setupNavigation(binding)
         viewModel.drawerOpened.observe(this) { opened ->
             if (opened) {
                 binding.navigationDrawer.openDrawer(Gravity.START)
@@ -43,19 +43,21 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.commit {
-            val fragment = ConverterFragment()
-            add(R.id.container, fragment)
+            add<ConverterFragment>(R.id.container)
             setReorderingAllowed(true)
         }
     }
 
-    private fun setupDrawerContent() = with(binding.navigationView) {
+    private fun setupNavigation(binding: ActivityConverterBinding) {
         val units = ConverterCategory.values()
-        menu.setGroupCheckable(Menu.NONE, true, true)
-        for ((i, unit) in units.withIndex()) {
-            menu.add(Menu.NONE, Menu.NONE, i, getString(unit.categoryName)).setIcon(unit.icon)
+        with(binding.navigationView) {
+            menu.setGroupCheckable(Menu.NONE, true, true)
+            for ((i, unit) in units.withIndex()) {
+                menu.add(Menu.NONE, Menu.NONE, i, getString(unit.categoryName)).setIcon(unit.icon)
+            }
+            menu[converterId].isChecked = true
+
         }
-        menu[converterId].isChecked = true
         binding.navigationView.setNavigationItemSelectedListener { menuItem: MenuItem ->
             converterId = menuItem.order
 //            presenter!!.setConverter(units[converterId])

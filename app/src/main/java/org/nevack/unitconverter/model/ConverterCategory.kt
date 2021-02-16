@@ -5,6 +5,9 @@ import org.nevack.unitconverter.R
 import androidx.annotation.StringRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.ColorRes
+import com.squareup.moshi.Moshi
+import org.nevack.unitconverter.NBRBService
+import org.nevack.unitconverter.history.db.HistoryDatabase
 import org.nevack.unitconverter.model.converter.*
 
 inline class CategoryIndex(val index: Int)
@@ -85,4 +88,8 @@ enum class ConverterCategory(
         private val nextIndex: Int
             get() = index++
     }
+}
+
+interface ConverterFactory {
+    fun create(context: Context, moshi: Moshi, service: NBRBService, database: HistoryDatabase)
 }

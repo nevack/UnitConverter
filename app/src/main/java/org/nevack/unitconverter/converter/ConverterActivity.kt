@@ -59,6 +59,7 @@ class ConverterActivity : AppCompatActivity() {
 
             presenter = ConverterPresenter(
                 this@ConverterActivity,
+                LoaderManager.getInstance(this@ConverterActivity),
                 fragment,
                 database.dao(),
                 moshi,

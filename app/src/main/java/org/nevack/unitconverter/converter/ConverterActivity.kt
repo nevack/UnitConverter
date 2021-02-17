@@ -51,17 +51,15 @@ class ConverterActivity : AppCompatActivity() {
         viewModel.load(Categories[category], this)
     }
 
-    private fun setupNavigation(binding: ActivityConverterBinding) {
+    private fun setupNavigation(binding: ActivityConverterBinding) = with(binding.navigationView) {
         val units = ConverterCategory.values()
-        with(binding.navigationView) {
-            for ((i, unit) in units.withIndex()) {
-                menu.add(Menu.NONE, Menu.NONE, i, unit.categoryName)
-                    .setCheckable(true)
-                    .setIcon(unit.icon)
-            }
+        for ((i, unit) in units.withIndex()) {
+            menu.add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                .setCheckable(true)
+                .setIcon(unit.icon)
         }
-        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
-            viewModel.load(Categories[menuItem.order], this)
+        setNavigationItemSelectedListener { menuItem ->
+            viewModel.load(Categories[menuItem.order], this@ConverterActivity)
             viewModel.setDrawerOpened(false)
             true
         }

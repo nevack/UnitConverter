@@ -15,7 +15,6 @@ import org.nevack.unitconverter.history.db.HistoryItem
 import org.nevack.unitconverter.model.ConverterCategory
 import org.nevack.unitconverter.model.converter.Converter
 import org.nevack.unitconverter.model.converter.CurrencyConverter
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,7 +44,7 @@ class ConverterViewModel @Inject constructor(
     val converter: LiveData<Converter>
         get() = _converter
 
-    private val _result= MutableLiveData<String>()
+    private val _result = MutableLiveData<String>()
     val result: LiveData<String>
         get() = _result
 
@@ -95,5 +94,9 @@ class ConverterViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             database.dao().insertAll(item)
         }
+    }
+
+    fun copyResultToClipboard(copyResult: String) {
+        require(copyResult.isNotBlank())
     }
 }

@@ -14,7 +14,8 @@ class ViewHolder(
         categoryName.setText(category.categoryName)
         categoryIcon.setImageResource(category.icon)
         categoryContainer.setBackgroundColor(
-            ContextCompat.getColor(itemView.context, category.color))
+            ContextCompat.getColor(itemView.context, category.color)
+        )
     }
 }
 

@@ -4,7 +4,7 @@ import android.content.Context
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.model.ConversionUnit
 
-class MemoryConverter(private val context: Context) : Converter(R.string.memory) {
+class MemoryConverter(private val context: Context) : Converter() {
     override suspend fun load() {
         registerUnit(
             ConversionUnit(

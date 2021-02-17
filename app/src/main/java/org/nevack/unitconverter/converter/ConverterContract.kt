@@ -1,9 +1,5 @@
 package org.nevack.unitconverter.converter
 
-import androidx.annotation.ColorRes
-import org.nevack.unitconverter.model.ConverterCategory
-import org.nevack.unitconverter.model.ConversionUnit
-
 interface ConverterContract {
     interface View {
         fun getConvertData(): ConvertData

@@ -1,14 +1,24 @@
 package org.nevack.unitconverter.model
 
 import android.content.Context
-import org.nevack.unitconverter.R
-import androidx.annotation.StringRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.squareup.moshi.Moshi
 import org.nevack.unitconverter.NBRBService
+import org.nevack.unitconverter.R
 import org.nevack.unitconverter.history.db.HistoryDatabase
-import org.nevack.unitconverter.model.converter.*
+import org.nevack.unitconverter.model.converter.AreaConverter
+import org.nevack.unitconverter.model.converter.Converter
+import org.nevack.unitconverter.model.converter.CurrencyConverter
+import org.nevack.unitconverter.model.converter.LengthConverter
+import org.nevack.unitconverter.model.converter.MassConverter
+import org.nevack.unitconverter.model.converter.MemoryConverter
+import org.nevack.unitconverter.model.converter.OtherConverter
+import org.nevack.unitconverter.model.converter.SpeedConverter
+import org.nevack.unitconverter.model.converter.TemperatureConverter
+import org.nevack.unitconverter.model.converter.TimeConverter
+import org.nevack.unitconverter.model.converter.VolumeConverter
 
 private var nextIndex = 0
 

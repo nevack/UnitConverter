@@ -13,7 +13,8 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroupOverlay
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import org.nevack.unitconverter.R
@@ -86,8 +87,10 @@ class ConverterDisplayView @JvmOverloads constructor(
         }
 
     fun getCopyResult(withUnitSymbols: Boolean): String {
-        return (binding.resultValue.text.toString()
-                + if (withUnitSymbols) binding.sourceValueContainer.suffixTextView.text.toString() else "")
+        return (
+            binding.resultValue.text.toString() +
+                if (withUnitSymbols) binding.sourceValueContainer.suffixTextView.text.toString() else ""
+            )
     }
 
     fun showError() {
@@ -109,9 +112,11 @@ class ConverterDisplayView @JvmOverloads constructor(
     fun setUnits(conversionUnits: List<ConversionUnit>) {
         this.conversionUnits.clear()
         this.conversionUnits.addAll(conversionUnits)
-        val adapter = ArrayAdapter(context,
+        val adapter = ArrayAdapter(
+            context,
             android.R.layout.simple_list_item_1,
-            conversionUnits.map { it.name })
+            conversionUnits.map { it.name }
+        )
         setSpinnerAdapter(adapter)
     }
 
@@ -153,7 +158,7 @@ class ConverterDisplayView @JvmOverloads constructor(
         })
         val animatorSet = AnimatorSet()
 
-        //Play Reveal Animation if Lollipop or higher, and only alpha animation for others
+        // Play Reveal Animation if Lollipop or higher, and only alpha animation for others
         animatorSet.play(revealAnimator).before(alphaAnimator)
         animatorSet.interpolator = AccelerateDecelerateInterpolator()
         animatorSet.addListener(object : AnimatorListenerAdapter() {

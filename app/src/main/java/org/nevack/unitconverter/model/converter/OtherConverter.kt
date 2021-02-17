@@ -5,7 +5,7 @@ import org.nevack.unitconverter.R
 import org.nevack.unitconverter.model.ConversionUnit
 import org.nevack.unitconverter.model.EMPTY
 
-class OtherConverter(private val context: Context) : Converter(R.string.other) {
+class OtherConverter(private val context: Context) : Converter() {
     override suspend fun load() {
         registerUnit(
             ConversionUnit(

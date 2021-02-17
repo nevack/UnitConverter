@@ -1,21 +1,21 @@
 package org.nevack.unitconverter.model.converter
 
 import android.content.Context
-import com.squareup.moshi.*
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
 import org.nevack.unitconverter.NBRBService
-import org.nevack.unitconverter.R
-import org.nevack.unitconverter.model.Rate
 import org.nevack.unitconverter.model.ConversionUnit
-import retrofit2.Call
-import java.io.*
-import java.util.*
+import org.nevack.unitconverter.model.Rate
+import java.io.File
+import java.util.Calendar
 
-class CurrencyConverter(context: Context) : Converter(R.string.currency) {
+class CurrencyConverter(context: Context) : Converter() {
     internal var service: NBRBService? = null
     internal var moshi: Moshi? = null
     private val adapter: JsonAdapter<List<Rate>> by lazy(LazyThreadSafetyMode.NONE) {

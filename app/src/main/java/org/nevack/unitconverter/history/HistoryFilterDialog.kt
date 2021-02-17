@@ -1,11 +1,11 @@
 package org.nevack.unitconverter.history
 
-import android.os.Bundle
 import android.app.Dialog
-import org.nevack.unitconverter.model.ConverterCategory
 import android.content.DialogInterface
+import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import org.nevack.unitconverter.model.ConverterCategory
 
 typealias Listener = ((Int) -> Unit)
 

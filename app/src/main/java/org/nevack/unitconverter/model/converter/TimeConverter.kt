@@ -4,8 +4,7 @@ import android.content.Context
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.model.ConversionUnit
 
-class TimeConverter(private val context: Context) : Converter(R.string.time) {
-
+class TimeConverter(private val context: Context) : Converter() {
     override suspend fun load() {
         registerUnit(
             ConversionUnit(

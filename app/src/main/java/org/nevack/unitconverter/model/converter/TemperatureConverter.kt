@@ -1,12 +1,12 @@
 package org.nevack.unitconverter.model.converter
 
 import android.content.Context
-import java.lang.ArithmeticException
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.model.ConversionUnit
+import java.lang.ArithmeticException
 import java.math.BigDecimal
 
-class TemperatureConverter(private val context: Context) : Converter(R.string.temperature) {
+class TemperatureConverter(private val context: Context) : Converter() {
     override suspend fun load() {
         registerUnit(
             ConversionUnit(
@@ -51,29 +51,38 @@ class TemperatureConverter(private val context: Context) : Converter(R.string.te
         val index: Int,
         val convertTo: (TemperatureUnit, BigDecimal) -> BigDecimal,
     ) {
-        object Kelvin : TemperatureUnit(0, { unit, x ->
-            when (unit) {
-                Kelvin -> x
-                Celsius -> x - MIN_KELVIN
-                Fahrenheit -> Celsius.convertTo(Fahrenheit, x - MIN_KELVIN)
+        object Kelvin : TemperatureUnit(
+            0,
+            { unit, x ->
+                when (unit) {
+                    Kelvin -> x
+                    Celsius -> x - MIN_KELVIN
+                    Fahrenheit -> Celsius.convertTo(Fahrenheit, x - MIN_KELVIN)
+                }
             }
-        })
+        )
 
-        object Celsius : TemperatureUnit(1, { unit, x ->
-            when (unit) {
-                Kelvin -> x + MIN_KELVIN
-                Celsius -> x
-                Fahrenheit -> x * FAHRENHEIT_MULTIPLIER + FAHRENHEIT_OFFSET
+        object Celsius : TemperatureUnit(
+            1,
+            { unit, x ->
+                when (unit) {
+                    Kelvin -> x + MIN_KELVIN
+                    Celsius -> x
+                    Fahrenheit -> x * FAHRENHEIT_MULTIPLIER + FAHRENHEIT_OFFSET
+                }
             }
-        })
+        )
 
-        object Fahrenheit : TemperatureUnit(2, { unit, x ->
-            when (unit) {
-                Kelvin -> Fahrenheit.convertTo(Celsius, x) + MIN_KELVIN
-                Celsius -> (x - FAHRENHEIT_OFFSET) / FAHRENHEIT_MULTIPLIER
-                Fahrenheit -> x
+        object Fahrenheit : TemperatureUnit(
+            2,
+            { unit, x ->
+                when (unit) {
+                    Kelvin -> Fahrenheit.convertTo(Celsius, x) + MIN_KELVIN
+                    Celsius -> (x - FAHRENHEIT_OFFSET) / FAHRENHEIT_MULTIPLIER
+                    Fahrenheit -> x
+                }
             }
-        })
+        )
 
         companion object {
             private val MIN_KELVIN = BigDecimal("-273.15", MC)

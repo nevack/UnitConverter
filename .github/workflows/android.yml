@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: Generate APK
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -29,7 +29,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Build APK
-        run: ./gradlew :app:assembleDebug dependencyUpdates
+        run: >
+          ./gradlew
+          -Dorg.gradle.daemon=false
+          -Dorg.gradle.parallel=true
+          -Dkotlin.compiler.execution.strategy=in-process
+          :app:assembleDebug
+          dependencyUpdates
       - name: Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
         # Restoring these files from a GitHub Actions cache might cause problems for future builds.

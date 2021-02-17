@@ -92,7 +92,6 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
             binding.display.setUnits(it.units)
         }
 
-
         viewModel.result.observe(viewLifecycleOwner) {
             binding.display.showResult(it)
         }
@@ -111,7 +110,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
     override fun showError() = binding.display.showError()
 
     private fun copyWithNotification(shouldIncludeUnit: Boolean) {
-//        presenter!!.copyResultToClipboard(binding.display.getCopyResult(shouldIncludeUnit))
+        viewModel.copyResultToClipboard(binding.display.getCopyResult(shouldIncludeUnit))
         Snackbar.make(binding.background, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show()
     }
 }

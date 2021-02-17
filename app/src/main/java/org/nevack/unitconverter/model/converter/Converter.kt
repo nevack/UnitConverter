@@ -1,15 +1,15 @@
 package org.nevack.unitconverter.model.converter
 
-import androidx.annotation.StringRes
 import org.nevack.unitconverter.model.ConversionUnit
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
-import java.util.*
+import java.util.ArrayList
+import java.util.Comparator
 
-abstract class Converter(@StringRes val nameRes: Int) {
+abstract class Converter {
     private val _conversionUnits: MutableList<ConversionUnit> = ArrayList()
-    public val units: List<ConversionUnit>
+    val units: List<ConversionUnit>
         get() = _conversionUnits
 
     fun registerUnit(unit: ConversionUnit) {

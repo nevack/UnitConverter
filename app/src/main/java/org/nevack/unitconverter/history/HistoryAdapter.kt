@@ -11,7 +11,7 @@ import org.nevack.unitconverter.databinding.HistoryItemBinding
 import org.nevack.unitconverter.history.db.HistoryItem
 import org.nevack.unitconverter.model.ConverterCategory
 
-internal class Differ: DiffUtil.ItemCallback<HistoryItem>() {
+internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
     override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
         return newItem.id == oldItem.id
     }

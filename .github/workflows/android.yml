@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     name: Generate APK
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -36,6 +36,7 @@ jobs:
           -Dkotlin.compiler.execution.strategy=in-process
           :app:assembleDebug
           dependencyUpdates
+          spotlessCheck
       - name: Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
         # Restoring these files from a GitHub Actions cache might cause problems for future builds.

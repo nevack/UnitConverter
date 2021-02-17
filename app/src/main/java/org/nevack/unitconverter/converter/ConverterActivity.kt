@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -15,11 +14,11 @@ import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.databinding.ActivityConverterBinding
+import org.nevack.unitconverter.model.Categories
 import org.nevack.unitconverter.model.ConverterCategory
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
-    private var converterId = 0
     private val viewModel: ConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +27,6 @@ class ConverterActivity : AppCompatActivity() {
         val binding = ActivityConverterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        converterId = intent.getIntExtra(CONVERTER_ID_EXTRA, 0)
-        window.statusBarColor = 0x3F000000
-        window.navigationBarColor = 0x3F000000
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setupNavigation(binding)
@@ -46,23 +42,27 @@ class ConverterActivity : AppCompatActivity() {
             add<ConverterFragment>(R.id.container)
             setReorderingAllowed(true)
         }
+
+        viewModel.category.observe(this) {
+            binding.navigationView.menu[it].isChecked = true
+        }
+
+        val category = intent.getIntExtra(CONVERTER_ID_EXTRA, 0)
+        viewModel.load(Categories[category], this)
     }
 
     private fun setupNavigation(binding: ActivityConverterBinding) {
         val units = ConverterCategory.values()
         with(binding.navigationView) {
-            menu.setGroupCheckable(Menu.NONE, true, true)
             for ((i, unit) in units.withIndex()) {
-                menu.add(Menu.NONE, Menu.NONE, i, getString(unit.categoryName)).setIcon(unit.icon)
+                menu.add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                    .setCheckable(true)
+                    .setIcon(unit.icon)
             }
-            menu[converterId].isChecked = true
-
         }
-        binding.navigationView.setNavigationItemSelectedListener { menuItem: MenuItem ->
-            converterId = menuItem.order
-//            presenter!!.setConverter(units[converterId])
-            menuItem.isChecked = true
-            binding.navigationDrawer.closeDrawers()
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            viewModel.load(Categories[menuItem.order], this)
+            viewModel.setDrawerOpened(false)
             true
         }
     }
@@ -74,28 +74,24 @@ class ConverterActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(CONVERTER_ID_EXTRA, converterId)
+        viewModel.category.value?.let { outState.putInt(CONVERTER_ID_EXTRA, it) }
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        converterId = savedInstanceState.getInt(CONVERTER_ID_EXTRA)
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.leave_in_anim, R.anim.leave_out_anim)
+        val category = savedInstanceState.getInt(CONVERTER_ID_EXTRA, -1)
+        if (category != -1) {
+            viewModel.load(Categories[category], this)
+        }
     }
 
     companion object {
         private const val CONVERTER_ID_EXTRA = "converter_id"
 
-        @JvmStatic
-        fun getIntent(context: Context?, converterId: Int): Intent {
-            val intent = Intent(context, ConverterActivity::class.java)
-            intent.putExtra(CONVERTER_ID_EXTRA, converterId)
-            return intent
-        }
+        fun getIntent(context: Context, category: Int): Intent =
+            Intent(context, ConverterActivity::class.java).apply {
+                putExtra(CONVERTER_ID_EXTRA, category)
+            }
     }
 }

@@ -6,7 +6,6 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -15,9 +14,7 @@ import android.view.ViewAnimationUtils
 import android.view.ViewGroupOverlay
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.core.widget.doAfterTextChanged
 import org.nevack.unitconverter.R
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
@@ -36,6 +33,9 @@ class ConverterDisplayView @JvmOverloads constructor(
     private val binding: DisplayBinding
     private var conversionUnits: MutableList<ConversionUnit> = mutableListOf()
 
+    private var sourceIndex = 0
+    private var resultIndex = 0
+
     init {
         orientation = VERTICAL
         binding = DisplayBinding.inflate(LayoutInflater.from(context), this).apply {
@@ -44,23 +44,26 @@ class ConverterDisplayView @JvmOverloads constructor(
                 sourceValue.setText(resultValue.text.toString())
                 resultValue.setText(temp)
 
-                val position = sourceSpinner.selectedItemPosition
-                sourceSpinner.setSelection(resultSpinner.selectedItemPosition)
-                resultSpinner.setSelection(position)
+                val newSourse = conversionUnits[resultIndex].name
+                val newResult = conversionUnits[sourceIndex].name
+                sourceSpinner.setText(newSourse, false)
+                resultSpinner.setText(newResult, false)
+
+                val tempIndex = resultIndex
+                resultIndex = sourceIndex
+                sourceIndex = tempIndex
             }
-            sourceValueSymbol.setOnClickListener { sourceSpinner.performClick() }
-            resultValueSymbol.setOnClickListener { resultSpinner.performClick() }
         }
     }
 
-    fun setTextWatcher(watcher: (text: String) -> kotlin.Unit) {
+    fun setTextWatcher(watcher: (text: String) -> Unit) {
         binding.sourceValue.doAfterTextChanged {
             val text = it?.toString() ?: return@doAfterTextChanged
             watcher(text)
         }
     }
 
-    fun showResult(result: String?) {
+    fun showResult(result: String) {
         binding.resultValue.setText(result)
     }
 
@@ -69,36 +72,46 @@ class ConverterDisplayView @JvmOverloads constructor(
             ConvertData(
                 sourceValue.text.toString(),
                 resultValue.text.toString(),
-                sourceSpinner.selectedItemPosition,
-                resultSpinner.selectedItemPosition
+                sourceIndex,
+                resultIndex
             )
         }
         set(convertData) = with(binding) {
             sourceValue.setText(convertData.value)
             resultValue.setText(convertData.result)
-            sourceSpinner.setSelection(convertData.from)
-            resultSpinner.setSelection(convertData.to)
+            sourceIndex = convertData.from
+            resultIndex = convertData.to
+            sourceSpinner.setText(conversionUnits[sourceIndex].name, false)
+            resultSpinner.setText(conversionUnits[resultIndex].name, false)
         }
 
     fun getCopyResult(withUnitSymbols: Boolean): String {
         return (binding.resultValue.text.toString()
-                + if (withUnitSymbols) binding.resultValueSymbol.text.toString() else "")
+                + if (withUnitSymbols) binding.sourceValueContainer.suffixTextView.text.toString() else "")
     }
 
     fun showError() {
         binding.resultValue.setText(R.string.message_error)
     }
 
-    private fun setSpinnerAdapter(adapter: SpinnerAdapter) {
-        binding.sourceSpinner.adapter = adapter
-        binding.resultSpinner.adapter = adapter
+    private fun setSpinnerAdapter(adapter: ArrayAdapter<String>) {
+        binding.sourceSpinner.setAdapter(adapter)
+        binding.sourceSpinner.setText(adapter.getItem(0), false)
+        binding.sourceValueContainer.suffixText = conversionUnits[0].unitSymbol
+        sourceIndex = 0
+
+        binding.resultSpinner.setAdapter(adapter)
+        binding.resultSpinner.setText(adapter.getItem(0), false)
+        binding.resultValueContainer.suffixText = conversionUnits[0].unitSymbol
+        resultIndex = 0
     }
 
     fun setUnits(conversionUnits: List<ConversionUnit>) {
         this.conversionUnits.clear()
         this.conversionUnits.addAll(conversionUnits)
-        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1)
-        this.conversionUnits.forEach { adapter.add(it.name) }
+        val adapter = ArrayAdapter(context,
+            android.R.layout.simple_list_item_1,
+            conversionUnits.map { it.name })
         setSpinnerAdapter(adapter)
     }
 
@@ -168,28 +181,15 @@ class ConverterDisplayView @JvmOverloads constructor(
         }
     }
 
-    fun setSpinnersCallback(callback: () -> kotlin.Unit) {
-        binding.resultSpinner.onItemSelectedListener =
-            SpinnerListener(binding.resultValueSymbol, callback)
-        binding.sourceSpinner.onItemSelectedListener =
-            SpinnerListener(binding.sourceValueSymbol, callback)
-    }
-
-    inner class SpinnerListener(
-        private val textView: TextView,
-        private val callback: () -> kotlin.Unit
-    ) : OnItemSelectedListener {
-
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            val childAt = parent.getChildAt(0) as TextView
-            childAt.setTextColor(Color.WHITE)
-            val html = conversionUnits[parent.selectedItemPosition].unitSymbol
-            val spanned = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            textView.text = spanned
+    fun setSpinnersCallback(callback: () -> Unit) {
+        binding.sourceSpinner.setOnItemClickListener { _, _, position, _ ->
+            sourceIndex = position
+            binding.sourceValueContainer.suffixText = conversionUnits[position].unitSymbol
             callback()
         }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
+        binding.resultSpinner.setOnItemClickListener { _, _, position, _ ->
+            resultIndex = position
+            binding.resultValueContainer.suffixText = conversionUnits[position].unitSymbol
             callback()
         }
     }

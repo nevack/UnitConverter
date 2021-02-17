@@ -2,11 +2,7 @@ package org.nevack.unitconverter.converter
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -17,17 +13,11 @@ import org.nevack.unitconverter.R
 import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.databinding.FragmentConverterBinding
 import org.nevack.unitconverter.history.HistoryActivity
-import org.nevack.unitconverter.model.ConversionUnit
 
 class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContract.View {
-    private var presenter: ConverterContract.Presenter? = null
     private lateinit var binding: FragmentConverterBinding
 
     private val viewModel: ConverterViewModel by activityViewModels()
-
-    fun setPresenter(presenter: ConverterContract.Presenter) {
-        this.presenter = presenter
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentConverterBinding.bind(view)
@@ -36,7 +26,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.save -> {
-                    presenter!!.saveResultToHistory()
+                    viewModel.saveResultToHistory()
                     true
                 }
                 R.id.history -> {
@@ -52,9 +42,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
         }
 
         binding.display.setTextWatcher {
-            presenter?.convert(binding.display.convertData)
+            viewModel.convert(binding.display.convertData)
         }
-        binding.display.setSpinnersCallback { presenter?.convert(binding.display.convertData) }
+        binding.display.setSpinnersCallback {
+            viewModel.convert(binding.display.convertData)
+        }
         binding.keypad.setOnCopyListeners(
             object : KeypadView.ActionListener {
                 override fun longClick() {
@@ -83,7 +75,9 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
                 }
             }
         )
-        binding.keypad.setOnPasteListener { presenter!!.pasteFromClipboard() }
+        binding.keypad.setOnPasteListener {
+//            presenter!!.pasteFromClipboard()
+        }
         binding.keypad.setNumericListener { number -> binding.display.appendText(number.toString()) }
 
         viewModel.backgroundColor.observe(viewLifecycleOwner) {
@@ -93,9 +87,16 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
         viewModel.title.observe(viewLifecycleOwner) {
             binding.toolbar.setTitle(it)
         }
-    }
 
-    override fun setUnits(conversionUnits: List<ConversionUnit>) = binding.display.setUnits(conversionUnits)
+        viewModel.converter.observe(viewLifecycleOwner) {
+            binding.display.setUnits(it.units)
+        }
+
+
+        viewModel.result.observe(viewLifecycleOwner) {
+            binding.display.showResult(it)
+        }
+    }
 
     override fun getConvertData(): ConvertData = binding.display.convertData
 
@@ -105,14 +106,12 @@ class ConverterFragment : Fragment(R.layout.fragment_converter), ConverterContra
 
     override fun appendText(digit: String) = binding.display.appendText(digit)
 
-    override fun showResult(result: String) = binding.display.showResult(result)
-
     override fun clear() = binding.display.clear()
 
     override fun showError() = binding.display.showError()
 
     private fun copyWithNotification(shouldIncludeUnit: Boolean) {
-        presenter!!.copyResultToClipboard(binding.display.getCopyResult(shouldIncludeUnit))
+//        presenter!!.copyResultToClipboard(binding.display.getCopyResult(shouldIncludeUnit))
         Snackbar.make(binding.background, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show()
     }
 }

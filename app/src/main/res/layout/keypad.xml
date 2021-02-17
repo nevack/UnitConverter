@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText"
-    tools:parentTag="android.widget.LinearLayout">
+    tools:parentTag="android.widget.LinearLayout"
+    tools:background="@color/keypad_background_color">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -135,12 +136,14 @@
 
         <Button
             android:id="@+id/button_backspace"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="2"
             android:text="C"
-            android:textSize="35sp" />
+            android:textSize="35sp"
+            app:backgroundTint="?colorSecondary" />
 
         <ImageButton
             android:id="@+id/button_copy"

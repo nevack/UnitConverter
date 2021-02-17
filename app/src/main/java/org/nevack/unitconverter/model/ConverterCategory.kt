@@ -10,7 +10,7 @@ import org.nevack.unitconverter.NBRBService
 import org.nevack.unitconverter.history.db.HistoryDatabase
 import org.nevack.unitconverter.model.converter.*
 
-inline class CategoryIndex(val index: Int)
+private var nextIndex = 0
 
 enum class ConverterCategory(
     @StringRes val categoryName: Int,
@@ -79,14 +79,20 @@ enum class ConverterCategory(
         ::OtherConverter
     );
 
-    val index = CategoryIndex(nextIndex)
+    val index = nextIndex++
 
     fun getConverter(context: Context): Converter = creator(context)
 
-    private companion object {
-        private var index = 0
-        private val nextIndex: Int
-            get() = index++
+    init {
+        Categories += this
+    }
+}
+
+object Categories {
+    private val categories: MutableList<ConverterCategory> = mutableListOf()
+    operator fun get(index: Int): ConverterCategory = categories[index]
+    internal operator fun plusAssign(category: ConverterCategory) {
+        categories += category
     }
 }
 

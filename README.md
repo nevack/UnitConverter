@@ -1,4 +1,5 @@
-# UnitConverter
+UnitConverter ![Build app](https://github.com/nevack/UnitConverter/workflows/Build%20app/badge.svg)
+-------------
 Simple Unit converter for Android with Material Design
 
 Main menu | Currency & Speed | Temperature & Area converter

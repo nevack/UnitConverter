@@ -5,7 +5,9 @@ data class ConvertData internal constructor(
     val result: String,
     val from: Int,
     val to: Int
-)
+) {
+    fun swap() = ConvertData(result, value, to, from)
+}
 
 sealed class Result(val result: String) {
     object Empty : Result("")

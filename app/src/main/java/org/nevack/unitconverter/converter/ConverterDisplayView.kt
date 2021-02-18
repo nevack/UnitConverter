@@ -50,18 +50,7 @@ internal class ConverterDisplayView @JvmOverloads constructor(
         orientation = VERTICAL
         binding = DisplayBinding.inflate(LayoutInflater.from(context), this).apply {
             fab.setOnClickListener {
-                val temp = sourceValue.text.toString()
-                sourceValue.setText(resultValue.text.toString())
-                resultValue.setText(temp)
-
-                val newSourse = conversionUnits[resultIndex].name
-                val newResult = conversionUnits[sourceIndex].name
-                sourceSpinner.setText(newSourse, false)
-                resultSpinner.setText(newResult, false)
-
-                val tempIndex = resultIndex
-                resultIndex = sourceIndex
-                sourceIndex = tempIndex
+                convertData = convertData.swap()
             }
             sourceValue.showSoftInputOnFocus = false
             resultValue.showSoftInputOnFocus = false
@@ -196,12 +185,10 @@ internal class ConverterDisplayView @JvmOverloads constructor(
     fun setSpinnersCallback(callback: () -> Unit) {
         binding.sourceSpinner.setOnItemClickListener { _, _, position, _ ->
             sourceIndex = position
-            updateSuffixes()
             callback()
         }
         binding.resultSpinner.setOnItemClickListener { _, _, position, _ ->
             resultIndex = position
-            updateSuffixes()
             callback()
         }
     }

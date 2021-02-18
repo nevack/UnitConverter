@@ -99,7 +99,7 @@ internal class ConverterDisplayView @JvmOverloads constructor(
 
     fun getCopyResult(withUnitSymbols: Boolean): String {
         return binding.resultValue.text.toString() +
-                if (withUnitSymbols) binding.sourceValueContainer.suffixText else ""
+            if (withUnitSymbols) binding.sourceValueContainer.suffixText else ""
     }
 
     fun showError() {

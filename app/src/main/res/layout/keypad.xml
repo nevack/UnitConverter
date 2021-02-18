@@ -2,9 +2,10 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/keypad_background_color"
     tools:ignore="HardcodedText"
-    tools:parentTag="android.widget.LinearLayout"
-    tools:background="@color/keypad_background_color">
+    tools:layout_height="480dp"
+    tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -131,19 +132,28 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:background="@color/keypad_light_color"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:background="@color/keypad_background_color">
 
-        <Button
-            android:id="@+id/button_backspace"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="2"
-            android:text="C"
-            android:textSize="35sp"
-            app:backgroundTint="?colorSecondary" />
+            android:layout_weight="2">
+
+            <Button
+                android:id="@+id/button_backspace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:padding="0dp"
+                android:text="C"
+                android:textSize="35sp"
+                app:backgroundTint="?colorSecondary" />
+
+        </FrameLayout>
 
         <ImageButton
             android:id="@+id/button_copy"

@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.SparseIntArray
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -14,22 +14,21 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import org.nevack.unitconverter.R
 
-class KeypadView @JvmOverloads constructor(
+internal class ConverterKeypadView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     defStyleRes: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
-    interface ActionListener {
-        fun longClick()
-        fun singleClick()
+    fun interface ActionListener {
+        fun click(long: Boolean)
     }
 
     fun interface NumberListener {
-        fun click(number: Int)
+        fun click(digit: String)
     }
 
-    private val paint = Paint().apply { color = context.getColor(R.color.keypad_light_color) }
+    private val paint = Paint().apply { color = context.getColor(R.color.keypad_background_color) }
     private val rect = Rect()
 
     private val mButton1: Button
@@ -80,13 +79,7 @@ class KeypadView @JvmOverloads constructor(
     }
 
     fun setNumericListener(listener: NumberListener) {
-        val clickListener = OnClickListener { v: View ->
-            val id = v.id
-            val value = mapper[id, -1]
-            if (value != -1) {
-                listener.click(value)
-            }
-        }
+        val clickListener = OnClickListener { listener.click(mapper.get(it.id)) }
         mButton1.setOnClickListener(clickListener)
         mButton2.setOnClickListener(clickListener)
         mButton3.setOnClickListener(clickListener)
@@ -103,32 +96,34 @@ class KeypadView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        rect[width - mButtonPaste.width - paddingRight, 0, width] = height
+        rect.set(width - mButtonPaste.width - paddingRight, 0, width, height)
         canvas.drawRect(rect, paint)
     }
 
     private fun View.setActionListener(listener: ActionListener) {
-        setOnClickListener { listener.singleClick() }
+        setOnClickListener { listener.click(false) }
         setOnLongClickListener {
-            listener.longClick()
+            listener.click(true)
             true
         }
     }
 
     companion object {
-        private val mapper = SparseIntArray(10)
+        private val mapper = SparseArray<String>(10)
 
         init {
-            mapper.append(R.id.button0, 0)
-            mapper.append(R.id.button1, 1)
-            mapper.append(R.id.button2, 2)
-            mapper.append(R.id.button3, 3)
-            mapper.append(R.id.button4, 4)
-            mapper.append(R.id.button5, 5)
-            mapper.append(R.id.button6, 6)
-            mapper.append(R.id.button7, 7)
-            mapper.append(R.id.button8, 8)
-            mapper.append(R.id.button9, 9)
+            mapper.append(R.id.button0, "0")
+            mapper.append(R.id.button1, "1")
+            mapper.append(R.id.button2, "2")
+            mapper.append(R.id.button3, "3")
+            mapper.append(R.id.button4, "4")
+            mapper.append(R.id.button5, "5")
+            mapper.append(R.id.button6, "6")
+            mapper.append(R.id.button7, "7")
+            mapper.append(R.id.button8, "8")
+            mapper.append(R.id.button9, "9")
+            mapper.append(R.id.button_dot, ".")
+            mapper.append(R.id.button_minus, "-")
         }
     }
 }

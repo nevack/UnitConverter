@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FFC107</color>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryVariant">#512DA8</color>
+    <color name="colorSecondary">#FBC02D</color>
+    <color name="colorSecondaryVariant">#FFD54F</color>
 
     <color name="material_red_500">#F44336</color>
     <color name="material_green_accent_700">#00C853</color>
@@ -18,7 +19,6 @@
     <color name="divider_color_dark">#1E000000</color>
     <color name="divider_color_light">#1EFFFFFF</color>
 
-    <color name="keypad_background_color">#BF212121</color>
-    <color name="keypad_light_color">#40424242</color>
-    <color name="quoter_transparent">#3F000000</color>
+    <color name="keypad_background_color">#33000000</color>
+    <color name="shade_color">#33000000</color>
 </resources>

@@ -21,13 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:background="#20000000"
+        android:background="@color/shade_color"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textColor="@android:color/white"
+        android:textColor="?colorSurface"
         android:textSize="16sp"
         tools:text="@string/other" />
 

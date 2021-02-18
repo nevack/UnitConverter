@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:background="@color/material_indigo_500"
-    tools:layout_height="400dp"
+    tools:layout_height="wrap_content"
     tools:orientation="vertical"
     tools:parentTag="android.widget.LinearLayout">
 
@@ -13,26 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:boxStrokeColor="?colorSecondary"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        app:suffixTextColor="?colorSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/source_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
             android:gravity="end"
             android:hint="@string/zero_hint"
             android:importantForAutofill="no"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="number|numberDecimal|numberSigned"
             android:paddingTop="8dp"
             android:paddingBottom="4dp"
-            android:textSize="32sp" />
+            android:textColor="?colorSurface"
+            android:textSize="48sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:labelFor="@id/source_spinner"
-                app:boxStrokeColor="?colorSecondary">
+                app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/source_spinner"
@@ -75,7 +74,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:labelFor="@id/result_spinner">
+                android:labelFor="@id/result_spinner"
+                app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/result_spinner"
@@ -95,26 +95,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        app:boxStrokeColor="?colorSecondary"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        app:suffixTextColor="?colorSurface">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/result_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
             android:gravity="end"
             android:hint="@string/zero_hint"
             android:importantForAutofill="no"
-            android:inputType="numberDecimal|numberSigned"
+            android:inputType="number|numberDecimal|numberSigned"
             android:paddingTop="8dp"
             android:paddingBottom="4dp"
             android:textColor="?colorSurface"
-            android:textSize="32sp" />
+            android:textSize="48sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

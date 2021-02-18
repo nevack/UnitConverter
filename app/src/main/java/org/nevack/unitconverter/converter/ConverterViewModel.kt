@@ -44,9 +44,13 @@ class ConverterViewModel @Inject constructor(
     val converter: LiveData<Converter>
         get() = _converter
 
-    private val _result = MutableLiveData<String>()
-    val result: LiveData<String>
+    private val _result = MutableLiveData<Result>()
+    val result: LiveData<Result>
         get() = _result
+
+    private val _state = MutableLiveData<ConverterViewState>()
+    val state: LiveData<ConverterViewState>
+        get() = _state
 
     fun setDrawerOpened(opened: Boolean): Boolean {
         val changed = _drawerOpened.value != opened
@@ -73,11 +77,24 @@ class ConverterViewModel @Inject constructor(
         }
     }
 
-    fun convert(data: ConverterContract.ConvertData) {
+    fun convert(data: ConvertData) {
+        val converter = converter.value
+        if (converter == null) {
+            _result.value = Result.Empty
+            return
+        }
         try {
-            _result.value = converter.value?.convert(data.value, data.from, data.to)
-        } catch (ex: ArithmeticException) {
-//            view.showError()
+            val result =
+                Result.Converted(
+                    converter.convert(
+                        data.value,
+                        data.from,
+                        data.to
+                    )
+                )
+            _result.value = result
+        } catch (ex: Exception) {
+            _result.value = Result.Empty
         }
     }
 
@@ -88,7 +105,7 @@ class ConverterViewModel @Inject constructor(
             "from",
             "to",
             "source",
-            _result.value ?: "result",
+            _result.value?.result ?: "result",
             0
         )
         viewModelScope.launch(Dispatchers.IO) {
@@ -100,3 +117,10 @@ class ConverterViewModel @Inject constructor(
         require(copyResult.isNotBlank())
     }
 }
+
+data class ConverterViewState(
+    val value: String,
+    val result: Result,
+    val from: Int,
+    val to: Int,
+)

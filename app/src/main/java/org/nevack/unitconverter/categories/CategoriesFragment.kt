@@ -16,7 +16,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 GridLayoutManager(requireContext(), resources.getInteger(R.integer.column_count))
             setHasFixedSize(true)
             adapter = CategoriesAdapter {
-                startActivity(ConverterActivity.getIntent(context, it.index))
+                startActivity(ConverterActivity.getIntent(requireContext(), it))
             }
         }
     }

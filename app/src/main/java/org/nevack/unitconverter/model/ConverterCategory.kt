@@ -26,7 +26,7 @@ enum class ConverterCategory(
     @StringRes val categoryName: Int,
     @DrawableRes val icon: Int,
     @ColorRes val color: Int,
-    private val creator: (Context) -> Converter
+    private val creator: (Context) -> Converter,
 ) {
     MASS(
         R.string.mass,
@@ -92,19 +92,9 @@ enum class ConverterCategory(
     val index = nextIndex++
 
     fun getConverter(context: Context): Converter = creator(context)
-
-    init {
-        Categories += this
-    }
 }
 
-object Categories {
-    private val categories: MutableList<ConverterCategory> = mutableListOf()
-    operator fun get(index: Int): ConverterCategory = categories[index]
-    internal operator fun plusAssign(category: ConverterCategory) {
-        categories += category
-    }
-}
+object Categories : List<ConverterCategory> by ConverterCategory.values().toList()
 
 interface ConverterFactory {
     fun create(context: Context, moshi: Moshi, service: NBRBService, database: HistoryDatabase)

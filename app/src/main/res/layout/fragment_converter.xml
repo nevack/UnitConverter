@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    tools:background="@color/material_indigo_500">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <ImageView
-                android:id="@+id/converter_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:padding="12dp"
-                android:contentDescription="@string/unit_icon_description"
-                />
-
-        </androidx.appcompat.widget.Toolbar>
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <org.nevack.unitconverter.converter.ConverterDisplayView
         android:id="@+id/display"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <org.nevack.unitconverter.converter.KeypadView
+    <org.nevack.unitconverter.converter.ConverterKeypadView
         android:id="@+id/keypad"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/keypad_background_color"/>
+        android:background="@color/keypad_background_color" />
 
 </LinearLayout>

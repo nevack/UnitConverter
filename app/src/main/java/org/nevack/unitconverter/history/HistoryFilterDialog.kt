@@ -3,32 +3,25 @@ package org.nevack.unitconverter.history
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import org.nevack.unitconverter.model.ConverterCategory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.nevack.unitconverter.model.Categories
 
 typealias Listener = ((Int) -> Unit)
 
-class HistoryFilterDialog : DialogFragment() {
-    private var listener: Listener? = null
+class HistoryFilterDialog(private val listener: Listener) : DialogFragment() {
     private var mask = 0
-    fun setListener(listener: Listener?) {
-        this.listener = listener
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireContext())
         val names: MutableList<String> = mutableListOf("None")
-        ConverterCategory.values().mapTo(names) { getString(it.categoryName) }
-        builder.setItems(names.toTypedArray()) { _: DialogInterface?, which: Int ->
-            mask = which - 1
-        }
-
-        return builder.create()
+        Categories.mapTo(names) { getString(it.categoryName) }
+        return MaterialAlertDialogBuilder(requireContext())
+            .setItems(names.toTypedArray()) { _, which -> mask = which - 1 }
+            .create()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        listener?.invoke(mask)
+        listener.invoke(mask)
     }
 }

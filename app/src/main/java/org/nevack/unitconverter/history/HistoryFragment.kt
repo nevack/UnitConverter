@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,33 +19,27 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
 
-    private val model: HistoryViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    private val viewModel: HistoryViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         binding = FragmentHistoryBinding.bind(view)
         with(binding.recycler) {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(requireContext())
             val animation = AnimationUtils.loadLayoutAnimation(
-                context,
+                requireContext(),
                 R.anim.layout_animation_fall_down
             )
             layoutAnimation = animation
         }
-        adapter = HistoryAdapter(model::removeItem, ::shareItem)
-        binding.recycler.adapter = adapter
+        adapter = HistoryAdapter(remove = viewModel::removeItem, share = ::shareItem).also {
+            binding.recycler.adapter = it
+        }
 
-        model.items.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                showHistoryItems(it)
-            } else {
-                showNoItems()
-            }
+        viewModel.items.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            binding.recycler.isVisible = it.isNotEmpty()
         }
     }
 
@@ -53,58 +48,24 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.delete -> {
-                model.removeAll()
-                return true
-            }
-            R.id.filter -> {
-                showFilterDialog()
-                return true
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.delete -> {
+            viewModel.removeAll()
+            true
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun showFilterDialog() {
-        val manager = parentFragmentManager
-        val transaction = manager.beginTransaction()
-        val prev = manager.findFragmentByTag("dialog")
-        if (prev != null) {
-            transaction.remove(prev)
+        R.id.filter -> {
+            HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
+            true
         }
-        transaction.addToBackStack(null)
-
-        // Create and show the dialog.
-        val newFragment = HistoryFilterDialog()
-        newFragment.setListener(model::filter)
-        newFragment.show(transaction, "dialog")
-    }
-
-    private fun showHistoryItems(items: List<HistoryItem>) {
-        adapter.submitList(items)
-        binding.nohistory.visibility = View.GONE
-        binding.recycler.visibility = View.VISIBLE
-    }
-
-    private fun showNoItems() {
-        binding.recycler.visibility = View.GONE
-        binding.nohistory.visibility = View.VISIBLE
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun shareItem(item: HistoryItem) {
-        val sendIntent = Intent()
-        sendIntent.action = Intent.ACTION_SEND
         val message = "${item.valueFrom} ${item.unitFrom} = ${item.valueTo} ${item.unitTo}"
-        sendIntent.putExtra(Intent.EXTRA_TEXT, message)
-        sendIntent.type = "text/plain"
-        requireContext().startActivity(sendIntent)
-    }
-
-    companion object {
-        fun newInstance(): HistoryFragment {
-            return HistoryFragment()
+        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, message)
         }
+        requireContext().startActivity(Intent.createChooser(sendIntent, message))
     }
 }

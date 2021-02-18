@@ -12,7 +12,7 @@
     <string name="other">Other</string>
     <string name="time">Time</string>
     <string name="area">Area</string>
-    <string name="currency">Currency Exchange</string>
+    <string name="currency">Currencies</string>
 
     <!-- Mass units and symbols -->
     <string name="kilogram">Kilogram</string>

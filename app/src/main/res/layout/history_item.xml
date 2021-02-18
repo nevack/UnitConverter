@@ -2,28 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/colorAccent"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    tools:background="?colorPrimary">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/quoter_transparent">
+        android:background="@color/shade_color">
 
         <TextView
             android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:gravity="center_vertical"
-            tools:text="Temperature"/>
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Temperature" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,91 +33,85 @@
 
             <ImageView
                 android:id="@+id/share_item"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="12dp"
-                app:srcCompat="@drawable/ic_share"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_share" />
 
             <ImageView
                 android:id="@+id/remove_item"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="12dp"
-                app:srcCompat="@drawable/ic_close"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_close" />
 
         </LinearLayout>
 
     </FrameLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:layout_height="80dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:background="@drawable/round_background"
+            tools:src="@drawable/ic_temperature" />
 
         <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/round_background">
-
-            <ImageView
-                android:id="@+id/category_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="8dp"
-                tools:src="@drawable/ic_temperature"/>
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_gravity="top"
+            android:layout_marginStart="64dp">
 
             <TextView
                 android:id="@+id/unit_from"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textColor="?colorSurface"
                 android:textSize="16sp"
-                android:textColor="@android:color/white"
-                tools:text="Kelvin"/>
-
-            <TextView
-                android:id="@+id/unit_to"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                tools:text="Celsius"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+                tools:text="Kelvin" />
 
             <TextView
                 android:id="@+id/value_from"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="end"
+                android:textColor="?colorSurface"
                 android:textSize="16sp"
-                tools:text="20K"/>
+                tools:text="20K" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="64dp">
+
+            <TextView
+                android:id="@+id/unit_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textColor="?colorSurface"
+                android:textSize="16sp"
+                tools:text="Celsius" />
 
             <TextView
                 android:id="@+id/value_to"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="end"
+                android:textColor="?colorSurface"
                 android:textSize="16sp"
-                tools:text="30C"/>
-        </LinearLayout>
+                tools:text="30C" />
+        </FrameLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

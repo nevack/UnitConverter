@@ -87,7 +87,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
         companion object {
             private val MIN_KELVIN = BigDecimal("-273.15", MC)
             private val FAHRENHEIT_OFFSET = BigDecimal(32, MC)
-            private val FAHRENHEIT_MULTIPLIER = BigDecimal(9, MC) / BigDecimal(5, MC)
+            private val FAHRENHEIT_MULTIPLIER = BigDecimal(1.8, MC)
         }
     }
 }

@@ -16,16 +16,17 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.textfield.TextInputLayout
 import org.nevack.unitconverter.R
-import org.nevack.unitconverter.converter.ConverterContract.ConvertData
 import org.nevack.unitconverter.databinding.DisplayBinding
 import org.nevack.unitconverter.model.ConversionUnit
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class ConverterDisplayView @JvmOverloads constructor(
+internal class ConverterDisplayView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -35,7 +36,15 @@ class ConverterDisplayView @JvmOverloads constructor(
     private var conversionUnits: MutableList<ConversionUnit> = mutableListOf()
 
     private var sourceIndex = 0
+        set(value) {
+            field = value
+            updateSuffixes()
+        }
     private var resultIndex = 0
+        set(value) {
+            field = value
+            updateSuffixes()
+        }
 
     init {
         orientation = VERTICAL
@@ -54,6 +63,8 @@ class ConverterDisplayView @JvmOverloads constructor(
                 resultIndex = sourceIndex
                 sourceIndex = tempIndex
             }
+            sourceValue.showSoftInputOnFocus = false
+            resultValue.showSoftInputOnFocus = false
         }
     }
 
@@ -87,10 +98,8 @@ class ConverterDisplayView @JvmOverloads constructor(
         }
 
     fun getCopyResult(withUnitSymbols: Boolean): String {
-        return (
-            binding.resultValue.text.toString() +
-                if (withUnitSymbols) binding.sourceValueContainer.suffixTextView.text.toString() else ""
-            )
+        return binding.resultValue.text.toString() +
+                if (withUnitSymbols) binding.sourceValueContainer.suffixText else ""
     }
 
     fun showError() {
@@ -98,15 +107,13 @@ class ConverterDisplayView @JvmOverloads constructor(
     }
 
     private fun setSpinnerAdapter(adapter: ArrayAdapter<String>) {
+        sourceIndex = 0
+        resultIndex = 0
+
         binding.sourceSpinner.setAdapter(adapter)
         binding.sourceSpinner.setText(adapter.getItem(0), false)
-        binding.sourceValueContainer.suffixText = conversionUnits[0].unitSymbol
-        sourceIndex = 0
-
         binding.resultSpinner.setAdapter(adapter)
         binding.resultSpinner.setText(adapter.getItem(0), false)
-        binding.resultValueContainer.suffixText = conversionUnits[0].unitSymbol
-        resultIndex = 0
     }
 
     fun setUnits(conversionUnits: List<ConversionUnit>) {
@@ -130,7 +137,7 @@ class ConverterDisplayView @JvmOverloads constructor(
         revealView.bottom = displayRect.bottom
         revealView.left = displayRect.left
         revealView.right = displayRect.right
-        revealView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
+        revealView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorSecondary))
         val groupOverlay = (context as Activity).window.decorView.overlay as ViewGroupOverlay
         groupOverlay.add(revealView)
         var (width, height) = IntArray(2).apply(::getLocationInWindow)
@@ -174,7 +181,7 @@ class ConverterDisplayView @JvmOverloads constructor(
         binding.sourceValue.editableText.clear()
     }
 
-    fun appendText(text: String?) {
+    fun appendText(text: String) {
         binding.sourceValue.append(text)
     }
 
@@ -189,13 +196,23 @@ class ConverterDisplayView @JvmOverloads constructor(
     fun setSpinnersCallback(callback: () -> Unit) {
         binding.sourceSpinner.setOnItemClickListener { _, _, position, _ ->
             sourceIndex = position
-            binding.sourceValueContainer.suffixText = conversionUnits[position].unitSymbol
+            updateSuffixes()
             callback()
         }
         binding.resultSpinner.setOnItemClickListener { _, _, position, _ ->
             resultIndex = position
-            binding.resultValueContainer.suffixText = conversionUnits[position].unitSymbol
+            updateSuffixes()
             callback()
         }
+    }
+
+    private fun updateSuffixes() {
+        binding.sourceValueContainer.setHtmlSuffixText(conversionUnits[sourceIndex].unitSymbol)
+        binding.resultValueContainer.setHtmlSuffixText(conversionUnits[resultIndex].unitSymbol)
+    }
+
+    private fun TextInputLayout.setHtmlSuffixText(text: String) {
+        suffixText = text
+        suffixTextView.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }

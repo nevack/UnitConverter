@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.nevack.unitconverter.databinding.CategoryItemBinding
+import org.nevack.unitconverter.model.Categories
 import org.nevack.unitconverter.model.ConverterCategory
 
-class ViewHolder(
+internal class ViewHolder(
     private val binding: CategoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(category: ConverterCategory) = with(binding) {
@@ -19,10 +20,9 @@ class ViewHolder(
     }
 }
 
-class CategoriesAdapter(
-    private val listener: (ConverterCategory) -> Unit,
+internal class CategoriesAdapter(
+    private val listener: (Int) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
-    private val unitCategories = listOf(*ConverterCategory.values())
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -31,15 +31,15 @@ class CategoriesAdapter(
         binding.root.setOnClickListener {
             val position = holder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                listener(unitCategories[position])
+                listener(Categories[position].index)
             }
         }
         return holder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(unitCategories[holder.bindingAdapterPosition])
+        holder.bind(Categories[holder.bindingAdapterPosition])
     }
 
-    override fun getItemCount(): Int = unitCategories.size
+    override fun getItemCount(): Int = Categories.size
 }

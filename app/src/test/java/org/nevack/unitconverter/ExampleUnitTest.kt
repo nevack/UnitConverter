@@ -1,4 +1,4 @@
-package org.nevack.unitconverter
+package dev.nevack.unitconverter
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

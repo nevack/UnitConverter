@@ -9,8 +9,8 @@
         android:shortcutShortLabel="@string/history_shortcut_short_label">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="org.nevack.unitconverter.history.HistoryActivity"
-            android:targetPackage="org.nevack.unitconverter" />
+            android:targetClass="dev.nevack.unitconverter.history.HistoryActivity"
+            android:targetPackage="dev.nevack.unitconverter" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 </shortcuts>

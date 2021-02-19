@@ -8,7 +8,7 @@ plugins {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "org.nevack.unitconverter"
+        applicationId "dev.nevack.unitconverter"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 3

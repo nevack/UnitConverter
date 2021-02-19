@@ -16,7 +16,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import org.nevack.unitconverter.R
@@ -200,6 +200,6 @@ internal class ConverterDisplayView @JvmOverloads constructor(
 
     private fun TextInputLayout.setHtmlSuffixText(text: String) {
         suffixText = text
-        suffixTextView.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        suffixTextView.text = text.parseAsHtml()
     }
 }

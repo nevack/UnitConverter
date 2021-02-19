@@ -38,7 +38,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         binding.toolbar.setNavigationIcon(R.drawable.ic_menu)
         binding.toolbar.setNavigationOnClickListener { viewModel.setDrawerOpened(true) }
 
-        binding.display.setTextWatcher {
+        binding.display.onTextChanged {
             viewModel.convert(binding.display.convertData)
         }
         binding.display.setSpinnersCallback {

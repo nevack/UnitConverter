@@ -57,10 +57,9 @@ internal class ConverterDisplayView @JvmOverloads constructor(
         }
     }
 
-    fun setTextWatcher(watcher: (text: String) -> Unit) {
+    fun onTextChanged(watcher: (text: String) -> Unit) {
         binding.sourceValue.doAfterTextChanged {
-            val text = it?.toString() ?: return@doAfterTextChanged
-            watcher(text)
+            it?.run { watcher(toString()) }
         }
     }
 
@@ -97,17 +96,17 @@ internal class ConverterDisplayView @JvmOverloads constructor(
 
     private fun setSpinnerAdapter(adapter: ArrayAdapter<String>) {
         sourceIndex = 0
-        resultIndex = 0
+        resultIndex = 1
 
         binding.sourceSpinner.setAdapter(adapter)
-        binding.sourceSpinner.setText(adapter.getItem(0), false)
+        binding.sourceSpinner.setText(adapter.getItem(sourceIndex), false)
         binding.resultSpinner.setAdapter(adapter)
-        binding.resultSpinner.setText(adapter.getItem(0), false)
+        binding.resultSpinner.setText(adapter.getItem(resultIndex), false)
     }
 
-    fun setUnits(conversionUnits: List<ConversionUnit>) {
-        this.conversionUnits.clear()
-        this.conversionUnits.addAll(conversionUnits)
+    fun setUnits(units: List<ConversionUnit>) {
+        conversionUnits.clear()
+        conversionUnits.addAll(units)
         val adapter = ArrayAdapter(
             context,
             android.R.layout.simple_list_item_1,

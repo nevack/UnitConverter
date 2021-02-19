@@ -52,7 +52,9 @@ class CurrencyConverter(context: Context) : Converter() {
         val rates = service.allRatesForToday()
         rates.forEach { registerUnit(it.toUnit()) }
         withContext(Dispatchers.IO) {
-            adapter.toJson(file.sink().buffer(), rates)
+            file.sink().buffer().use { sink ->
+                sink.writeUtf8(adapter.toJson(rates))
+            }
         }
     }
 

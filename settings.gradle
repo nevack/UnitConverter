@@ -1,1 +1,8 @@
+dependencyResolutionManagement {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 include ':app'

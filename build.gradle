@@ -7,7 +7,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha06'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha07'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.32-alpha'
@@ -20,13 +20,6 @@ buildscript {
 plugins {
     id "com.diffplug.spotless" version "5.10.2"
     id "com.github.ben-manes.versions" version "0.36.0"
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        google()
-    }
 }
 
 subprojects {

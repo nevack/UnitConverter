@@ -4,14 +4,14 @@ import android.content.Context
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import dev.nevack.unitconverter.NBRBService
+import dev.nevack.unitconverter.model.ConversionUnit
+import dev.nevack.unitconverter.model.Rate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
-import dev.nevack.unitconverter.NBRBService
-import dev.nevack.unitconverter.model.ConversionUnit
-import dev.nevack.unitconverter.model.Rate
 import java.io.File
 import java.util.Calendar
 

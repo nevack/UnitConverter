@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import dev.nevack.unitconverter.NBRBService
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.history.db.HistoryItem
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.converter.Converter
 import dev.nevack.unitconverter.model.converter.CurrencyConverter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

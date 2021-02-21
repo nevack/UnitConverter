@@ -7,19 +7,9 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <item name="android:statusBarColor">?colorPrimaryVariant</item>
-    </style>
-
-    <style name="AppTheme.Transparent">
-        <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="colorPrimary">@color/colorSecondary</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="ConverterSymbol" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textSize">24sp</item>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.converter.ConverterActivity
 import dev.nevack.unitconverter.databinding.FragmentCategoriesBinding
@@ -17,6 +18,10 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             setHasFixedSize(true)
             adapter = CategoriesAdapter {
                 startActivity(ConverterActivity.getIntent(requireContext(), it))
+            }
+
+            applyInsetter {
+                type(navigationBars = true) { padding() }
             }
         }
     }

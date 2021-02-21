@@ -10,7 +10,7 @@ import dev.nevack.unitconverter.model.Categories
 typealias Listener = ((Int) -> Unit)
 
 class HistoryFilterDialog(private val listener: Listener) : DialogFragment() {
-    private var mask = 0
+    private var mask = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val names: MutableList<String> = mutableListOf("None")
@@ -22,6 +22,10 @@ class HistoryFilterDialog(private val listener: Listener) : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        listener.invoke(mask)
+        if (mask < 0) {
+            listener(0)
+        } else {
+            listener(1 shl mask)
+        }
     }
 }

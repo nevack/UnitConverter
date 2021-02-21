@@ -7,10 +7,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.view.isVisible
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
@@ -25,6 +26,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         binding = FragmentHistoryBinding.bind(view)
+
+        binding.root.applyInsetter {
+            type(navigationBars = true) { padding(horizontal = true) }
+        }
+
         with(binding.recycler) {
             layoutManager = LinearLayoutManager(requireContext())
             val animation = AnimationUtils.loadLayoutAnimation(
@@ -32,6 +38,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 R.anim.layout_animation_fall_down
             )
             layoutAnimation = animation
+
+            applyInsetter {
+                type(navigationBars = true) { padding(vertical = true) }
+            }
         }
         adapter = HistoryAdapter(remove = viewModel::removeItem, share = ::shareItem).also {
             binding.recycler.adapter = it
@@ -39,7 +49,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
         viewModel.items.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-            binding.recycler.isVisible = it.isNotEmpty()
+            binding.recycler.isInvisible = it.isEmpty()
         }
     }
 

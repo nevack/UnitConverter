@@ -46,7 +46,7 @@ internal class HistoryAdapter constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(holder.bindingAdapterPosition)
-        val category = ConverterCategory.values()[item.category!!]
+        val category = ConverterCategory.values()[item.category]
         holder.bind(category, item)
     }
 }

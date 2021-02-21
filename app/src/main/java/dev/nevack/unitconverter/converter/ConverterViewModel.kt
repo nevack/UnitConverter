@@ -98,15 +98,15 @@ class ConverterViewModel @Inject constructor(
         }
     }
 
-    fun saveResultToHistory() {
-        converter.value ?: return
+    fun saveResultToHistory(result: ConvertData) {
+        val converter = converter.value ?: return
         val item = HistoryItem(
             0,
-            "from",
-            "to",
-            "source",
-            _result.value?.result ?: "result",
-            0
+            converter[result.from].name,
+            converter[result.to].name,
+            result.value,
+            result.result,
+            _index.value ?: 0
         )
         viewModelScope.launch(Dispatchers.IO) {
             database.dao().insertAll(item)

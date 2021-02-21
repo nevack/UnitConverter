@@ -25,7 +25,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.save -> {
-                    viewModel.saveResultToHistory()
+                    viewModel.saveResultToHistory(binding.display.convertData)
                     true
                 }
                 R.id.history -> {

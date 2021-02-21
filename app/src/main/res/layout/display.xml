@@ -20,8 +20,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/source_value"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_weight="1"
             android:cursorVisible="false"
             android:gravity="end"
@@ -52,21 +53,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:labelFor="@id/source_spinner"
+                app:boxStrokeColor="?colorSecondary"
                 app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/source_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="?colorSurface" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,13 +77,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:labelFor="@id/result_spinner"
+                app:boxStrokeColor="?colorSecondary"
                 app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/result_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="?colorSurface" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,8 +106,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/result_value"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:cursorVisible="false"
             android:gravity="end"
             android:hint="@string/zero_hint"

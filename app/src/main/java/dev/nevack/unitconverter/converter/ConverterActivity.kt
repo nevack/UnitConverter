@@ -9,13 +9,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.Categories
-import dev.nevack.unitconverter.model.ConverterCategory
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
@@ -39,8 +38,8 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.commit {
-            add<ConverterFragment>(R.id.container)
             setReorderingAllowed(true)
+            replace<ConverterFragment>(R.id.container)
         }
 
         viewModel.category.observe(this) {
@@ -52,8 +51,7 @@ class ConverterActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation(binding: ActivityConverterBinding) = with(binding.navigationView) {
-        val units = ConverterCategory.values()
-        for ((i, unit) in units.withIndex()) {
+        for ((i, unit) in Categories.withIndex()) {
             menu.add(Menu.NONE, Menu.NONE, i, unit.categoryName)
                 .setCheckable(true)
                 .setIcon(unit.icon)

@@ -26,8 +26,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/source_value"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:cursorVisible="false"
                 android:gravity="end"
                 android:hint="@string/zero_hint"
@@ -59,13 +60,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@id/source_spinner"
+                app:boxStrokeColor="?colorSecondary"
                 app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/source_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="?colorSurface" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,13 +77,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@id/result_spinner"
+                app:boxStrokeColor="?colorSecondary"
                 app:boxStrokeWidth="2dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/result_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="?colorSurface" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,8 +121,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/result_value"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:cursorVisible="false"
                 android:gravity="end"
                 android:hint="@string/zero_hint"

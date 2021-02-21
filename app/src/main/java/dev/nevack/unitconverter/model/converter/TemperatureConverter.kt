@@ -56,8 +56,8 @@ class TemperatureConverter(private val context: Context) : Converter() {
             { unit, x ->
                 when (unit) {
                     Kelvin -> x
-                    Celsius -> x - MIN_KELVIN
-                    Fahrenheit -> Celsius.convertTo(Fahrenheit, x - MIN_KELVIN)
+                    Celsius -> x + MIN_KELVIN
+                    Fahrenheit -> Celsius.convertTo(Fahrenheit, x + MIN_KELVIN)
                 }
             }
         )
@@ -66,7 +66,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
             1,
             { unit, x ->
                 when (unit) {
-                    Kelvin -> x + MIN_KELVIN
+                    Kelvin -> x - MIN_KELVIN
                     Celsius -> x
                     Fahrenheit -> x * FAHRENHEIT_MULTIPLIER + FAHRENHEIT_OFFSET
                 }
@@ -77,7 +77,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
             2,
             { unit, x ->
                 when (unit) {
-                    Kelvin -> Fahrenheit.convertTo(Celsius, x) + MIN_KELVIN
+                    Kelvin -> Fahrenheit.convertTo(Celsius, x) - MIN_KELVIN
                     Celsius -> (x - FAHRENHEIT_OFFSET) / FAHRENHEIT_MULTIPLIER
                     Fahrenheit -> x
                 }

@@ -7,12 +7,14 @@ import android.view.Gravity
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
 import dev.nevack.unitconverter.R
+import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.Categories
 
@@ -39,7 +41,7 @@ class ConverterActivity : AppCompatActivity() {
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace<ConverterFragment>(R.id.container)
+            replace<ConverterFragment>(R.id.container, args = bundleOf(SHOW_NAV_BUTTON_ARG to true))
         }
 
         viewModel.category.observe(this) {

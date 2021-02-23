@@ -41,8 +41,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                 else -> false
             }
         }
-        binding.toolbar.setNavigationIcon(R.drawable.ic_menu)
-        binding.toolbar.setNavigationOnClickListener { viewModel.setDrawerOpened(true) }
+
+        if (arguments?.getBoolean(SHOW_NAV_BUTTON_ARG) == true) {
+            binding.toolbar.setNavigationIcon(R.drawable.ic_menu)
+            binding.toolbar.setNavigationOnClickListener { viewModel.setDrawerOpened(true) }
+        }
 
         binding.display.onTextChanged {
             viewModel.convert(binding.display.convertData)
@@ -91,5 +94,9 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         viewModel.result.observe(viewLifecycleOwner) {
             binding.display.showResult(it.result)
         }
+    }
+
+    companion object {
+        const val SHOW_NAV_BUTTON_ARG = "showNavButton"
     }
 }

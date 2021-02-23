@@ -13,6 +13,7 @@ import okio.buffer
 import okio.sink
 import okio.source
 import java.io.File
+import java.io.IOException
 import java.util.Calendar
 
 class CurrencyConverter(context: Context) : Converter() {
@@ -42,7 +43,11 @@ class CurrencyConverter(context: Context) : Converter() {
 
     private suspend fun loadUnitsFromFile() {
         val rates = withContext(Dispatchers.IO) {
-            adapter.fromJson(file.source().buffer())
+            try {
+                file.source().buffer().use { source -> adapter.fromJson(source) }
+            } catch (e: IOException) {
+                null
+            }
         }
         rates?.forEach { registerUnit(it.toUnit()) }
     }
@@ -52,9 +57,9 @@ class CurrencyConverter(context: Context) : Converter() {
         val rates = service.allRatesForToday()
         rates.forEach { registerUnit(it.toUnit()) }
         withContext(Dispatchers.IO) {
-            file.sink().buffer().use { sink ->
-                sink.writeUtf8(adapter.toJson(rates))
-            }
+            try {
+                file.sink().buffer().use { sink -> adapter.toJson(sink, rates) }
+            } catch (ignored: IOException) {}
         }
     }
 

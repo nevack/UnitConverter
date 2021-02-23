@@ -112,10 +112,6 @@ class ConverterViewModel @Inject constructor(
             database.dao().insertAll(item)
         }
     }
-
-    fun copyResultToClipboard(copyResult: String) {
-        require(copyResult.isNotBlank())
-    }
 }
 
 data class ConverterViewState(

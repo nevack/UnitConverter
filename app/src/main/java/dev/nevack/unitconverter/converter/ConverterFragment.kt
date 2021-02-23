@@ -1,9 +1,13 @@
 package dev.nevack.unitconverter.converter
 
+import android.content.ClipData
+import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -47,8 +51,12 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
             viewModel.convert(binding.display.convertData)
         }
         binding.keypad.setOnCopyListeners { long ->
-            viewModel.copyResultToClipboard(binding.display.getCopyResult(long))
-            Snackbar.make(binding.root, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show()
+            requireContext().getSystemService<ClipboardManager>()?.run {
+                val clipData =
+                    ClipData.newPlainText("Conversion result", binding.display.getCopyResult(long))
+                setPrimaryClip(clipData)
+                Snackbar.make(binding.root, R.string.copy_result_toast, Snackbar.LENGTH_SHORT).show()
+            }
         }
         binding.converterDisplayContainer?.applyInsetter {
             type(WindowInsetsCompat.Type.statusBars()) { padding() }
@@ -60,7 +68,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
             with(binding.display) { if (long) erase() else removeLastDigit() }
         }
         binding.keypad.setOnPasteListener {
-//            presenter!!.pasteFromClipboard()
+            requireContext().getSystemService<ClipboardManager>()?.primaryClip?.run {
+                if (description.hasMimeType(MIMETYPE_TEXT_PLAIN)) {
+                    binding.display.appendText(getItemAt(0).text)
+                }
+            }
         }
         binding.keypad.setNumericListener { binding.display.appendText(it) }
 

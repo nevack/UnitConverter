@@ -153,7 +153,7 @@ internal class ConverterDisplayView @JvmOverloads constructor(
         binding.sourceValue.editableText.clear()
     }
 
-    fun appendText(text: String) {
+    fun appendText(text: CharSequence) {
         binding.sourceValue.append(text)
     }
 

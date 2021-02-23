@@ -8,11 +8,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentConverterBinding
 import dev.nevack.unitconverter.history.HistoryActivity
 
+@AndroidEntryPoint
 class ConverterFragment : Fragment(R.layout.fragment_converter) {
     private lateinit var binding: FragmentConverterBinding
 

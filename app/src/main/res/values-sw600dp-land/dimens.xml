@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="column_count">1</integer>
+    <dimen name="categories_column_width">320dp</dimen>
 </resources>

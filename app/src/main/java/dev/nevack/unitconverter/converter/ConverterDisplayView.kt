@@ -4,25 +4,22 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Context
-import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.ViewGroup
 import android.view.ViewGroupOverlay
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.core.text.parseAsHtml
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.DisplayBinding
 import dev.nevack.unitconverter.model.ConversionUnit
-import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -90,10 +87,6 @@ internal class ConverterDisplayView @JvmOverloads constructor(
             if (withUnitSymbols) binding.sourceValueContainer.suffixText else ""
     }
 
-    fun showError() {
-        binding.resultValue.setText(R.string.message_error)
-    }
-
     private fun setSpinnerAdapter(adapter: ArrayAdapter<String>) {
         sourceIndex = 0
         resultIndex = 1
@@ -117,27 +110,18 @@ internal class ConverterDisplayView @JvmOverloads constructor(
 
     fun erase() {
         val revealView = View(context)
-        val revealAnimator: Animator
-        val displayRect = Rect()
-        this.getGlobalVisibleRect(displayRect)
-
         // Make reveal cover the display and status bar.
-        revealView.bottom = displayRect.bottom
-        revealView.left = displayRect.left
-        revealView.right = displayRect.right
-        revealView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorSecondary))
-        val groupOverlay = (context as Activity).window.decorView.overlay as ViewGroupOverlay
+        revealView.top = -y.toInt()
+        revealView.bottom = bottom
+        revealView.left = left
+        revealView.right = right
+        revealView.setBackgroundColor(context.getColor(R.color.colorSecondary))
+        val groupOverlay = (parent as ViewGroup).overlay as ViewGroupOverlay
         groupOverlay.add(revealView)
-        var (width, height) = IntArray(2).apply(::getLocationInWindow)
-        width += this.width
-        height += this.height
-        val revealCenterX = width - revealView.left
-        val revealCenterY = height - revealView.top
-        val x1 = (revealView.left - revealCenterX).toDouble().pow(2)
-        val x2 = (revealView.right - revealCenterX).toDouble().pow(2)
-        val y = (revealView.top - revealCenterY).toDouble().pow(2)
-        val revealRadius = max(sqrt(x1 + y), sqrt(x2 + y)).toFloat()
-        revealAnimator = ViewAnimationUtils.createCircularReveal(
+        val revealCenterX = width
+        val revealCenterY = height + y.toInt()
+        val revealRadius = sqrt(revealCenterX.toFloat().pow(2) + revealCenterY.toFloat().pow(2))
+        val revealAnimator = ViewAnimationUtils.createCircularReveal(
             revealView,
             revealCenterX, revealCenterY, 0.0f, revealRadius
         )

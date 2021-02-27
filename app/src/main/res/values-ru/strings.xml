@@ -141,4 +141,5 @@
     <string name="message_error">Ошибка</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фильтр результатов</string>
+    <string name="currency_byn_name">Белорусский рубль</string>
 </resources>

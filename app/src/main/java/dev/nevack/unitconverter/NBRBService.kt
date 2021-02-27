@@ -1,24 +1,21 @@
 package dev.nevack.unitconverter
 
-import dev.nevack.unitconverter.model.Currency
-import dev.nevack.unitconverter.model.Rate
+import dev.nevack.unitconverter.model.nbrb.NBRBCurrency
+import dev.nevack.unitconverter.model.nbrb.NBRBRate
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NBRBService {
     @GET("Currencies")
-    suspend fun listAllCurrencies(): List<Currency>
+    suspend fun allCurrencies(): List<NBRBCurrency>
 
     @GET("Currencies/{id}")
-    suspend fun getCurrencyById(@Path("id") currencyId: String): List<Currency>
+    suspend fun currencyById(@Path("id") currencyId: String): List<NBRBCurrency>
 
     @GET("Rates?Periodicity=0")
-    suspend fun allRatesForToday(): List<Rate>
+    suspend fun allRatesForToday(): List<NBRBRate>
 
     @GET("Rates?Periodicity=0")
-    suspend fun getAllRatesForDate(@Query("onDate") date: String): List<Rate>
-
-    @GET("Rates?Periodicity=1")
-    suspend fun allRatesForThisMonth(): List<Rate>
+    suspend fun allRatesForDate(@Query("onDate") date: String): List<NBRBRate>
 }

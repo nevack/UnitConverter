@@ -141,4 +141,5 @@
     <string name="message_error">Памылка</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фільтр вынікаў</string>
+    <string name="currency_byn_name">Беларускі рубель</string>
 </resources>

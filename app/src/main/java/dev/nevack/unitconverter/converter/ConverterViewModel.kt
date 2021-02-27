@@ -5,23 +5,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.nevack.unitconverter.NBRBService
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.history.db.HistoryItem
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.converter.Converter
 import dev.nevack.unitconverter.model.converter.CurrencyConverter
+import dev.nevack.unitconverter.model.nbrb.NBRBRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ConverterViewModel @Inject constructor(
-    private var database: HistoryDatabase,
-    private var moshi: Moshi,
-    private var service: NBRBService,
+    private val database: HistoryDatabase,
+    private val repository: NBRBRepository,
 ) : ViewModel() {
 
     private val _drawerOpened = MutableLiveData(false)
@@ -67,8 +65,7 @@ class ConverterViewModel @Inject constructor(
         val converter = category.getConverter(context)
 
         if (converter is CurrencyConverter) {
-            converter.moshi = moshi
-            converter.service = service
+            converter.repository = repository
         }
 
         viewModelScope.launch {

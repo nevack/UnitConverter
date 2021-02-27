@@ -87,14 +87,15 @@ internal class ConverterDisplayView @JvmOverloads constructor(
             if (withUnitSymbols) binding.sourceValueContainer.suffixText else ""
     }
 
-    private fun setSpinnerAdapter(adapter: ArrayAdapter<String>) {
-        sourceIndex = 0
-        resultIndex = 1
-
+    private fun setSpinnerAdapter(adapter: ArrayAdapter<String>, isDifferent: Boolean) {
         binding.sourceSpinner.setAdapter(adapter)
-        binding.sourceSpinner.setText(adapter.getItem(sourceIndex), false)
         binding.resultSpinner.setAdapter(adapter)
-        binding.resultSpinner.setText(adapter.getItem(resultIndex), false)
+        if (!adapter.isEmpty) {
+            sourceIndex = 0
+            resultIndex = if (isDifferent) 1 else 0
+            binding.sourceSpinner.setText(adapter.getItem(sourceIndex), false)
+            binding.resultSpinner.setText(adapter.getItem(resultIndex), false)
+        }
     }
 
     fun setUnits(units: List<ConversionUnit>) {
@@ -105,7 +106,7 @@ internal class ConverterDisplayView @JvmOverloads constructor(
             android.R.layout.simple_list_item_1,
             conversionUnits.map { it.name }
         )
-        setSpinnerAdapter(adapter)
+        setSpinnerAdapter(adapter, units.size > 1)
     }
 
     fun erase() {
@@ -137,7 +138,6 @@ internal class ConverterDisplayView @JvmOverloads constructor(
         })
         val animatorSet = AnimatorSet()
 
-        // Play Reveal Animation if Lollipop or higher, and only alpha animation for others
         animatorSet.play(revealAnimator).before(alphaAnimator)
         animatorSet.interpolator = AccelerateDecelerateInterpolator()
         animatorSet.addListener(object : AnimatorListenerAdapter() {

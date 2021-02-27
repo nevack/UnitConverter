@@ -172,5 +172,6 @@
     <string name="message_error">Error</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Filter results</string>
+    <string name="currency_byn_name">Belarussian Ruble</string>
 
 </resources>

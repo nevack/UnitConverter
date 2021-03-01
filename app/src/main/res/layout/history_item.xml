@@ -58,11 +58,11 @@
             android:id="@+id/category_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="12dp"
             android:background="@drawable/round_background"
+            android:padding="12dp"
             tools:src="@drawable/ic_temperature" />
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -70,25 +70,31 @@
 
             <TextView
                 android:id="@+id/unit_from"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lines="1"
                 android:textColor="?colorSurface"
                 android:textSize="16sp"
                 tools:text="Kelvin" />
 
             <TextView
                 android:id="@+id/value_from"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:gravity="end"
+                android:lines="1"
                 android:textColor="?colorSurface"
                 android:textSize="16sp"
                 tools:text="20K" />
 
-        </FrameLayout>
+        </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -96,22 +102,28 @@
 
             <TextView
                 android:id="@+id/unit_to"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lines="1"
                 android:textColor="?colorSurface"
                 android:textSize="16sp"
                 tools:text="Celsius" />
 
             <TextView
                 android:id="@+id/value_to"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:gravity="end"
+                android:lines="1"
                 android:textColor="?colorSurface"
                 android:textSize="16sp"
                 tools:text="30C" />
-        </FrameLayout>
+        </LinearLayout>
 
     </FrameLayout>
 </LinearLayout>

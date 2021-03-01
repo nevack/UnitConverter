@@ -9,7 +9,6 @@
     <string name="bit">Біт</string>
     <string name="bit_symbol">б</string>
     <string name="celsius">Градусы Цэльсія</string>
-    <string name="celsiussymbol">°C</string>
     <string name="centimetre">Сантыметр</string>
     <string name="centimetresymbol">см</string>
     <string name="copy_result_toast">Вынік скапіяваны</string>
@@ -20,7 +19,6 @@
     <string name="decimetre">Дэцыметры</string>
     <string name="decimetresymbol">дм</string>
     <string name="fahrenheit">Градусы Фарэнгейта</string>
-    <string name="fahrenheitsymbol">°F</string>
     <string name="foot">Футы</string>
     <string name="footspersecond">Футы у секунду</string>
     <string name="footsymbol">фут</string>
@@ -119,7 +117,6 @@
     <string name="squareyard">Квадратныя ярды</string>
     <string name="description_copy_button">Кнопка скапіяваць вынік</string>
     <string name="description_paste_button">Кнопка ўставіць значэнне</string>
-    <string name="zero_hint">0</string>
     <string name="gallon">Галон ЗША</string>
     <string name="gallonsymbol">гал</string>
     <string name="barrel">Барэль</string>
@@ -131,8 +128,8 @@
     <string name="lightyear">Светлавы год</string>
     <string name="lightyearsymbol">св.г.</string>
     <string name="title_activity_history">Гісторыя</string>
-    <string name="no_history_items">You haven\'t saved any results yet</string>
-    <string name="description_no_history_icon">No history icons message icon</string>
+    <string name="no_history_items">Вы яшчэ не захавалі ніводнага выніку ў гісторыю</string>
+    <string name="description_no_history_icon">Абразок адсутнасці захаваных вынікаў</string>
     <string name="history_shortcut_short_label">Гісторыя</string>
     <string name="history_shortcut_long_label">Гісторыя</string>
     <string name="history_shortcut_disabled_label">Гісторыя</string>
@@ -142,4 +139,5 @@
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фільтр вынікаў</string>
     <string name="currency_byn_name">Беларускі рубель</string>
+    <string name="description_icon">Абразок катэгорыі</string>
 </resources>

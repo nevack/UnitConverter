@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Конвертер</string>
     <string name="celsius">Градусы Цельсия</string>
-    <string name="celsiussymbol">°C</string>
     <string name="centimetre">Сантиметр</string>
     <string name="centimetresymbol">см</string>
     <string name="cubicmetre">Кубические метры</string>
@@ -11,7 +10,6 @@
     <string name="decimetre">Дециметры</string>
     <string name="decimetresymbol">дм</string>
     <string name="fahrenheit">Градусы Фаренгейта</string>
-    <string name="fahrenheitsymbol">°F</string>
     <string name="foot">Футы</string>
     <string name="footspersecond">Футы в секунду</string>
     <string name="footsymbol">фут</string>
@@ -119,7 +117,6 @@
     <string name="unit_icon_description">Иконка единицы измерения</string>
     <string name="description_copy_button">Кнопка скопировать релультат</string>
     <string name="description_paste_button">Кнопка вставить значение</string>
-    <string name="zero_hint">0</string>
     <string name="gallon">Галлон США</string>
     <string name="gallonsymbol">гал</string>
     <string name="barrel">Баррель</string>
@@ -131,8 +128,7 @@
     <string name="lightyear">Световой год</string>
     <string name="lightyearsymbol">св.г.</string>
     <string name="title_activity_history">История</string>
-    <string name="no_history_items">You haven\'t saved any results yet</string>
-    <string name="description_no_history_icon">No history icons message icon</string>
+    <string name="no_history_items">Вы еще не сохранили ни одного результата в историю</string>
     <string name="history_shortcut_short_label">История</string>
     <string name="history_shortcut_long_label">История</string>
     <string name="history_shortcut_disabled_label">История</string>
@@ -142,4 +138,6 @@
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фильтр результатов</string>
     <string name="currency_byn_name">Белорусский рубль</string>
+    <string name="description_no_history_icon">Иконка отсутствия сохранённых результатов</string>
+    <string name="description_icon" translatable="false">Иконка категории</string>
 </resources>

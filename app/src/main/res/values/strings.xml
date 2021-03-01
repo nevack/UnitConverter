@@ -62,8 +62,8 @@
     <string name="kelvin">Kelvin</string>
 
     <string name="kelvinsymbol">K</string>
-    <string name="celsiussymbol">°C</string>
-    <string name="fahrenheitsymbol">°F</string>
+    <string name="celsiussymbol" translatable="false">°C</string>
+    <string name="fahrenheitsymbol" translatable="false">°F</string>
 
     <!-- Speed units and symbols -->
     <string name="metrespersecond">Metres per second</string>
@@ -148,8 +148,8 @@
     <string name="unit_icon_description">Unit icon</string>
     <string name="description_copy_button">Copy result button</string>
     <string name="description_paste_button">Paste value button</string>
-    <string name="description_icon" translatable="false">Category icon</string>
-    <string name="zero_hint">0</string>
+    <string name="description_icon">Category icon</string>
+    <string name="zero_hint" translatable="false">0</string>
     <string name="gallon">US Gallon</string>
     <string name="gallonsymbol">gal</string>
     <string name="barrel">Barrel</string>
@@ -166,7 +166,7 @@
     <string name="history_shortcut_disabled_label">History</string>
     <string name="title_activity_history">History</string>
     <string name="no_history_items">You haven\'t saved any results yet</string>
-    <string name="description_no_history_icon">No history icons message icon</string>
+    <string name="description_no_history_icon">No history message icon</string>
     <string name="menu_history_label">History</string>
     <string name="menu_save_label">Save</string>
     <string name="message_error">Error</string>

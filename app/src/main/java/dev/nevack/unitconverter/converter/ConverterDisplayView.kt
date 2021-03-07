@@ -95,6 +95,9 @@ internal class ConverterDisplayView @JvmOverloads constructor(
             resultIndex = if (isDifferent) 1 else 0
             binding.sourceSpinner.setText(adapter.getItem(sourceIndex), false)
             binding.resultSpinner.setText(adapter.getItem(resultIndex), false)
+        } else {
+            binding.sourceSpinner.isEnabled = false
+            binding.resultSpinner.isEnabled = false
         }
     }
 

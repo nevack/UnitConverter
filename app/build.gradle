@@ -60,7 +60,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0-beta03"
     implementation "androidx.room:room-ktx:2.3.0-beta03"
     // Okio
-    implementation "com.squareup.okio:okio:3.0.0-alpha.1"
+    implementation "com.squareup.okio:okio:3.0.0-alpha.2"
     // Moshi
     implementation "com.squareup.moshi:moshi:1.11.0"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.11.0"

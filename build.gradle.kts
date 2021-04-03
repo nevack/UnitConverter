@@ -43,3 +43,8 @@ subprojects {
         }
     }
 }
+
+tasks.named<Wrapper>("wrapper") {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = "7.0-rc-2"
+}

@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         release {
-            debuggable(false)
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), file("proguard-rules.pro"))
@@ -73,5 +73,4 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.33-beta")
     // Test
     testImplementation("junit:junit:4.13.2")
-    // Dummy
 }

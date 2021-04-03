@@ -29,7 +29,7 @@ subprojects {
             targetExclude("$buildDir/**/*.kt")
             targetExclude("bin/**/*.kt")
 
-            ktlint("0.40.0")
+            ktlint("0.41.0")
         }
     }
 

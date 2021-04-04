@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+@Suppress("unused")
 interface NBRBService {
     @GET("Currencies")
     suspend fun allCurrencies(): List<NBRBCurrency>

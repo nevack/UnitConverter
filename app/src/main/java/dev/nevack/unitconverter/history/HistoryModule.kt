@@ -11,7 +11,7 @@ import dev.nevack.unitconverter.history.db.HistoryDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object HistoryModule {
+object HistoryModule {
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): HistoryDatabase {
         return Room.databaseBuilder(context, HistoryDatabase::class.java, "history-db").build()

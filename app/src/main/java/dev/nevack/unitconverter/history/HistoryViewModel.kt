@@ -19,7 +19,7 @@ class HistoryViewModel @Inject constructor(
     private val dao = db.dao()
 
     private val _items = MutableLiveData<List<HistoryItem>>().also { fetch() }
-    private var _filter = MutableLiveData<Int>(0)
+    private var _filter = MutableLiveData(0)
     private val _filteredItems by lazy {
         MediatorLiveData<List<HistoryItem>>().apply {
             addSource(_filter) {

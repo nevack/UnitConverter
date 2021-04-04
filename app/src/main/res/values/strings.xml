@@ -143,9 +143,6 @@
     <string name="giga">Giga</string>
     <string name="tera">Tera</string>
     <string name="copy_result_toast">Copied to clipboard</string>
-    <string name="unable_to_fetch_data">Unable to fetch data. Try again later</string>
-    <string name="loading_data">Loading data</string>
-    <string name="unit_icon_description">Unit icon</string>
     <string name="description_copy_button">Copy result button</string>
     <string name="description_paste_button">Paste value button</string>
     <string name="description_icon">Category icon</string>
@@ -169,9 +166,11 @@
     <string name="description_no_history_icon">No history message icon</string>
     <string name="menu_history_label">History</string>
     <string name="menu_save_label">Save</string>
-    <string name="message_error">Error</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Filter results</string>
     <string name="currency_byn_name">Belarussian Ruble</string>
+    <string name="swap_source_and_result_units_and_values">Swap source and result units and values button</string>
+    <string name="share_button">Share button</string>
+    <string name="remove_item_button">Remove item button</string>
 
 </resources>

@@ -3,11 +3,11 @@ package dev.nevack.unitconverter.converter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.fragment.app.commit
@@ -33,9 +33,9 @@ class ConverterActivity : AppCompatActivity() {
         setupNavigation(binding)
         viewModel.drawerOpened.observe(this) { opened ->
             if (opened) {
-                binding.navigationDrawer.openDrawer(Gravity.START)
+                binding.navigationDrawer.openDrawer(GravityCompat.START)
             } else {
-                binding.navigationDrawer.closeDrawer(Gravity.START)
+                binding.navigationDrawer.closeDrawer(GravityCompat.START)
             }
         }
 

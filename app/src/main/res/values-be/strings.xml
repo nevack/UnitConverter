@@ -52,7 +52,6 @@
     <string name="length">Даўжыня</string>
     <string name="litre">Літры</string>
     <string name="litresymbol">л</string>
-    <string name="loading_data">Загрузка звестак</string>
     <string name="mass">Маса</string>
     <string name="mega">Мега</string>
     <string name="megabyte">Мегабайты</string>
@@ -98,8 +97,6 @@
     <string name="weeksymbol">тыд</string>
     <string name="week">Тыдні</string>
     <string name="volume">Аб\'ём</string>
-    <string name="unit_icon_description">Іконка адзінкі вымярэння</string>
-    <string name="unable_to_fetch_data">Немагчыма атрымаць дадзеныя. Паўтарыце пазней</string>
     <string name="tonnesymbol">т</string>
     <string name="tonne">Тоны</string>
     <string name="title_activity_convert">Канвертар</string>
@@ -135,9 +132,11 @@
     <string name="history_shortcut_disabled_label">Гісторыя</string>
     <string name="menu_history_label">Гісторыя</string>
     <string name="menu_save_label">Захаваць</string>
-    <string name="message_error">Памылка</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фільтр вынікаў</string>
     <string name="currency_byn_name">Беларускі рубель</string>
     <string name="description_icon">Абразок катэгорыі</string>
+    <string name="swap_source_and_result_units_and_values">Кнопка памяняць адзінкі і значэнні крыніцы і выніку</string>
+    <string name="share_button">Кнопка \"Падзяліцца\"</string>
+    <string name="remove_item_button">Кнопка \"Выдаліць элемент\"</string>
 </resources>

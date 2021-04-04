@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.squareup.moshi.Moshi
-import dev.nevack.unitconverter.NBRBService
 import dev.nevack.unitconverter.R
-import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.model.converter.AreaConverter
 import dev.nevack.unitconverter.model.converter.Converter
 import dev.nevack.unitconverter.model.converter.CurrencyConverter
@@ -95,7 +92,3 @@ enum class ConverterCategory(
 }
 
 object Categories : List<ConverterCategory> by ConverterCategory.values().toList()
-
-interface ConverterFactory {
-    fun create(context: Context, moshi: Moshi, service: NBRBService, database: HistoryDatabase)
-}

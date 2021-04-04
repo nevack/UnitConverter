@@ -46,10 +46,6 @@ class ConverterViewModel @Inject constructor(
     val result: LiveData<Result>
         get() = _result
 
-    private val _state = MutableLiveData<ConverterViewState>()
-    val state: LiveData<ConverterViewState>
-        get() = _state
-
     fun setDrawerOpened(opened: Boolean): Boolean {
         val changed = _drawerOpened.value != opened
         _drawerOpened.value = opened
@@ -110,10 +106,3 @@ class ConverterViewModel @Inject constructor(
         }
     }
 }
-
-data class ConverterViewState(
-    val value: String,
-    val result: Result,
-    val from: Int,
-    val to: Int,
-)

@@ -95,7 +95,6 @@
     <string name="gigabytesymbol">ГБ</string>
     <string name="copy_result_toast">Результат скопирован</string>
     <string name="currency">Валюта</string>
-    <string name="unable_to_fetch_data">Невозможно получить данные. Повторите позже</string>
     <string name="bit">Биты</string>
     <string name="bit_symbol">б</string>
     <string name="area">Площадь</string>
@@ -113,8 +112,6 @@
     <string name="acresymbol">акр</string>
     <string name="squarecentimetre">Квадратные сантиметры</string>
     <string name="squaremillimetre">Квадратные миллиметры</string>
-    <string name="loading_data">Загрузка данных</string>
-    <string name="unit_icon_description">Иконка единицы измерения</string>
     <string name="description_copy_button">Кнопка скопировать релультат</string>
     <string name="description_paste_button">Кнопка вставить значение</string>
     <string name="gallon">Галлон США</string>
@@ -134,10 +131,12 @@
     <string name="history_shortcut_disabled_label">История</string>
     <string name="menu_history_label">История</string>
     <string name="menu_save_label">Сохранить</string>
-    <string name="message_error">Ошибка</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Фильтр результатов</string>
     <string name="currency_byn_name">Белорусский рубль</string>
     <string name="description_no_history_icon">Иконка отсутствия сохранённых результатов</string>
-    <string name="description_icon" translatable="false">Иконка категории</string>
+    <string name="description_icon">Иконка категории</string>
+    <string name="swap_source_and_result_units_and_values">Кнопка поменять местами исходные и результирующие единицы и значения</string>
+    <string name="share_button">Кнопка \"Поделиться\"</string>
+    <string name="remove_item_button">Кнопка \"Удалить элемент\"</string>
 </resources>

@@ -51,7 +51,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0-rc01")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0-alpha01")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha01")
-    implementation("androidx.recyclerview:recyclerview:1.2.0-rc01")
+    implementation("androidx.recyclerview:recyclerview:1.2.0")
     // Material
     implementation("com.google.android.material:material:1.4.0-alpha02")
     // Room
@@ -69,8 +69,8 @@ dependencies {
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.5.0")
     // Dagger + Hilt
-    implementation("com.google.dagger:hilt-android:2.33-beta")
-    kapt("com.google.dagger:hilt-android-compiler:2.33-beta")
+    implementation("com.google.dagger:hilt-android:2.34-beta")
+    kapt("com.google.dagger:hilt-android-compiler:2.34-beta")
     // Test
     testImplementation("junit:junit:4.13.2")
 }

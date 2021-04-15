@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.0-alpha14")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0-M2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0-RC")
 
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.34.1-beta")
     }

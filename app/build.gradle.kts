@@ -45,7 +45,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-RC")
     // AndroidX
-    implementation("androidx.core:core-ktx:1.6.0-alpha02")
+    implementation("androidx.core:core-ktx:1.6.0-alpha03")
     implementation("androidx.fragment:fragment-ktx:1.3.3")
     implementation("androidx.appcompat:appcompat:1.3.0-rc01")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0-alpha01")
@@ -54,9 +54,9 @@ dependencies {
     // Material
     implementation("com.google.android.material:material:1.4.0-alpha02")
     // Room
-    implementation("androidx.room:room-runtime:2.4.0-alpha01")
-    kapt("androidx.room:room-compiler:2.4.0-alpha01")
-    implementation("androidx.room:room-ktx:2.4.0-alpha01")
+    implementation("androidx.room:room-runtime:2.4.0-alpha02")
+    kapt("androidx.room:room-compiler:2.4.0-alpha02")
+    implementation("androidx.room:room-ktx:2.4.0-alpha02")
     // Okio
     implementation("com.squareup.okio:okio:3.0.0-alpha.5")
     // Moshi

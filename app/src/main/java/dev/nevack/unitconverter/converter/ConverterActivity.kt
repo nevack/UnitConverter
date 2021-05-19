@@ -18,8 +18,8 @@ import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_B
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.Categories
 
-@AndroidEntryPoint
-class ConverterActivity : AppCompatActivity() {
+@AndroidEntryPoint(AppCompatActivity::class)
+class ConverterActivity : Hilt_ConverterActivity() {
     private val viewModel: ConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

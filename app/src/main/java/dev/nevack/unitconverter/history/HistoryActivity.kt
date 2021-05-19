@@ -12,8 +12,8 @@ import dev.nevack.unitconverter.databinding.ActivityHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import javax.inject.Inject
 
-@AndroidEntryPoint
-class HistoryActivity : AppCompatActivity() {
+@AndroidEntryPoint(AppCompatActivity::class)
+class HistoryActivity : Hilt_HistoryActivity() {
     @Inject
     lateinit var db: HistoryDatabase
 

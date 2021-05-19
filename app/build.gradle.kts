@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("org.jetbrains.kotlin.kapt")
-    id("dagger.hilt.android.plugin")
+//    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -72,4 +72,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.35.1")
     // Test
     testImplementation("junit:junit:4.13.2")
+}
+
+kapt {
+    correctErrorTypes = true
 }

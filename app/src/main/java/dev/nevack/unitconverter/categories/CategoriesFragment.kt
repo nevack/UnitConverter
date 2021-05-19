@@ -11,8 +11,8 @@ import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentCategoriesBinding
 import dev.nevack.unitconverter.model.Categories
 
-@AndroidEntryPoint
-class CategoriesFragment : Fragment(R.layout.fragment_categories) {
+@AndroidEntryPoint(Fragment::class)
+class CategoriesFragment : Hilt_CategoriesFragment(R.layout.fragment_categories) {
     private val viewModel: CategoriesViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

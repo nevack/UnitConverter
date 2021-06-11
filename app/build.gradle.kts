@@ -69,7 +69,7 @@ dependencies {
     implementation("dev.chrisbanes.insetter:insetter:0.6.0")
     // Dagger + Hilt
     implementation("com.google.dagger:hilt-android:2.37")
-    kapt("com.google.dagger:hilt-android-compiler:2.36")
+    kapt("com.google.dagger:hilt-android-compiler:2.37")
     // Test
     testImplementation("junit:junit:4.13.2")
 }

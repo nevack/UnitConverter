@@ -18,8 +18,8 @@ import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentConverterBinding
 import dev.nevack.unitconverter.history.HistoryActivity
 
-@AndroidEntryPoint(Fragment::class)
-class ConverterFragment : Hilt_ConverterFragment(R.layout.fragment_converter) {
+@AndroidEntryPoint
+class ConverterFragment : Fragment(R.layout.fragment_converter) {
     private lateinit var binding: FragmentConverterBinding
 
     private val viewModel: ConverterViewModel by activityViewModels()

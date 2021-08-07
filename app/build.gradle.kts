@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("org.jetbrains.kotlin.kapt")
-//    id("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -27,11 +27,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
     buildFeatures {
         viewBinding = true
         renderScript = false
@@ -45,18 +40,18 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
     // AndroidX
-    implementation("androidx.core:core-ktx:1.6.0-beta01")
-    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha01")
-    implementation("androidx.appcompat:appcompat:1.4.0-alpha01")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0-alpha01")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha01")
-    implementation("androidx.recyclerview:recyclerview:1.2.0")
+    implementation("androidx.core:core-ktx:1.7.0-alpha01")
+    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha06")
+    implementation("androidx.appcompat:appcompat:1.4.0-alpha03")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0-alpha03")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha03")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
     // Material
-    implementation("com.google.android.material:material:1.4.0-beta01")
+    implementation("com.google.android.material:material:1.5.0-alpha01")
     // Room
-    implementation("androidx.room:room-runtime:2.4.0-alpha02")
-    kapt("androidx.room:room-compiler:2.4.0-alpha02")
-    implementation("androidx.room:room-ktx:2.4.0-alpha02")
+    implementation("androidx.room:room-runtime:2.4.0-alpha04")
+    kapt("androidx.room:room-compiler:2.4.0-alpha04")
+    implementation("androidx.room:room-ktx:2.4.0-alpha04")
     // Okio
     implementation("com.squareup.okio:okio:3.0.0-alpha.9")
     // Moshi
@@ -72,8 +67,4 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     // Test
     testImplementation("junit:junit:4.13.2")
-}
-
-kapt {
-    correctErrorTypes = true
 }

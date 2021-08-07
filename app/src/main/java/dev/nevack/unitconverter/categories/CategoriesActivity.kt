@@ -15,8 +15,8 @@ import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.databinding.ActivityCategoriesBinding
 import dev.nevack.unitconverter.model.Categories
 
-@AndroidEntryPoint(AppCompatActivity::class)
-class CategoriesActivity : Hilt_CategoriesActivity() {
+@AndroidEntryPoint
+class CategoriesActivity : AppCompatActivity() {
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val converterViewModel: ConverterViewModel by viewModels()
 

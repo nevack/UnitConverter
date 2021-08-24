@@ -37,7 +37,7 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
     // AndroidX
     implementation("androidx.core:core-ktx:1.7.0-alpha01")

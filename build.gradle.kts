@@ -28,7 +28,7 @@ spotless {
     }
 }
 
-tasks.named<Wrapper>("wrapper") {
+tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "7.2"
 }

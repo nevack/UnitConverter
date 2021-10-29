@@ -40,14 +40,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     // AndroidX
-    implementation("androidx.core:core-ktx:1.7.0-rc01")
-    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
-    implementation("androidx.appcompat:appcompat:1.4.0-beta01")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0-rc01")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-rc01")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.fragment:fragment-ktx:1.4.0-beta01")
+    implementation("androidx.appcompat:appcompat:1.4.0-rc01")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0-alpha01")
     // Material
-    implementation("com.google.android.material:material:1.5.0-alpha04")
+    implementation("com.google.android.material:material:1.5.0-alpha05")
     // Room
     implementation("androidx.room:room-runtime:2.4.0-beta01")
     kapt("androidx.room:room-compiler:2.4.0-beta01")

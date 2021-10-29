@@ -1,21 +1,10 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:7.2.0-alpha03")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.40")
-    }
-}
-
 plugins {
     id("com.diffplug.spotless") version "5.17.1"
     id("com.github.ben-manes.versions") version "0.39.0"
     id("com.github.spotbugs") version "4.7.9"
+    id("com.android.application") version "7.2.0-alpha03" apply false
+    id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+    id("dagger.hilt.android.plugin") version "2.40" apply false
 }
 
 spotless {

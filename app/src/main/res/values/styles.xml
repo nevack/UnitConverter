@@ -1,18 +1,28 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.App" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="KeyPadButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">?colorSurface</item>
-        <item name="android:textSize">36sp</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    <style name="Widget.App.Button.KeyPad.NumberButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">?textAppearanceDisplayMedium</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.KeyPad.ClearButton" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">?textAppearanceDisplayMedium</item>
+        <item name="android:textColor">?colorOnSecondary</item>
+        <item name="backgroundTint">?colorSecondary</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="Widget.App.Button.KeyPad.CopyPasteButton" parent="Widget.Material3.Button.TextButton.Icon">
     </style>
 
 </resources>

@@ -15,7 +15,7 @@
 
         <Button
             android:id="@+id/button1"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/button4"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
 
         <Button
             android:id="@+id/button7"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -39,7 +39,7 @@
 
         <Button
             android:id="@+id/button_dot"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -56,7 +56,7 @@
 
         <Button
             android:id="@+id/button2"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -64,7 +64,7 @@
 
         <Button
             android:id="@+id/button5"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -72,7 +72,7 @@
 
         <Button
             android:id="@+id/button8"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -80,7 +80,7 @@
 
         <Button
             android:id="@+id/button0"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -96,7 +96,7 @@
 
         <Button
             android:id="@+id/button3"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -104,7 +104,7 @@
 
         <Button
             android:id="@+id/button6"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -112,7 +112,7 @@
 
         <Button
             android:id="@+id/button9"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -120,7 +120,7 @@
 
         <Button
             android:id="@+id/button_minus"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -142,22 +142,20 @@
 
             <Button
                 android:id="@+id/button_backspace"
+                style="@style/Widget.App.Button.KeyPad.ClearButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:padding="0dp"
-                android:text="C"
-                android:textSize="35sp"
-                app:backgroundTint="?colorSecondary" />
+                android:layout_marginBottom="24dp"
+                android:text="C" />
 
         </FrameLayout>
 
         <ImageButton
             android:id="@+id/button_copy"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.CopyPasteButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -166,7 +164,7 @@
 
         <ImageButton
             android:id="@+id/button_paste"
-            style="@style/KeyPadButton"
+            style="@style/Widget.App.Button.KeyPad.CopyPasteButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

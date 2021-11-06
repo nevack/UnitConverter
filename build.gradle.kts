@@ -13,7 +13,7 @@ spotless {
         targetExclude("$buildDir/**/*.kt")
         targetExclude("bin/**/*.kt")
 
-        ktlint("0.42.1")
+        ktlint("0.43.0")
     }
 }
 

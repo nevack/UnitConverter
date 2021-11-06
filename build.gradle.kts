@@ -3,7 +3,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.39.0"
     id("com.github.spotbugs") version "4.7.9"
     id("com.android.application") version "7.2.0-alpha03" apply false
-    id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+    id("org.jetbrains.kotlin.android") version "1.6.0-RC2" apply false
     id("dagger.hilt.android.plugin") version "2.40" apply false
 }
 

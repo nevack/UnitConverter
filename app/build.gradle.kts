@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
+    id("com.diffplug.spotless")
 }
 
 android {
@@ -72,4 +73,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.40")
     // Test
     testImplementation("junit:junit:4.13.2")
+}
+
+spotless {
+    kotlin {
+        ktlint("0.43.0")
+    }
 }

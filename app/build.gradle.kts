@@ -43,7 +43,7 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-RC")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     // AndroidX
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.fragment:fragment-ktx:1.4.0")

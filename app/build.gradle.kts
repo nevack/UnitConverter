@@ -68,7 +68,7 @@ dependencies {
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt
-    implementation("com.google.dagger:hilt-android:2.40.3")
+    implementation("com.google.dagger:hilt-android:2.40.4")
     kapt("com.google.dagger:hilt-android-compiler:2.40.3")
     // Test
     testImplementation("junit:junit:4.13.2")

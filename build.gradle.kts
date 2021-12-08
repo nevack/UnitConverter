@@ -1,6 +1,6 @@
 plugins {
     id("com.github.ben-manes.versions") version "0.39.0"
-    id("com.diffplug.spotless") version "6.0.2" apply false
+    id("com.diffplug.spotless") version "6.0.4" apply false
     id("com.android.application") version "7.2.0-alpha05" apply false
     id("org.jetbrains.kotlin.android") version "1.6.0" apply false
     id("org.jetbrains.kotlin.kapt") version "1.6.0" apply false

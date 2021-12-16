@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
     id("com.diffplug.spotless")
+    id("org.gradle.android.cache-fix")
 }
 
 android {

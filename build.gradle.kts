@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.6.10" apply false
     id("org.jetbrains.kotlin.kapt") version "1.6.10" apply false
     id("dagger.hilt.android.plugin") version "2.40.5" apply false
+    id("org.gradle.android.cache-fix") version "2.4.5" apply false
 }
 
 tasks.wrapper {

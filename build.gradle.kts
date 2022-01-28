@@ -1,3 +1,6 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
+
 plugins {
     id("com.github.ben-manes.versions") version "0.41.0"
     id("com.diffplug.spotless") version "6.2.0" apply false
@@ -11,4 +14,23 @@ plugins {
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "7.3.3"
+}
+
+fun isNotStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
+}
+
+fun ComponentSelectionWithCurrent.shouldSkip(): Boolean {
+    if (candidate.module == "org.jacoco.ant") return true
+    return isNotStable(candidate.version) && !isNotStable(currentVersion)
+}
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    // optional parameters
+    checkForGradleUpdate = true
+    gradleReleaseChannel = "current"
+    rejectVersionIf { shouldSkip() }
 }

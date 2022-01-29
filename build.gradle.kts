@@ -1,6 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
-
 plugins {
     id("com.github.ben-manes.versions") version "0.41.0"
     id("com.diffplug.spotless") version "6.2.0" apply false
@@ -23,14 +20,11 @@ fun isNotStable(version: String): Boolean {
     return isStable.not()
 }
 
-fun ComponentSelectionWithCurrent.shouldSkip(): Boolean {
-    if (candidate.module == "org.jacoco.ant") return true
-    return isNotStable(candidate.version) && !isNotStable(currentVersion)
-}
-
-tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
-    // optional parameters
+tasks.dependencyUpdates {
     checkForGradleUpdate = true
     gradleReleaseChannel = "current"
-    rejectVersionIf { shouldSkip() }
+    rejectVersionIf {
+        if (candidate.module == "org.jacoco.ant") true
+        else isNotStable(candidate.version) && !isNotStable(currentVersion)
+    }
 }

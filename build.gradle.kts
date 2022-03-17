@@ -10,7 +10,7 @@ plugins {
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "7.4"
+    gradleVersion = "7.4.1"
 }
 
 fun isNotStable(version: String): Boolean {

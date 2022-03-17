@@ -6,10 +6,10 @@ Simple Unit converter for Android with Material Design
 <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width=258 />
 </a>
 
- Main menu | Currency
------------|----------
-![Categories](.github/images/main.png) | ![Currency](.github/images/currency.png)
+| Main menu                              | Currency                                 |
+|----------------------------------------|------------------------------------------|
+| ![Categories](.github/images/main.png) | ![Currency](.github/images/currency.png) |
 
- Temperrature | History
---------------|---------
-![Temperature](.github/images/temperature.png) | ![History](.github/images/history.png)
+| Temperature                                    | History                                |
+|------------------------------------------------|----------------------------------------|
+| ![Temperature](.github/images/temperature.png) | ![History](.github/images/history.png) |

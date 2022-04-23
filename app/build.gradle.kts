@@ -72,6 +72,6 @@ dependencies {
 
 spotless {
     kotlin {
-        ktlint("0.43.2")
+        ktlint("0.45.2")
     }
 }

@@ -34,10 +34,10 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: app
+          name: UnitConverter.apk
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Upload Dependencies report
         uses: actions/upload-artifact@v3
         with:
-          name: report
-          path: build/dependencyUpdates
+          name: dependencyUpdates.txt
+          path: build/dependencyUpdates/report.txt

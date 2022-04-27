@@ -32,12 +32,12 @@ jobs:
         with:
           arguments: dependencyUpdates spotlessCheck
       - name: Upload APK
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Upload Dependencies report
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: report
           path: build/dependencyUpdates

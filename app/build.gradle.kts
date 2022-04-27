@@ -35,6 +35,17 @@ android {
         aidl = false
         shaders = false
     }
+
+    packagingOptions {
+        resources {
+            excludes += "DebugProbesKt.bin"
+        }
+    }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
 }
 
 dependencies {

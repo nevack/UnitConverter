@@ -39,6 +39,7 @@ android {
     packagingOptions {
         resources {
             excludes += "DebugProbesKt.bin"
+            excludes += "META-INF/*.version"
         }
     }
 

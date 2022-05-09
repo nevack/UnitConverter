@@ -25,6 +25,10 @@ fun isAndroidDep(group: String): Boolean = when {
     else -> false
 }
 
+fun isKotlin(group: String): Boolean = group.startsWith("org.jetbrains.kotlin")
+
+fun isKotlinBeta(version: String): Boolean = version.contains("Beta")
+
 tasks.dependencyUpdates {
     checkForGradleUpdate = true
     gradleReleaseChannel = "current"
@@ -33,6 +37,9 @@ tasks.dependencyUpdates {
             candidate.module == "org.jacoco.ant" -> true
             isAndroidDep(candidate.group) -> {
                 getAndroidStability(candidate.version) < getAndroidStability(currentVersion)
+            }
+            isKotlin(candidate.group) -> {
+                !isKotlinBeta(currentVersion) && isKotlinBeta(candidate.version)
             }
             else -> false
         }

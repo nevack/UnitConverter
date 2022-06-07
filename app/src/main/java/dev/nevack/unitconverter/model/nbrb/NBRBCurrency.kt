@@ -51,11 +51,12 @@ data class NBRBCurrency(
 
         fun getCompatibleLocale(list: LocaleListCompat): Locale {
             for (i in 0 until list.size()) {
-                if (LANGUAGES.contains(list[i].language)) {
-                    return list[i]
+                val locale = list[i] ?: continue
+                if (LANGUAGES.contains(locale.language)) {
+                    return locale
                 }
             }
-            return list[0]
+            return list[0] ?: Locale.getDefault()
         }
     }
 

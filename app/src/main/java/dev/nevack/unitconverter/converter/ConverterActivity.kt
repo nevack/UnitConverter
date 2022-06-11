@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.fragment.app.commit
@@ -31,11 +31,16 @@ class ConverterActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setupNavigation(binding)
+
+        val callback = onBackPressedDispatcher.addCallback(this) {
+            viewModel.setDrawerOpened(false)
+        }
         viewModel.drawerOpened.observe(this) { opened ->
+            callback.isEnabled = opened
             if (opened) {
-                binding.navigationDrawer.openDrawer(GravityCompat.START)
+                binding.navigationDrawer.open()
             } else {
-                binding.navigationDrawer.closeDrawer(GravityCompat.START)
+                binding.navigationDrawer.close()
             }
         }
 
@@ -62,12 +67,6 @@ class ConverterActivity : AppCompatActivity() {
             viewModel.load(Categories[menuItem.order], this@ConverterActivity)
             viewModel.setDrawerOpened(false)
             true
-        }
-    }
-
-    override fun onBackPressed() {
-        if (!viewModel.setDrawerOpened(false)) {
-            super.onBackPressed()
         }
     }
 

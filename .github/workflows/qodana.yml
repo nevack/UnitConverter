@@ -16,4 +16,4 @@ jobs:
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v5.1.0
         with:
-          args: -l,jetbrains/qodana-jvm-android:2021.3-eap
+          args: -l,jetbrains/qodana-jvm-android:2022.1-eap

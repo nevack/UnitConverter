@@ -55,10 +55,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3")
     // AndroidX
     implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    implementation("androidx.fragment:fragment-ktx:1.5.0")
     implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     // Material
     implementation("com.google.android.material:material:1.6.1")

@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("dev.nevack.plugins.signing-config")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("com.google.dagger.hilt.android")

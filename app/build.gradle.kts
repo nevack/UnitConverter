@@ -6,6 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.diffplug.spotless")
     id("org.gradle.android.cache-fix")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -26,11 +28,6 @@ android {
             isDebuggable = false
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), file("proguard-rules.pro"))
-        }
-
-        debug {
-            isMinifyEnabled = false
-            applicationIdSuffix = ".debug"
         }
     }
 
@@ -83,6 +80,12 @@ dependencies {
     // Dagger + Hilt
     implementation("com.google.dagger:hilt-android:2.42")
     kapt("com.google.dagger:hilt-android-compiler:2.42")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
     // Test
     testImplementation("junit:junit:4.13.2")
 }

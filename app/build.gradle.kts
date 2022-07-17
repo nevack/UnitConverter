@@ -82,7 +82,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.42")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:30.2.0"))
+    implementation(platform("com.google.firebase:firebase-bom:30.3.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 

@@ -78,8 +78,8 @@ dependencies {
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    implementation("com.google.dagger:hilt-android:2.43")
+    kapt("com.google.dagger:hilt-android-compiler:2.43")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:30.3.0"))

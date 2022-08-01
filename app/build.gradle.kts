@@ -64,9 +64,9 @@ dependencies {
     // Material
     implementation("com.google.android.material:material:1.6.1")
     // Room
-    implementation("androidx.room:room-runtime:2.4.2")
-    kapt("androidx.room:room-compiler:2.4.2")
-    implementation("androidx.room:room-ktx:2.4.2")
+    implementation("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
+    implementation("androidx.room:room-ktx:2.4.3")
     // Okio
     implementation("com.squareup.okio:okio:3.2.0")
     // Moshi

@@ -7,16 +7,19 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
 
-class HistoryFragment : Fragment(R.layout.fragment_history) {
+class HistoryFragment : Fragment(R.layout.fragment_history), MenuProvider {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
 
@@ -24,7 +27,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         binding = FragmentHistoryBinding.bind(view)
 
         binding.root.applyInsetter {
@@ -51,14 +53,16 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             adapter.submitList(it)
             binding.recycler.isInvisible = it.isEmpty()
         }
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_history, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_history, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when(menuItem.itemId) {
         R.id.delete -> {
             viewModel.removeAll()
             true
@@ -67,7 +71,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
             true
         }
-        else -> super.onOptionsItemSelected(item)
+        else -> false
     }
 
     private fun shareItem(item: HistoryItem) {

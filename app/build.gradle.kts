@@ -13,12 +13,12 @@ plugins {
 android {
     namespace = "dev.nevack.unitconverter"
     buildToolsVersion = "33.0.0"
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "dev.nevack.unitconverter"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 7
         versionName = "1.1.7"
     }

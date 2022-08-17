@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <include domain="database" path="history-db"/>
+    <include domain="file" path="currencies.json"/>
+    <include domain="file" path="rates.json"/>
+</full-backup-content>

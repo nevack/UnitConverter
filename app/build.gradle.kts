@@ -70,7 +70,7 @@ dependencies {
     // Okio
     implementation("com.squareup.okio:okio:3.2.0")
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.13.0")
+    implementation("com.squareup.moshi:moshi:1.14.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

@@ -55,7 +55,7 @@ dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     // AndroidX
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.fragment:fragment-ktx:1.5.2")
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.5.1")

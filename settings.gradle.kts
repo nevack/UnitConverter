@@ -14,7 +14,7 @@ pluginManagement {
         id("com.google.dagger.hilt.android") version "2.43.2"
         id("org.gradle.android.cache-fix") version "2.5.6"
         id("com.google.gms.google-services") version "4.3.14"
-        id("com.google.firebase.crashlytics") version "2.9.1"
+        id("com.google.firebase.crashlytics") version "2.9.2"
     }
 }
 

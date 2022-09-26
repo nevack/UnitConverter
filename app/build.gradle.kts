@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.nevack.unitconverter"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 33
         versionCode = 7
         versionName = "1.1.7"

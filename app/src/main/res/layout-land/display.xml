@@ -93,12 +93,12 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
+            style="?attr/floatingActionButtonSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
             android:layout_marginEnd="8dp"
             android:contentDescription="@string/swap_source_and_result_units_and_values"
-            app:fabSize="mini"
             app:srcCompat="@drawable/ic_swap_vert" />
 
     </FrameLayout>

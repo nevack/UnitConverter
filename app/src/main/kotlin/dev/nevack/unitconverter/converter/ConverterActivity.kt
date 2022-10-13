@@ -13,6 +13,7 @@ import androidx.core.view.get
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
@@ -67,6 +68,10 @@ class ConverterActivity : AppCompatActivity() {
             viewModel.load(Categories[menuItem.order], this@ConverterActivity)
             viewModel.setDrawerOpened(false)
             true
+        }
+        applyInsetter {
+            type(statusBars = true) { margin(top = true) }
+            type(navigationBars = true) { margin(bottom = true) }
         }
     }
 

@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import dev.nevack.unitconverter.R
+import dev.nevack.unitconverter.databinding.KeypadBinding
 
 internal class ConverterKeypadView @JvmOverloads constructor(
     context: Context,
@@ -49,22 +50,23 @@ internal class ConverterKeypadView @JvmOverloads constructor(
 
     init {
         orientation = HORIZONTAL
-        LayoutInflater.from(context).inflate(R.layout.keypad, this, true)
-        mButton1 = findViewById(R.id.button1)
-        mButton2 = findViewById(R.id.button2)
-        mButton3 = findViewById(R.id.button3)
-        mButton4 = findViewById(R.id.button4)
-        mButton5 = findViewById(R.id.button5)
-        mButton6 = findViewById(R.id.button6)
-        mButton7 = findViewById(R.id.button7)
-        mButton8 = findViewById(R.id.button8)
-        mButton9 = findViewById(R.id.button9)
-        mButton0 = findViewById(R.id.button0)
-        mButtonDot = findViewById(R.id.button_dot)
-        mButtonMinus = findViewById(R.id.button_minus)
-        mButtonBackspace = findViewById(R.id.button_backspace)
-        mButtonCopy = findViewById(R.id.button_copy)
-        mButtonPaste = findViewById(R.id.button_paste)
+        KeypadBinding.inflate(LayoutInflater.from(context), this).apply {
+            mButton1 = button1
+            mButton2 = button2
+            mButton3 = button3
+            mButton4 = button4
+            mButton5 = button5
+            mButton6 = button6
+            mButton7 = button7
+            mButton8 = button8
+            mButton9 = button9
+            mButton0 = button0
+            mButtonDot = buttonDot
+            mButtonMinus = buttonMinus
+            mButtonBackspace = buttonBackspace
+            mButtonCopy = buttonCopy
+            mButtonPaste = buttonPaste
+        }
     }
     fun setOnCopyListeners(listener: ActionListener) {
         mButtonCopy.setActionListener(listener)

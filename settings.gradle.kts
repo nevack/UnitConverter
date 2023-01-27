@@ -9,7 +9,7 @@ pluginManagement {
 
     plugins {
         id("com.github.ben-manes.versions") version "0.44.0"
-        id("com.diffplug.spotless") version "6.13.0"
+        id("com.diffplug.spotless") version "6.14.0"
         id("com.android.application") version "7.4.0"
         id("org.jetbrains.kotlin.android") version "1.8.0"
         id("org.jetbrains.kotlin.kapt") version "1.8.0"

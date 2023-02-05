@@ -92,8 +92,4 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-spotless {
-    kotlin {
-        ktlint("0.47.1")
-    }
-}
+spotless.kotlin { ktlint() }

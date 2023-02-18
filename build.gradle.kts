@@ -4,5 +4,5 @@ plugins {
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "7.6"
+    gradleVersion = "8.0.1"
 }

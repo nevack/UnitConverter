@@ -34,13 +34,14 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         renderScript = false
         aidl = false
         shaders = false
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "DebugProbesKt.bin"
             excludes += "META-INF/*.version"

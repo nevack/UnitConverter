@@ -14,7 +14,7 @@ pluginManagement {
         id("org.jetbrains.kotlin.android") version "1.8.20"
         id("org.jetbrains.kotlin.kapt") version "1.8.20"
         id("com.google.dagger.hilt.android") version "2.45"
-        id("org.gradle.android.cache-fix") version "2.7.0"
+        id("org.gradle.android.cache-fix") version "2.7.1"
         id("com.google.gms.google-services") version "4.3.15"
         id("com.google.firebase.crashlytics") version "2.9.5"
     }

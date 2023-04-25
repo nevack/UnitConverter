@@ -12,7 +12,7 @@ pluginManagement {
         id("com.diffplug.spotless") version "6.18.0"
         id("com.android.application") version "8.0.0"
         id("org.jetbrains.kotlin.android") version "1.8.21"
-        id("org.jetbrains.kotlin.kapt") version "1.8.20"
+        id("org.jetbrains.kotlin.kapt") version "1.8.21"
         id("com.google.dagger.hilt.android") version "2.45"
         id("org.gradle.android.cache-fix") version "2.7.1"
         id("com.google.gms.google-services") version "4.3.15"

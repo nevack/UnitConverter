@@ -73,8 +73,8 @@ dependencies {
     // Okio
     implementation("com.squareup.okio:okio:3.3.0")
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.14.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
+    implementation("com.squareup.moshi:moshi:1.15.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")

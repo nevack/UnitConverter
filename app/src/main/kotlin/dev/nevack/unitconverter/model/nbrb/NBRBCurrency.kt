@@ -1,6 +1,6 @@
 package dev.nevack.unitconverter.model.nbrb
 
-import androidx.core.os.LocaleListCompat
+import android.os.LocaleList
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -49,7 +49,7 @@ data class NBRBCurrency(
         private val BE = Locale("be")
         private val LANGUAGES = listOf(EN, RU, BE).map { it.language }.toSet()
 
-        fun getCompatibleLocale(list: LocaleListCompat): Locale {
+        fun getCompatibleLocale(list: LocaleList): Locale {
             for (i in 0 until list.size()) {
                 val locale = list[i] ?: continue
                 if (locale.language in LANGUAGES) return locale

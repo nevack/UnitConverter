@@ -1,7 +1,6 @@
 package dev.nevack.unitconverter
 
 import android.content.Context
-import androidx.core.os.ConfigurationCompat
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -38,7 +37,7 @@ object MainModule {
         service: NBRBService,
         moshi: Moshi
     ): NBRBRepository {
-        val localeList = ConfigurationCompat.getLocales(context.resources.configuration)
+        val localeList = context.resources.configuration.locales
         val locale = NBRBCurrency.getCompatibleLocale(localeList)
         return NBRBRepository(locale, { name -> File(context.filesDir, name) }, service, moshi)
     }

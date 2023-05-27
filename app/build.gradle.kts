@@ -36,21 +36,6 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
-        renderScript = false
-        aidl = false
-        shaders = false
-    }
-
-    packaging {
-        resources {
-            excludes += "DebugProbesKt.bin"
-            excludes += "META-INF/*.version"
-        }
-    }
-
-    dependenciesInfo {
-        includeInApk = false
-        includeInBundle = false
     }
 }
 

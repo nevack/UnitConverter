@@ -24,7 +24,7 @@ object MainModule {
 
     @Provides
     fun provideRetrofit(moshi: Moshi): Retrofit = Retrofit.Builder()
-        .baseUrl("https://www.nbrb.by/API/ExRates/")
+        .baseUrl("https://api.nbrb.by/exrates/")
         .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
 
     @Provides

@@ -32,11 +32,11 @@ jobs:
       - name: Build APK
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :app:assembleDebug
-      - name: Check format and deps
+          arguments: --stacktrace :app:assembleDebug
+      - name: Check code format and dependencies
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: dependencyUpdates spotlessCheck
+          arguments: -Pdependency_updates=true dependencyUpdates spotlessCheck
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:

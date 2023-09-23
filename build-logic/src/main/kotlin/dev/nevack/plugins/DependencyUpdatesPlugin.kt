@@ -8,6 +8,11 @@ import org.gradle.kotlin.dsl.provideDelegate
 
 class DependencyUpdatesPlugin : Plugin<Project> {
     override fun apply(target: Project) {
+        val dependencyUpdates = target.findProperty("dependency_updates")
+        val dependencyUpdatesBoolean = dependencyUpdates?.toString()?.toBoolean() ?: false
+
+        if (!dependencyUpdatesBoolean) return
+
         target.pluginManager.apply("com.github.ben-manes.versions")
 
         val ignoreConstraints: String? by target

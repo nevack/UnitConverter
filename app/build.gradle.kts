@@ -57,7 +57,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
     // Okio
-    implementation("com.squareup.okio:okio:3.5.0")
+    implementation("com.squareup.okio:okio:3.6.0")
     // Moshi
     implementation("com.squareup.moshi:moshi:1.15.0")
     //noinspection KaptUsageInsteadOfKsp

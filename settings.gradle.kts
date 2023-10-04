@@ -13,7 +13,7 @@ pluginManagement {
         id("com.android.application") version "8.1.2"
         id("org.jetbrains.kotlin.android") version "1.9.10"
         id("org.jetbrains.kotlin.kapt") version "1.9.10"
-        id("com.google.dagger.hilt.android") version "2.48"
+        id("com.google.dagger.hilt.android") version "2.48.1"
         id("org.gradle.android.cache-fix") version "2.8.1"
         id("com.google.gms.google-services") version "4.4.0"
         id("com.google.firebase.crashlytics") version "2.9.9"

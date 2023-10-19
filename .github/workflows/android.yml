@@ -50,6 +50,7 @@ jobs:
           path: build/dependencyUpdates/report.txt
 
   dependency-review:
+    if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     steps:

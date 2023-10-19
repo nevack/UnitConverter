@@ -32,13 +32,9 @@ jobs:
         with:
           dependency-graph: generate-and-submit
       - name: Build APK
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace :app:assembleDebug
+        run: ./gradlew --stacktrace :app:assembleDebug
       - name: Check code format and dependencies
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: -Pdependency_updates=true dependencyUpdates spotlessCheck
+        run: ./gradlew -Pdependency_updates=true dependencyUpdates spotlessCheck
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:

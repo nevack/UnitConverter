@@ -51,7 +51,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // Material
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0-beta01")
     // Room
     implementation("androidx.room:room-runtime:2.6.0")
     //noinspection KaptUsageInsteadOfKsp

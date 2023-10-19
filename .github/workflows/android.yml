@@ -27,8 +27,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Setup Gradle
+      - name: Setup Gradle to generate and submit dependency graphs
         uses: gradle/gradle-build-action@v2
+        with:
+          dependency-graph: generate-and-submit
       - name: Build APK
         uses: gradle/gradle-build-action@v2
         with:
@@ -47,3 +49,10 @@ jobs:
         with:
           name: dependencyUpdates.txt
           path: build/dependencyUpdates/report.txt
+
+  dependency-review:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Perform dependency review
+        uses: actions/dependency-review-action@v3

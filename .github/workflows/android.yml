@@ -35,9 +35,16 @@ jobs:
         with:
           dependency-graph: generate-and-submit
       - name: Build APK
-        run: ./gradlew --stacktrace :app:assembleDebug
+        run: >
+          ./gradlew
+          --stacktrace
+          :app:assembleDebug
       - name: Check code format and dependencies
-        run: ./gradlew -Pdependency_updates=true dependencyUpdates spotlessCheck
+        run: >
+          ./gradlew
+          -Pdependency_updates=true
+          dependencyUpdates
+          spotlessCheck
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
@@ -48,8 +55,17 @@ jobs:
         with:
           name: dependencyUpdates.txt
           path: build/dependencyUpdates/report.txt
+      - name: Upload reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
 
   dependency-review:
+    name: Generate Dependency Review for Pull Requests
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest

@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("dev.nevack.plugins.signing-config")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("com.diffplug.spotless")
     id("org.gradle.android.cache-fix")
@@ -55,14 +55,14 @@ dependencies {
     // Room
     implementation("androidx.room:room-runtime:2.6.0")
     //noinspection KaptUsageInsteadOfKsp
-    kapt("androidx.room:room-compiler:2.6.0")
+    ksp("androidx.room:room-compiler:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
     // Okio
     implementation("com.squareup.okio:okio:3.6.0")
     // Moshi
     implementation("com.squareup.moshi:moshi:1.15.0")
     //noinspection KaptUsageInsteadOfKsp
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
@@ -70,7 +70,7 @@ dependencies {
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.48.1")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))

@@ -42,9 +42,8 @@ jobs:
       - name: Check code format and dependencies
         run: >
           ./gradlew
-          -Pdependency_updates=true
-          dependencyUpdates
           spotlessCheck
+          dependencyUpdates
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:

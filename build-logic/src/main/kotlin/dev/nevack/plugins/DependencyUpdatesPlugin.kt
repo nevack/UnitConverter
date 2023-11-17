@@ -23,7 +23,7 @@ class DependencyUpdatesPlugin : Plugin<Project> {
                     isAndroidDep(candidate.group) -> {
                         getAndroidStability(candidate.version) < getAndroidStability(currentVersion)
                     }
-                    isKotlin(candidate.group) -> {
+                    isKotlin(candidate.group) || isKSP(candidate.group) -> {
                         isKotlinStable(currentVersion) && !isKotlinStable(candidate.version)
                     }
                     else -> false
@@ -52,6 +52,8 @@ private fun isAndroidDep(group: String): Boolean = when {
 }
 
 private fun isKotlin(group: String): Boolean = group.startsWith("org.jetbrains.kotlin")
+
+private fun isKSP(group: String): Boolean = group.startsWith("com.google.devtools.ksp")
 
 private fun isKotlinStable(version: String): Boolean = when {
     version.contains("Beta") -> false

@@ -8,7 +8,7 @@ pluginManagement {
     }
 
     plugins {
-        id("com.github.ben-manes.versions") version "0.49.0"
+        id("com.github.ben-manes.versions") version "0.50.0"
         id("com.diffplug.spotless") version "6.22.0"
         id("com.android.application") version "8.2.0-rc03"
         id("org.jetbrains.kotlin.android") version "1.9.20"

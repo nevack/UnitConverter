@@ -15,7 +15,7 @@ gradlePlugin {
         }
         register("dependencyUpdates") {
             id = "dev.nevack.plugins.dependency-updates"
-            implementationClass = "dev.nevack.plugins.DependencyUpdatesPlugin"
+            implementationClass = "dev.nevack.plugins.dependencies.DependencyUpdatesPlugin"
         }
     }
 }

@@ -3,5 +3,5 @@ plugins {
 }
 
 tasks.wrapper {
-    gradleVersion = "8.5-rc-2"
+    gradleVersion = "8.5-rc-3"
 }

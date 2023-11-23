@@ -11,7 +11,7 @@ pluginManagement {
         id("com.github.ben-manes.versions") version "0.50.0"
         id("com.diffplug.spotless") version "6.22.0"
         id("com.android.application") version "8.2.0-rc03"
-        id("org.jetbrains.kotlin.android") version "1.9.20"
+        id("org.jetbrains.kotlin.android") version "1.9.21"
         id("com.google.devtools.ksp") version "1.9.20-1.0.14"
         id("com.google.dagger.hilt.android") version "2.48.1"
         id("org.gradle.android.cache-fix") version "3.0"

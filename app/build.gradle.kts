@@ -81,7 +81,11 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-spotless.kotlin { ktlint() }
+spotless.kotlin {
+    // https://github.com/diffplug/spotless/pull/1890#issuecomment-1827263031
+    @Suppress("INACCESSIBLE_TYPE")
+    ktlint()
+}
 
 kotlin.jvmToolchain(17)
 

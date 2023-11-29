@@ -54,14 +54,12 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0-rc01")
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
-    //noinspection KaptUsageInsteadOfKsp
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     // Okio
     implementation("com.squareup.okio:okio:3.6.0")
     // Moshi
     implementation("com.squareup.moshi:moshi:1.15.0")
-    //noinspection KaptUsageInsteadOfKsp
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

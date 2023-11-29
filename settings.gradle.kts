@@ -8,11 +8,13 @@ pluginManagement {
     }
 
     plugins {
+        val kotlinVersion = "1.9.20"
+        val kspSubVersion = "1.0.14"
         id("com.github.ben-manes.versions") version "0.50.0"
         id("com.diffplug.spotless") version "6.23.0"
         id("com.android.application") version "8.2.0-rc03"
-        id("org.jetbrains.kotlin.android") version "1.9.20"
-        id("com.google.devtools.ksp") version "1.9.20-1.0.14"
+        id("org.jetbrains.kotlin.android") version kotlinVersion
+        id("com.google.devtools.ksp") version "$kotlinVersion-$kspSubVersion"
         id("com.google.dagger.hilt.android") version "2.48.1"
         id("org.gradle.android.cache-fix") version "3.0"
         id("com.google.gms.google-services") version "4.4.0"

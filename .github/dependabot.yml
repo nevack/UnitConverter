@@ -4,3 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+registries:
+  maven-google:
+    type: "maven-repository"
+    url: "https://maven.google.com"
+    replaces-base: true

@@ -7,6 +7,7 @@ plugins {
     id("org.gradle.android.cache-fix") apply false
     id("dev.nevack.plugins.dependency-updates")
     id("com.diffplug.spotless")
+    id("com.autonomousapps.dependency-analysis")
 }
 
 spotless {
@@ -18,6 +19,12 @@ spotless {
     kotlinGradle {
         target("**/*.gradle.kts")
         ktlint("1.3.1")
+    }
+}
+
+dependencyAnalysis {
+    structure {
+        ignoreKtx(true)
     }
 }
 

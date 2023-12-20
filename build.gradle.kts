@@ -9,6 +9,13 @@ plugins {
     id("com.google.gms.google-services") apply false
     id("com.google.firebase.crashlytics") apply false
     id("dev.nevack.plugins.dependency-updates")
+    id("com.autonomousapps.dependency-analysis")
+}
+
+dependencyAnalysis {
+    structure {
+        ignoreKtx(true)
+    }
 }
 
 tasks.wrapper {

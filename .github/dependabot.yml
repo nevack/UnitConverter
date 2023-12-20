@@ -9,6 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    registries: "*"
+    open-pull-requests-limit: 3
 registries:
   maven-google:
     type: "maven-repository"

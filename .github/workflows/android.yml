@@ -9,7 +9,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  pull-requests: write
 
 # Where will they run
 jobs:
@@ -30,10 +30,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Setup Gradle to generate and submit dependency graphs
-        uses: gradle/gradle-build-action@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
-          dependency-graph: generate-and-submit
+          add-job-summary-as-pr-comment: always
       - name: Build APK
         run: >
           ./gradlew
@@ -62,12 +62,3 @@ jobs:
           path: |
             **/build/reports/
             **/build/test-results/
-
-  dependency-review:
-    name: Generate Dependency Review for Pull Requests
-    if: github.event_name == 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Perform dependency review
-        uses: actions/dependency-review-action@v4

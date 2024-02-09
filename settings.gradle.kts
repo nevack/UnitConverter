@@ -17,7 +17,7 @@ pluginManagement {
         id("com.google.devtools.ksp") version "$kotlinVersion-$kspSubVersion"
         id("com.google.dagger.hilt.android") version "2.50"
         id("org.gradle.android.cache-fix") version "3.0"
-        id("com.google.gms.google-services") version "4.4.0"
+        id("com.google.gms.google-services") version "4.4.1"
         id("com.google.firebase.crashlytics") version "2.9.9"
     }
 

@@ -15,7 +15,7 @@ pluginManagement {
         id("com.android.application") version "8.2.2"
         id("org.jetbrains.kotlin.android") version kotlinVersion
         id("com.google.devtools.ksp") version "$kotlinVersion-$kspSubVersion"
-        id("com.google.dagger.hilt.android") version "2.50"
+        id("com.google.dagger.hilt.android") version "2.51"
         id("org.gradle.android.cache-fix") version "3.0.1"
         id("com.google.gms.google-services") version "4.4.1"
         id("com.google.firebase.crashlytics") version "2.9.9"

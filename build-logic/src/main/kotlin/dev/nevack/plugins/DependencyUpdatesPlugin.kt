@@ -15,7 +15,7 @@ class DependencyUpdatesPlugin : Plugin<Project> {
 
         target.tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
             checkForGradleUpdate = true
-            gradleReleaseChannel = "current"
+            gradleReleaseChannel = if (ignoreConstraintsBoolean) "release-candidate" else "current"
             rejectVersionIf {
                 when {
                     ignoreConstraintsBoolean -> false

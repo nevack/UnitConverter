@@ -13,6 +13,7 @@ fun buildRejectStrategy(option: IgnoreConstraintsOption): RejectStrategy {
     if (option != IgnoreConstraintsOption.KOTLIN) {
         strategies += KotlinRejectStrategy(2)
     }
+    strategies += GuavaAndroidRejectStrategy()
     strategies += GroupExcludeRejectStrategy(listOf()) // Nothing here for now.
 
     return CompositeRejectStrategy(strategies)
@@ -105,6 +106,12 @@ class KotlinRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowan
 class AndroidRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowance) {
     override fun getStability(version: String): Int = getAndroidStability(version).ordinal
     override fun matches(group: String): Boolean = isAndroidDep(group)
+}
+
+
+class GuavaAndroidRejectStrategy() : StabilityRejectStrategy() {
+    override fun getStability(version: String): Int = if (version.endsWith("-android")) 100 else 0
+    override fun matches(group: String): Boolean = group == "com.google.guava"
 }
 
 class CompositeRejectStrategy(

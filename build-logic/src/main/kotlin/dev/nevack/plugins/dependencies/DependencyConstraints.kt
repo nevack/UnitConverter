@@ -8,13 +8,14 @@ fun buildRejectStrategy(option: IgnoreConstraintsOption): RejectStrategy {
     val strategies = mutableListOf<RejectStrategy>()
 
     if (option != IgnoreConstraintsOption.ANDROID) {
-        strategies += AndroidRejectStrategy(2)
+        strategies += AndroidRejectStrategy(allowance = 2)
+        strategies += AndroidBuildRejectStrategy(allowance = 0)
     }
     if (option != IgnoreConstraintsOption.KOTLIN) {
-        strategies += KotlinRejectStrategy(2)
+        strategies += KotlinRejectStrategy(allowance = 2)
     }
     strategies += GuavaAndroidRejectStrategy()
-    strategies += GroupExcludeRejectStrategy(listOf()) // Nothing here for now.
+    strategies += GroupExcludeRejectStrategy(emptyList()) // Nothing here for now.
 
     return CompositeRejectStrategy(strategies)
 }
@@ -109,8 +110,14 @@ class AndroidRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowa
 }
 
 
-class GuavaAndroidRejectStrategy() : StabilityRejectStrategy() {
-    override fun getStability(version: String): Int = if (version.endsWith("-android")) 100 else 0
+class AndroidBuildRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowance) {
+    override fun getStability(version: String): Int = getAndroidStability(version).ordinal
+    override fun matches(group: String): Boolean = isAndroidBuildDep(group)
+}
+
+
+class GuavaAndroidRejectStrategy : StabilityRejectStrategy() {
+    override fun getStability(version: String): Int = if (version.endsWith("-android")) Int.MAX_VALUE else Int.MIN_VALUE
     override fun matches(group: String): Boolean = group == "com.google.guava"
 }
 

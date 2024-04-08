@@ -13,8 +13,14 @@ fun getAndroidStability(version: String): AndroidStability = when {
 }
 
 fun isAndroidDep(group: String): Boolean = when {
+    isAndroidBuildDep(group) -> false
     group.startsWith("androidx.") -> true
     group.startsWith("com.google.android.") -> true
+    else -> false
+}
+
+fun isAndroidBuildDep(group: String): Boolean = when {
+    group == "androidx.databinding" -> true
     group.startsWith("com.android.") -> true
     else -> false
 }

@@ -84,10 +84,7 @@ abstract class StabilityRejectStrategy(
         matches(group) -> {
             val fromStability = getStability(fromVersion)
             val toStability = getStability(toVersion)
-            if (isAndroidDep(group)) {
-                println("$fromVersion($fromStability) $toVersion($toStability)")
-                println()
-            }
+
             toStability + allowance < fromStability
         }
 

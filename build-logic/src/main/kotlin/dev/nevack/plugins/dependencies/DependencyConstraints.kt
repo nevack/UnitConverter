@@ -12,7 +12,7 @@ fun buildRejectStrategy(option: IgnoreConstraintsOption): RejectStrategy {
         strategies += AndroidBuildRejectStrategy(allowance = 0)
     }
     if (option != IgnoreConstraintsOption.KOTLIN) {
-        strategies += KotlinRejectStrategy(allowance = 2)
+        strategies += KotlinRejectStrategy(allowance = 1)
     }
     strategies += GuavaAndroidRejectStrategy()
     strategies += GroupExcludeRejectStrategy(emptyList()) // Nothing here for now.

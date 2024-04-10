@@ -51,7 +51,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
         val index: Int,
         val convertTo: (TemperatureUnit, BigDecimal) -> BigDecimal,
     ) {
-        object Kelvin : TemperatureUnit(
+        data object Kelvin : TemperatureUnit(
             0,
             { unit, x ->
                 when (unit) {
@@ -62,7 +62,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
             }
         )
 
-        object Celsius : TemperatureUnit(
+        data object Celsius : TemperatureUnit(
             1,
             { unit, x ->
                 when (unit) {
@@ -73,7 +73,7 @@ class TemperatureConverter(private val context: Context) : Converter() {
             }
         )
 
-        object Fahrenheit : TemperatureUnit(
+        data object Fahrenheit : TemperatureUnit(
             2,
             { unit, x ->
                 when (unit) {

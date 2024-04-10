@@ -39,9 +39,3 @@ fun getKotlinStability(version: String): KotlinStability = when {
 fun isKotlin(group: String): Boolean = group.startsWith("org.jetbrains.kotlin")
 
 fun isKSP(group: String): Boolean = group.startsWith("com.google.devtools.ksp")
-
-fun isKotlinStable(version: String): Boolean = when {
-    version.contains("Beta") -> false
-    version.contains("RC") -> false
-    else -> true
-}

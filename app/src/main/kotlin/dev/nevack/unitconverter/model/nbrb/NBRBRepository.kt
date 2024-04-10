@@ -67,7 +67,6 @@ class NBRBRepository(
         result
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun <T> JsonAdapter<T>.save(what: Pair<T, File>) = withContext(Dispatchers.IO) {
         try {
             what.second.sink().buffer().use { sink -> toJson(sink, what.first) }
@@ -75,7 +74,6 @@ class NBRBRepository(
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun <T> JsonAdapter<T>.load(from: File): T? = withContext(Dispatchers.IO) {
         try {
             from.source().buffer().use { source -> fromJson(source) }

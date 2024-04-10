@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.databinding.HistoryItemBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
+import dev.nevack.unitconverter.model.Categories
 import dev.nevack.unitconverter.model.ConverterCategory
 
 internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
@@ -21,7 +22,7 @@ internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
     }
 }
 
-internal class HistoryAdapter constructor(
+internal class HistoryAdapter(
     private val remove: (HistoryItem) -> Unit,
     private val share: (HistoryItem) -> Unit
 ) : ListAdapter<HistoryItem, ViewHolder>(Differ()) {
@@ -46,12 +47,12 @@ internal class HistoryAdapter constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(holder.bindingAdapterPosition)
-        val category = ConverterCategory.values()[item.category]
+        val category = Categories[item.category]
         holder.bind(category, item)
     }
 }
 
-internal class ViewHolder constructor(val binding: HistoryItemBinding) :
+internal class ViewHolder(val binding: HistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(category: ConverterCategory, item: HistoryItem) {

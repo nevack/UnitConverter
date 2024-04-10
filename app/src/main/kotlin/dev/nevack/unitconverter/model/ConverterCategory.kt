@@ -91,4 +91,4 @@ enum class ConverterCategory(
     fun getConverter(context: Context): Converter = creator(context)
 }
 
-object Categories : List<ConverterCategory> by ConverterCategory.values().toList()
+object Categories : List<ConverterCategory> by ConverterCategory.entries

@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     id("com.android.application")
     id("dev.nevack.plugins.signing-config")

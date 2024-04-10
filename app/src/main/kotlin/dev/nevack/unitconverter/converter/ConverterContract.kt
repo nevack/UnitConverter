@@ -10,6 +10,6 @@ data class ConvertData internal constructor(
 }
 
 sealed class Result(val result: String) {
-    object Empty : Result("")
+    data object Empty : Result("")
     class Converted(result: String) : Result(result)
 }

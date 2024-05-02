@@ -49,40 +49,38 @@ class TemperatureConverter(private val context: Context) : Converter() {
 
     private sealed class TemperatureUnit(
         val index: Int,
-        val convertTo: (TemperatureUnit, BigDecimal) -> BigDecimal,
     ) {
-        data object Kelvin : TemperatureUnit(
-            0,
-            { unit, x ->
-                when (unit) {
+        abstract fun convertTo(unit: TemperatureUnit, x: BigDecimal): BigDecimal
+
+        data object Kelvin : TemperatureUnit(0) {
+            override fun convertTo(unit: TemperatureUnit, x: BigDecimal): BigDecimal {
+                return when (unit) {
                     Kelvin -> x
                     Celsius -> x + MIN_KELVIN
                     Fahrenheit -> Celsius.convertTo(Fahrenheit, x + MIN_KELVIN)
                 }
             }
-        )
+        }
 
-        data object Celsius : TemperatureUnit(
-            1,
-            { unit, x ->
-                when (unit) {
+        data object Celsius : TemperatureUnit(1) {
+            override fun convertTo(unit: TemperatureUnit, x: BigDecimal): BigDecimal {
+                return when (unit) {
                     Kelvin -> x - MIN_KELVIN
                     Celsius -> x
                     Fahrenheit -> x * FAHRENHEIT_MULTIPLIER + FAHRENHEIT_OFFSET
                 }
             }
-        )
+        }
 
-        data object Fahrenheit : TemperatureUnit(
-            2,
-            { unit, x ->
-                when (unit) {
-                    Kelvin -> Fahrenheit.convertTo(Celsius, x) - MIN_KELVIN
+        data object Fahrenheit : TemperatureUnit(2) {
+            override fun convertTo(unit: TemperatureUnit, x: BigDecimal): BigDecimal {
+                return when (unit) {
+                    Kelvin -> convertTo(Celsius, x) - MIN_KELVIN
                     Celsius -> (x - FAHRENHEIT_OFFSET) / FAHRENHEIT_MULTIPLIER
                     Fahrenheit -> x
                 }
             }
-        )
+        }
 
         companion object {
             private val MIN_KELVIN = BigDecimal("-273.15", MC)

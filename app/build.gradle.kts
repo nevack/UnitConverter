@@ -25,12 +25,15 @@ android {
         release {
             isDebuggable = false
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), file("proguard-rules.pro"))
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                file("proguard-rules.pro"),
+            )
         }
     }
 
     buildFeatures {
-        buildConfig = true
         viewBinding = true
     }
 }

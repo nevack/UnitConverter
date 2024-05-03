@@ -49,7 +49,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // Material
-    implementation("com.google.android.material:material:1.12.0-rc01")
+    implementation("com.google.android.material:material:1.12.0")
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")

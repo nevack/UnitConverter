@@ -6,8 +6,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.diffplug.spotless")
     id("org.gradle.android.cache-fix")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -67,11 +65,6 @@ dependencies {
     // Dagger + Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     ksp("com.google.dagger:hilt-android-compiler:2.51.1")
-
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     // Test
     testImplementation("junit:junit:4.13.2")

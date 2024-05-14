@@ -40,7 +40,9 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.1"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     // AndroidX
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.activity:activity-ktx:1.9.0")

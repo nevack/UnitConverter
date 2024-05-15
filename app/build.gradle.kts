@@ -50,8 +50,8 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.9.0")
     implementation("androidx.fragment:fragment-ktx:1.8.0-beta01")
     implementation("androidx.appcompat:appcompat:1.7.0-rc01")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.0-rc01")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0-rc01")
+    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // Material
     implementation("com.google.android.material:material:1.12.0")

@@ -3,6 +3,7 @@ package dev.nevack.plugins.dependencies
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.specs.Spec
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.provideDelegate
 
@@ -21,6 +22,10 @@ class DependencyUpdatesPlugin : Plugin<Project> {
             rejectVersionIf {
                 rejectStrategy(candidate.group, candidate.module, currentVersion, candidate.version)
             }
+            filterConfigurations = Spec { configuration ->
+                !configuration.name.endsWith("DependencySources", ignoreCase = true)
+            }
+            notCompatibleWithConfigurationCache("DependencyUpdates")
         }
     }
 }

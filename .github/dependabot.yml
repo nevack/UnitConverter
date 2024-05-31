@@ -10,7 +10,16 @@ updates:
     schedule:
       interval: "daily"
     registries: "*"
-    open-pull-requests-limit: 3
+    groups:
+      kotlin-ksp:
+        patterns:
+          - "org.jetbrains.kotlin:*"
+          - "org.jetbrains.kotlin.android"
+          - "com.google.devtools.ksp"
+      androidx-lifecycle:
+        patterns:
+          - "androidx.lifecycle:*"
+    open-pull-requests-limit: 5
 registries:
   maven-google:
     type: "maven-repository"

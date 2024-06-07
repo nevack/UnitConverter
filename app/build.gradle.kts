@@ -40,25 +40,34 @@ android {
     }
 }
 
-dependencies {
+dependencies { //noinspection KtxExtensionAvailable
     // Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.9.0-RC"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     // AndroidX
+    implementation("androidx.annotation:annotation:1.8.0")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.activity:activity-ktx:1.9.0")
     implementation("androidx.fragment:fragment-ktx:1.8.0-rc01")
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.1")
+    implementation("androidx.appcompat:appcompat-resources:1.7.0")
+    implementation("androidx.lifecycle:lifecycle-common:2.8.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-core:2.8.1")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.8.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.8.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // Material
     implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation("com.google.errorprone:error_prone_annotations:2.28.0")
     // Room
+    implementation("androidx.room:room-common:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.sqlite:sqlite:2.4.0")
     // Okio
     implementation("com.squareup.okio:okio:3.9.0")
     // Moshi
@@ -70,16 +79,17 @@ dependencies {
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt
+    implementation("com.google.dagger:dagger:2.51.1")
+    implementation("com.google.dagger:hilt-core:2.51.1")
     implementation("com.google.dagger:hilt-android:2.51.1")
     ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("javax.inject:javax.inject:1")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
-
-    // Test
-    testImplementation("junit:junit:4.13.2")
+    implementation("com.google.guava:guava:33.2.1-android")
 }
 
 spotless.kotlin { ktlint("1.2.1") }

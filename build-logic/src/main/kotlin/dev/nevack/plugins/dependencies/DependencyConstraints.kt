@@ -21,7 +21,11 @@ fun buildRejectStrategy(option: IgnoreConstraintsOption): RejectStrategy {
 }
 
 enum class IgnoreConstraintsOption {
-    ALL, ANDROID, KOTLIN, NONE;
+    ALL,
+    ANDROID,
+    KOTLIN,
+    NONE,
+    ;
 
     companion object {
         fun from(name: String?): IgnoreConstraintsOption {
@@ -50,11 +54,8 @@ class AllowAllRejectStrategy : RejectStrategy {
         module: String,
         fromVersion: String,
         toVersion: String,
-    ): Boolean {
-        return false
-    }
+    ): Boolean = false
 }
-
 
 class GroupExcludeRejectStrategy(
     private val groups: List<String>,
@@ -74,47 +75,56 @@ class GroupExcludeRejectStrategy(
 
 abstract class StabilityRejectStrategy(
     private val allowance: Int = 0,
-): RejectStrategy {
+) : RejectStrategy {
     final override fun invoke(
         group: String,
         module: String,
         fromVersion: String,
         toVersion: String,
-    ): Boolean = when {
-        matches(group) -> {
-            val fromStability = getStability(fromVersion)
-            val toStability = getStability(toVersion)
+    ): Boolean =
+        when {
+            matches(group) -> {
+                val fromStability = getStability(fromVersion)
+                val toStability = getStability(toVersion)
 
-            toStability + allowance < fromStability
+                toStability + allowance < fromStability
+            }
+
+            else -> false
         }
 
-        else -> false
-    }
-
     abstract fun getStability(version: String): Int
+
     abstract fun matches(group: String): Boolean
 }
 
-class KotlinRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowance) {
+class KotlinRejectStrategy(
+    allowance: Int = 0,
+) : StabilityRejectStrategy(allowance) {
     override fun getStability(version: String): Int = getKotlinStability(version).ordinal
+
     override fun matches(group: String): Boolean = isKotlin(group) || isKSP(group)
 }
 
-
-class AndroidRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowance) {
+class AndroidRejectStrategy(
+    allowance: Int = 0,
+) : StabilityRejectStrategy(allowance) {
     override fun getStability(version: String): Int = getAndroidStability(version).ordinal
+
     override fun matches(group: String): Boolean = isAndroidDep(group)
 }
 
-
-class AndroidBuildRejectStrategy(allowance: Int = 0) : StabilityRejectStrategy(allowance) {
+class AndroidBuildRejectStrategy(
+    allowance: Int = 0,
+) : StabilityRejectStrategy(allowance) {
     override fun getStability(version: String): Int = getAndroidStability(version).ordinal
+
     override fun matches(group: String): Boolean = isAndroidBuildDep(group)
 }
 
-
 class GuavaAndroidRejectStrategy : StabilityRejectStrategy() {
     override fun getStability(version: String): Int = if (version.endsWith("-android")) Int.MAX_VALUE else Int.MIN_VALUE
+
     override fun matches(group: String): Boolean = group == "com.google.guava"
 }
 

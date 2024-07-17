@@ -22,9 +22,10 @@ class DependencyUpdatesPlugin : Plugin<Project> {
             rejectVersionIf {
                 rejectStrategy(candidate.group, candidate.module, currentVersion, candidate.version)
             }
-            filterConfigurations = Spec { configuration ->
-                !configuration.name.endsWith("DependencySources", ignoreCase = true)
-            }
+            filterConfigurations =
+                Spec { configuration ->
+                    !configuration.name.endsWith("DependencySources", ignoreCase = true)
+                }
             notCompatibleWithConfigurationCache("DependencyUpdates")
         }
     }

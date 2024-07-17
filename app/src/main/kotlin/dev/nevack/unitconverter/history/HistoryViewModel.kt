@@ -13,52 +13,53 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(
-    db: HistoryDatabase
-) : ViewModel() {
-    private val dao = db.dao()
+class HistoryViewModel
+    @Inject
+    constructor(
+        db: HistoryDatabase,
+    ) : ViewModel() {
+        private val dao = db.dao()
 
-    private val _items = MutableLiveData<List<HistoryItem>>().also { fetch() }
-    private var _filter = MutableLiveData(0)
-    private val _filteredItems by lazy {
-        MediatorLiveData<List<HistoryItem>>().apply {
-            addSource(_filter) {
-                value = _items.value?.filter {
-                    item ->
-                    it == 0 || ((1 shl item.category) and it) != 0
-                } ?: emptyList()
+        private val itemsRaw = MutableLiveData<List<HistoryItem>>().also { fetch() }
+        private var filter = MutableLiveData(0)
+        private val itemsFiltered by lazy {
+            MediatorLiveData<List<HistoryItem>>().apply {
+                addSource(filter) {
+                    value = itemsRaw.value?.filter { item ->
+                        it == 0 || ((1 shl item.category) and it) != 0
+                    } ?: emptyList()
+                }
+                addSource(itemsRaw) {
+                    val filter = filter.value ?: 0
+                    value = it.filter { item -> filter == 0 || ((1 shl item.category) and filter) != 0 }
+                }
             }
-            addSource(_items) {
-                val filter = _filter.value ?: 0
-                value = it.filter { item -> filter == 0 || ((1 shl item.category) and filter) != 0 }
+        }
+        val items: LiveData<List<HistoryItem>>
+            get() = itemsFiltered
+
+        fun removeItem(item: HistoryItem) {
+            viewModelScope.launch(Dispatchers.IO) {
+                dao.delete(item)
+            }
+            fetch()
+        }
+
+        fun removeAll() {
+            viewModelScope.launch(Dispatchers.IO) {
+                dao.deleteAll()
+            }
+            fetch()
+        }
+
+        fun filter(mask: Int) {
+            filter.value = mask
+        }
+
+        private fun fetch() {
+            viewModelScope.launch(Dispatchers.IO) {
+                val items = dao.getAll()
+                itemsRaw.postValue(items)
             }
         }
     }
-    val items: LiveData<List<HistoryItem>>
-        get() = _filteredItems
-
-    fun removeItem(item: HistoryItem) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dao.delete(item)
-        }
-        fetch()
-    }
-
-    fun removeAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            dao.deleteAll()
-        }
-        fetch()
-    }
-
-    fun filter(mask: Int) {
-        _filter.value = mask
-    }
-
-    private fun fetch() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val items = dao.getAll()
-            _items.postValue(items)
-        }
-    }
-}

@@ -19,13 +19,18 @@ import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
 
-class HistoryFragment : Fragment(R.layout.fragment_history), MenuProvider {
+class HistoryFragment :
+    Fragment(R.layout.fragment_history),
+    MenuProvider {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
 
     private val viewModel: HistoryViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHistoryBinding.bind(view)
 
@@ -35,19 +40,21 @@ class HistoryFragment : Fragment(R.layout.fragment_history), MenuProvider {
 
         with(binding.recycler) {
             layoutManager = LinearLayoutManager(requireContext())
-            val animation = AnimationUtils.loadLayoutAnimation(
-                requireContext(),
-                R.anim.layout_animation_fall_down
-            )
+            val animation =
+                AnimationUtils.loadLayoutAnimation(
+                    requireContext(),
+                    R.anim.layout_animation_fall_down,
+                )
             layoutAnimation = animation
 
             applyInsetter {
                 type(navigationBars = true) { padding(vertical = true) }
             }
         }
-        adapter = HistoryAdapter(remove = viewModel::removeItem, share = ::shareItem).also {
-            binding.recycler.adapter = it
-        }
+        adapter =
+            HistoryAdapter(remove = viewModel::removeItem, share = ::shareItem).also {
+                binding.recycler.adapter = it
+            }
 
         viewModel.items.observe(viewLifecycleOwner) {
             adapter.submitList(it)
@@ -58,28 +65,33 @@ class HistoryFragment : Fragment(R.layout.fragment_history), MenuProvider {
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         menuInflater.inflate(R.menu.menu_history, menu)
     }
 
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when(menuItem.itemId) {
-        R.id.delete -> {
-            viewModel.removeAll()
-            true
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+        when (menuItem.itemId) {
+            R.id.delete -> {
+                viewModel.removeAll()
+                true
+            }
+            R.id.filter -> {
+                HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
+                true
+            }
+            else -> false
         }
-        R.id.filter -> {
-            HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
-            true
-        }
-        else -> false
-    }
 
     private fun shareItem(item: HistoryItem) {
         val message = "${item.valueFrom} ${item.unitFrom} = ${item.valueTo} ${item.unitTo}"
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, message)
-        }
+        val sendIntent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, message)
+            }
         requireContext().startActivity(Intent.createChooser(sendIntent, message))
     }
 }

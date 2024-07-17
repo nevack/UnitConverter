@@ -18,24 +18,28 @@ import java.util.Date
 @InstallIn(SingletonComponent::class)
 object MainModule {
     @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder()
-        .add(Date::class.java, DateJsonAdapter())
-        .build()
+    fun provideMoshi(): Moshi =
+        Moshi
+            .Builder()
+            .add(Date::class.java, DateJsonAdapter())
+            .build()
 
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.nbrb.by/exrates/")
-        .addConverterFactory(MoshiConverterFactory.create(moshi)).build()
+    fun provideRetrofit(moshi: Moshi): Retrofit =
+        Retrofit
+            .Builder()
+            .baseUrl("https://api.nbrb.by/exrates/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
 
     @Provides
-    fun provideNBRBService(retrofit: Retrofit): NBRBService =
-        retrofit.create(NBRBService::class.java)
+    fun provideNBRBService(retrofit: Retrofit): NBRBService = retrofit.create(NBRBService::class.java)
 
     @Provides
     fun provideNBRBRepository(
         @ApplicationContext context: Context,
         service: NBRBService,
-        moshi: Moshi
+        moshi: Moshi,
     ): NBRBRepository {
         val localeList = context.resources.configuration.locales
         val locale = NBRBCurrency.getCompatibleLocale(localeList)

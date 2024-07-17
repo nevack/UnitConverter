@@ -5,7 +5,9 @@ import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.model.nbrb.NBRBRepository
 
-class CurrencyConverter(context: Context) : Converter() {
+class CurrencyConverter(
+    context: Context,
+) : Converter() {
     internal var repository: NBRBRepository? = null
 
     init {
@@ -19,8 +21,7 @@ class CurrencyConverter(context: Context) : Converter() {
     }
 
     companion object {
-        private fun getBYNLocalized(context: Context): ConversionUnit {
-            return ConversionUnit(context.getString(R.string.currency_byn_name), 1.0, "BYN")
-        }
+        private fun getBYNLocalized(context: Context): ConversionUnit =
+            ConversionUnit(context.getString(R.string.currency_byn_name), 1.0, "BYN")
     }
 }

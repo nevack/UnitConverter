@@ -24,7 +24,10 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
 
     private val viewModel: ConverterViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         binding = FragmentConverterBinding.bind(view)
 
         binding.toolbar.inflateMenu(R.menu.menu_converter)

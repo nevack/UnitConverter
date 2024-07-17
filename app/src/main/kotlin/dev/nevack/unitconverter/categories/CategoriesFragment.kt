@@ -15,7 +15,10 @@ import dev.nevack.unitconverter.model.Categories
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val viewModel: CategoriesViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         val binding = FragmentCategoriesBinding.bind(view)
         with(binding.recycler) {
             layoutManager =

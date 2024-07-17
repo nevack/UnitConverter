@@ -13,20 +13,25 @@ import dev.nevack.unitconverter.model.Categories
 import dev.nevack.unitconverter.model.ConverterCategory
 
 internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
-    override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
-        return newItem.id == oldItem.id
-    }
+    override fun areItemsTheSame(
+        oldItem: HistoryItem,
+        newItem: HistoryItem,
+    ): Boolean = newItem.id == oldItem.id
 
-    override fun areContentsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
-        return newItem == oldItem
-    }
+    override fun areContentsTheSame(
+        oldItem: HistoryItem,
+        newItem: HistoryItem,
+    ): Boolean = newItem == oldItem
 }
 
 internal class HistoryAdapter(
     private val remove: (HistoryItem) -> Unit,
-    private val share: (HistoryItem) -> Unit
+    private val share: (HistoryItem) -> Unit,
 ) : ListAdapter<HistoryItem, ViewHolder>(Differ()) {
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        viewGroup: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val binding =
             HistoryItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         val holder = ViewHolder(binding)
@@ -45,27 +50,33 @@ internal class HistoryAdapter(
         return holder
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val item = getItem(holder.bindingAdapterPosition)
         val category = Categories[item.category]
         holder.bind(category, item)
     }
 }
 
-internal class ViewHolder(val binding: HistoryItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    fun bind(category: ConverterCategory, item: HistoryItem) {
+internal class ViewHolder(
+    val binding: HistoryItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(
+        category: ConverterCategory,
+        item: HistoryItem,
+    ) {
         binding.categoryName.setText(category.categoryName)
         binding.valueFrom.text = item.valueFrom
         binding.valueTo.text = item.valueTo
         binding.unitFrom.text = item.unitFrom
         binding.unitTo.text = item.unitTo
         itemView.setBackgroundColor(
-            ContextCompat.getColor(itemView.context, category.color)
+            ContextCompat.getColor(itemView.context, category.color),
         )
         binding.categoryIcon.setImageDrawable(
-            AppCompatResources.getDrawable(itemView.context, category.icon)
+            AppCompatResources.getDrawable(itemView.context, category.icon),
         )
     }
 }

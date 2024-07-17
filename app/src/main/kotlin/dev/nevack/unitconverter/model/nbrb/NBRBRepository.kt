@@ -27,60 +27,71 @@ class NBRBRepository(
     private val ratesAdapter: JsonAdapter<List<NBRBRate>> = moshi.adapter(RATES_TYPE)
     private val currenciesAdapter: JsonAdapter<List<NBRBCurrency>> = moshi.adapter(CURRENCIES_TYPE)
 
-    suspend fun getUnits(): List<ConversionUnit> = withContext(Dispatchers.IO) {
-        val currenciesAsync = async {
-            loadWithCache(currenciesAdapter, currenciesFile) { allCurrencies() }
+    suspend fun getUnits(): List<ConversionUnit> =
+        withContext(Dispatchers.IO) {
+            val currenciesAsync =
+                async {
+                    loadWithCache(currenciesAdapter, currenciesFile) { allCurrencies() }
+                }
+            val ratesAsync =
+                async {
+                    loadWithCache(ratesAdapter, ratesFile) { allRatesForToday() }
+                }
+            val currencies = currenciesAsync.await().associateBy { it.curID }
+            val rates = ratesAsync.await()
+            rates
+                .filter { currencies.containsKey(it.curID) }
+                .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
         }
-        val ratesAsync = async {
-            loadWithCache(ratesAdapter, ratesFile) { allRatesForToday() }
-        }
-        val currencies = currenciesAsync.await().associateBy { it.curID }
-        val rates = ratesAsync.await()
-        rates.filter { currencies.containsKey(it.curID) }
-            .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
-    }
 
     private suspend fun <T> loadWithCache(
         adapter: JsonAdapter<T>,
         file: File,
         block: suspend NBRBService.() -> T,
-    ): T = withContext(Dispatchers.IO) {
-        if (file.exists()) {
-            val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
-            if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
-                val cached = adapter.load(file)
-                if (cached != null) {
-                    return@withContext cached
+    ): T =
+        withContext(Dispatchers.IO) {
+            if (file.exists()) {
+                val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
+                if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
+                    val cached = adapter.load(file)
+                    if (cached != null) {
+                        return@withContext cached
+                    }
                 }
             }
+            loadFromWeb(adapter, file, block)
         }
-        loadFromWeb(adapter, file, block)
-    }
 
     private suspend fun <T> loadFromWeb(
         adapter: JsonAdapter<T>,
         cache: File,
         block: suspend NBRBService.() -> T,
-    ): T = withContext(Dispatchers.IO) {
-        val result = service.block()
-        adapter.save(result to cache)
-        result
-    }
-
-    private suspend fun <T> JsonAdapter<T>.save(what: Pair<T, File>) = withContext(Dispatchers.IO) {
-        try {
-            what.second.sink().buffer().use { sink -> toJson(sink, what.first) }
-        } catch (ignored: IOException) {
+    ): T =
+        withContext(Dispatchers.IO) {
+            val result = service.block()
+            adapter.save(result to cache)
+            result
         }
-    }
 
-    private suspend fun <T> JsonAdapter<T>.load(from: File): T? = withContext(Dispatchers.IO) {
-        try {
-            from.source().buffer().use { source -> fromJson(source) }
-        } catch (e: IOException) {
-            null
+    private suspend fun <T> JsonAdapter<T>.save(what: Pair<T, File>) =
+        withContext(Dispatchers.IO) {
+            try {
+                what.second
+                    .sink()
+                    .buffer()
+                    .use { sink -> toJson(sink, what.first) }
+            } catch (ignored: IOException) {
+            }
         }
-    }
+
+    private suspend fun <T> JsonAdapter<T>.load(from: File): T? =
+        withContext(Dispatchers.IO) {
+            try {
+                from.source().buffer().use { source -> fromJson(source) }
+            } catch (e: IOException) {
+                null
+            }
+        }
 
     companion object {
         private val RATES_TYPE = Types.newParameterizedType(List::class.java, NBRBRate::class.java)

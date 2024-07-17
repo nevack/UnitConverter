@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import dev.nevack.unitconverter.model.ConverterCategory
 
 class CategoriesViewModel : ViewModel() {
-    private val _opened = MutableLiveData<Int>()
+    private val _converterOpened = MutableLiveData<Int>()
     val converterOpened: LiveData<Int>
-        get() = _opened
+        get() = _converterOpened
 
     fun openConverter(category: ConverterCategory) {
-        _opened.value = category.index
+        this._converterOpened.value = category.index
     }
 }

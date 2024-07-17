@@ -9,7 +9,9 @@ import dev.nevack.unitconverter.model.Categories
 
 typealias Listener = ((Int) -> Unit)
 
-class HistoryFilterDialog(private val listener: Listener) : DialogFragment() {
+class HistoryFilterDialog(
+    private val listener: Listener,
+) : DialogFragment() {
     private var mask = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

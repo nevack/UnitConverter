@@ -15,11 +15,15 @@ interface NBRBService {
     suspend fun allCurrencies(): List<NBRBCurrency>
 
     @GET("currencies/{id}")
-    suspend fun currencyById(@Path("id") currencyId: String): List<NBRBCurrency>
+    suspend fun currencyById(
+        @Path("id") currencyId: String,
+    ): List<NBRBCurrency>
 
     @GET("rates?periodicity=0")
     suspend fun allRatesForToday(): List<NBRBRate>
 
     @GET("rates?periodicity=0")
-    suspend fun allRatesForDate(@Query("onDate") date: String): List<NBRBRate>
+    suspend fun allRatesForDate(
+        @Query("onDate") date: String,
+    ): List<NBRBRate>
 }

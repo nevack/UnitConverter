@@ -20,11 +20,10 @@ data class NBRBRate(
     @Json(name = "Date")
     val date: Date,
 ) {
-    fun toUnitLocalized(name: String): ConversionUnit {
-        return ConversionUnit(
+    fun toUnitLocalized(name: String): ConversionUnit =
+        ConversionUnit(
             name,
             curOfficialRate / curScale,
-            curAbbreviation
+            curAbbreviation,
         )
-    }
 }

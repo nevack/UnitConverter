@@ -4,12 +4,17 @@ data class ConvertData internal constructor(
     val value: String,
     val result: String,
     val from: Int,
-    val to: Int
+    val to: Int,
 ) {
     fun swap() = ConvertData(result, value, to, from)
 }
 
-sealed class Result(val result: String) {
+sealed class Result(
+    val result: String,
+) {
     data object Empty : Result("")
-    class Converted(result: String) : Result(result)
+
+    class Converted(
+        result: String,
+    ) : Result(result)
 }

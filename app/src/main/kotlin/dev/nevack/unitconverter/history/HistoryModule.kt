@@ -13,7 +13,7 @@ import dev.nevack.unitconverter.history.db.HistoryDatabase
 @InstallIn(SingletonComponent::class)
 object HistoryModule {
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): HistoryDatabase {
-        return Room.databaseBuilder(context, HistoryDatabase::class.java, "history-db").build()
-    }
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+    ): HistoryDatabase = Room.databaseBuilder(context, HistoryDatabase::class.java, "history-db").build()
 }

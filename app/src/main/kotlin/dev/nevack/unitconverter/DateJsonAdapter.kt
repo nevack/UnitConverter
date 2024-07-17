@@ -19,7 +19,10 @@ class DateJsonAdapter : JsonAdapter<Date>() {
         return df.parse(string)
     }
 
-    override fun toJson(writer: JsonWriter, value: Date?) {
+    override fun toJson(
+        writer: JsonWriter,
+        value: Date?,
+    ) {
         if (value == null) {
             writer.nullValue()
         } else {

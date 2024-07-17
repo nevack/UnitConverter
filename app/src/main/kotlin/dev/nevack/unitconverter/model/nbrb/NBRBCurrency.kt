@@ -41,7 +41,7 @@ data class NBRBCurrency(
     @Json(name = "Cur_QuotName_Eng")
     val curQuotNameEng: String,
     @Json(name = "Cur_Scale")
-    val curScale: Int
+    val curScale: Int,
 ) {
     companion object {
         private val EN = Locale("en")
@@ -58,10 +58,11 @@ data class NBRBCurrency(
         }
     }
 
-    fun getLocalizedName(locale: Locale): String = when (locale.language) {
-        EN.language -> curNameEng
-        RU.language -> curName
-        BE.language -> curNameBel
-        else -> curNameEng
-    }
+    fun getLocalizedName(locale: Locale): String =
+        when (locale.language) {
+            EN.language -> curNameEng
+            RU.language -> curName
+            BE.language -> curNameBel
+            else -> curNameEng
+        }
 }

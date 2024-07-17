@@ -33,9 +33,10 @@ class ConverterActivity : AppCompatActivity() {
 
         setupNavigation(binding)
 
-        val callback = onBackPressedDispatcher.addCallback(this) {
-            viewModel.setDrawerOpened(false)
-        }
+        val callback =
+            onBackPressedDispatcher.addCallback(this) {
+                viewModel.setDrawerOpened(false)
+            }
         viewModel.drawerOpened.observe(this) { opened ->
             callback.isEnabled = opened
             if (opened) {
@@ -58,22 +59,24 @@ class ConverterActivity : AppCompatActivity() {
         viewModel.load(Categories[category], this)
     }
 
-    private fun setupNavigation(binding: ActivityConverterBinding) = with(binding.navigationView) {
-        for ((i, unit) in Categories.withIndex()) {
-            menu.add(Menu.NONE, Menu.NONE, i, unit.categoryName)
-                .setCheckable(true)
-                .setIcon(unit.icon)
+    private fun setupNavigation(binding: ActivityConverterBinding) =
+        with(binding.navigationView) {
+            for ((i, unit) in Categories.withIndex()) {
+                menu
+                    .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                    .setCheckable(true)
+                    .setIcon(unit.icon)
+            }
+            setNavigationItemSelectedListener { menuItem ->
+                viewModel.load(Categories[menuItem.order], this@ConverterActivity)
+                viewModel.setDrawerOpened(false)
+                true
+            }
+            applyInsetter {
+                type(statusBars = true) { margin(top = true) }
+                type(navigationBars = true) { margin(bottom = true) }
+            }
         }
-        setNavigationItemSelectedListener { menuItem ->
-            viewModel.load(Categories[menuItem.order], this@ConverterActivity)
-            viewModel.setDrawerOpened(false)
-            true
-        }
-        applyInsetter {
-            type(statusBars = true) { margin(top = true) }
-            type(navigationBars = true) { margin(bottom = true) }
-        }
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         viewModel.category.value?.let { outState.putInt(CONVERTER_ID_EXTRA, it) }
@@ -91,7 +94,10 @@ class ConverterActivity : AppCompatActivity() {
     companion object {
         private const val CONVERTER_ID_EXTRA = "converter_id"
 
-        fun getIntent(context: Context, category: Int): Intent =
+        fun getIntent(
+            context: Context,
+            category: Int,
+        ): Intent =
             Intent(context, ConverterActivity::class.java).apply {
                 putExtra(CONVERTER_ID_EXTRA, category)
             }

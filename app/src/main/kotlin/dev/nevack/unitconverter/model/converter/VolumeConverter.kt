@@ -4,42 +4,44 @@ import android.content.Context
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.model.ConversionUnit
 
-class VolumeConverter(private val context: Context) : Converter() {
+class VolumeConverter(
+    private val context: Context,
+) : Converter() {
     override suspend fun load() {
         registerUnit(
             ConversionUnit(
                 context.getString(R.string.litre),
                 0.001,
-                context.getString(R.string.litresymbol)
-            )
+                context.getString(R.string.litresymbol),
+            ),
         )
         registerUnit(
             ConversionUnit(
                 context.getString(R.string.cubicmetre),
                 1.0,
-                context.getString(R.string.metresymbol) + CUBIC_POSTFIX
-            )
+                context.getString(R.string.metresymbol) + CUBIC_POSTFIX,
+            ),
         )
         registerUnit(
             ConversionUnit(
                 context.getString(R.string.millilitre),
                 0.000001,
-                context.getString(R.string.millilitresymbol)
-            )
+                context.getString(R.string.millilitresymbol),
+            ),
         )
         registerUnit(
             ConversionUnit(
                 context.getString(R.string.gallon),
                 0.00378541,
-                context.getString(R.string.gallonsymbol)
-            )
+                context.getString(R.string.gallonsymbol),
+            ),
         )
         registerUnit(
             ConversionUnit(
                 context.getString(R.string.barrel),
                 0.158988,
-                context.getString(R.string.barrelsymbol)
-            )
+                context.getString(R.string.barrelsymbol),
+            ),
         )
     }
 }

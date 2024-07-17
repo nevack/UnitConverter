@@ -8,27 +8,31 @@ import java.util.ArrayList
 import java.util.Comparator
 
 abstract class Converter {
-    private val _conversionUnits: MutableList<ConversionUnit> = ArrayList()
+    private val conversionUnits: MutableList<ConversionUnit> = ArrayList()
     val units: List<ConversionUnit>
-        get() = _conversionUnits
+        get() = conversionUnits
 
     fun registerUnit(unit: ConversionUnit) {
-        _conversionUnits += unit
+        conversionUnits += unit
     }
 
     fun sortUnitsWith(comparator: Comparator<ConversionUnit>) {
-        _conversionUnits.sortWith(comparator)
+        conversionUnits.sortWith(comparator)
     }
 
-    operator fun get(index: Int): ConversionUnit = _conversionUnits[index]
+    operator fun get(index: Int): ConversionUnit = conversionUnits[index]
 
     abstract suspend fun load()
 
     @Throws(ArithmeticException::class)
-    open fun convert(inputValue: String, inputValueType: Int, outputValueType: Int): String {
+    open fun convert(
+        inputValue: String,
+        inputValueType: Int,
+        outputValueType: Int,
+    ): String {
         val source = BigDecimal(inputValue, MC)
-        val sourceFactor = _conversionUnits[inputValueType].factor.toBigDecimal()
-        val resultFactor = _conversionUnits[outputValueType].factor.toBigDecimal()
+        val sourceFactor = conversionUnits[inputValueType].factor.toBigDecimal()
+        val resultFactor = conversionUnits[outputValueType].factor.toBigDecimal()
         val result = source * sourceFactor / resultFactor
         return result.stripTrailingZeros().toPlainString()
     }

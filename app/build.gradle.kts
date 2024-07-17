@@ -82,6 +82,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
-spotless.kotlin { ktlint("1.2.1") }
+spotless.kotlin {
+    ktlint("1.3.1")
+    target("src/**/*.kt")
+}
 
 kotlin.jvmToolchain(17)

@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("com.diffplug.spotless")
     id("org.gradle.android.cache-fix")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -80,11 +79,6 @@ dependencies {
 
     // Test
     testImplementation("junit:junit:4.13.2")
-}
-
-spotless.kotlin {
-    ktlint("1.3.1")
-    target("src/**/*.kt")
 }
 
 kotlin.jvmToolchain(17)

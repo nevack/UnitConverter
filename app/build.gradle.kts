@@ -46,7 +46,7 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     // AndroidX
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.activity:activity-ktx:1.9.1")
+    implementation("androidx.activity:activity-ktx:1.9.2")
     implementation("androidx.fragment:fragment-ktx:1.8.2")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.4")

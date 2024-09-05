@@ -5,8 +5,6 @@ plugins {
     id("com.google.devtools.ksp") apply false
     id("com.google.dagger.hilt.android") apply false
     id("org.gradle.android.cache-fix") apply false
-    id("com.google.gms.google-services") apply false
-    id("com.google.firebase.crashlytics") apply false
     id("dev.nevack.plugins.dependency-updates")
     id("com.diffplug.spotless")
 }

@@ -1,6 +1,6 @@
 package dev.nevack.unitconverter.converter
 
-data class ConvertData internal constructor(
+data class ConvertData(
     val value: String,
     val result: String,
     val from: Int,

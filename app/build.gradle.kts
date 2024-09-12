@@ -73,7 +73,7 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:2.52")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
 

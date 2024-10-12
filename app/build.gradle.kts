@@ -82,4 +82,4 @@ dependencies { //noinspection KtxExtensionAvailable
     implementation("javax.inject:javax.inject:1")
 }
 
-kotlin.jvmToolchain(17)
+kotlin.jvmToolchain(21)

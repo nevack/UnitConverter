@@ -43,7 +43,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     // AndroidX
-    implementation("androidx.core:core-ktx:1.15.0-rc01")
+    implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("androidx.appcompat:appcompat:1.7.0")

@@ -49,7 +49,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.7")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
-    implementation("androidx.recyclerview:recyclerview:1.4.0-rc01")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
     // Material
     implementation("com.google.android.material:material:1.12.0")
     // Room

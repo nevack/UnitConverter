@@ -10,7 +10,7 @@ pluginManagement {
     plugins {
         val kotlinVersion = "2.1.0"
         val kspSubVersion = "1.0.29"
-        id("com.github.ben-manes.versions") version "0.51.0"
+        id("com.github.ben-manes.versions") version "0.52.0"
         id("com.diffplug.spotless") version "7.0.2"
         id("com.android.application") version "8.8.0"
         id("org.jetbrains.kotlin.android") version kotlinVersion

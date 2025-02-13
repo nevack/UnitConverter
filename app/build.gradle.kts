@@ -9,7 +9,6 @@ plugins {
 
 android {
     namespace = "dev.nevack.unitconverter"
-    buildToolsVersion = "34.0.0"
     compileSdk = 35
 
     defaultConfig {

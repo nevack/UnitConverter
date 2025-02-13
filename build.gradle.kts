@@ -11,13 +11,13 @@ plugins {
 
 spotless {
     kotlin {
-        ktlint("1.3.1")
+        ktlint("1.5.0")
         target("**/*.kt")
     }
 
     kotlinGradle {
+        ktlint("1.5.0")
         target("**/*.gradle.kts")
-        ktlint("1.3.1")
     }
 }
 

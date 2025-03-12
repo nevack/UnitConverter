@@ -29,5 +29,5 @@ dependencyAnalysis {
 }
 
 tasks.wrapper {
-    gradleVersion = "8.13-rc-1"
+    gradleVersion = "8.13"
 }

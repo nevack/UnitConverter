@@ -1,10 +1,14 @@
 package dev.nevack.plugins.dependencies
 
-enum class AndroidStability {
-    ALPHA,
-    BETA,
-    RC,
-    STABLE,
+interface DependencyStability {
+    val stability: Int
+}
+
+enum class AndroidStability(override val stability: Int) : DependencyStability {
+    ALPHA(-1),
+    BETA(1),
+    RC(2),
+    STABLE(3),
 }
 
 fun getAndroidStability(version: String): AndroidStability =
@@ -30,11 +34,11 @@ fun isAndroidBuildDep(group: String): Boolean =
         else -> false
     }
 
-enum class KotlinStability {
-    DEV,
-    BETA,
-    RC,
-    STABLE,
+enum class KotlinStability(override val stability: Int) : DependencyStability {
+    DEV(-1),
+    BETA(1),
+    RC(2),
+    STABLE(3),
 }
 
 fun getKotlinStability(version: String): KotlinStability =

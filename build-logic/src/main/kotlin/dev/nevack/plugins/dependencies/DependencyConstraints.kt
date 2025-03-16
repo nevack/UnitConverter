@@ -101,7 +101,7 @@ abstract class StabilityRejectStrategy(
 class KotlinRejectStrategy(
     allowance: Int = 0,
 ) : StabilityRejectStrategy(allowance) {
-    override fun getStability(version: String): Int = getKotlinStability(version).ordinal
+    override fun getStability(version: String): Int = getKotlinStability(version).stability
 
     override fun matches(group: String): Boolean = isKotlin(group) || isKSP(group)
 }
@@ -109,7 +109,7 @@ class KotlinRejectStrategy(
 class AndroidRejectStrategy(
     allowance: Int = 0,
 ) : StabilityRejectStrategy(allowance) {
-    override fun getStability(version: String): Int = getAndroidStability(version).ordinal
+    override fun getStability(version: String): Int = getAndroidStability(version).stability
 
     override fun matches(group: String): Boolean = isAndroidDep(group)
 }
@@ -117,7 +117,7 @@ class AndroidRejectStrategy(
 class AndroidBuildRejectStrategy(
     allowance: Int = 0,
 ) : StabilityRejectStrategy(allowance) {
-    override fun getStability(version: String): Int = getAndroidStability(version).ordinal
+    override fun getStability(version: String): Int = getAndroidStability(version).stability
 
     override fun matches(group: String): Boolean = isAndroidBuildDep(group)
 }

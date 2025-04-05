@@ -4,7 +4,9 @@ interface DependencyStability {
     val stability: Int
 }
 
-enum class AndroidStability(override val stability: Int) : DependencyStability {
+enum class AndroidStability(
+    override val stability: Int,
+) : DependencyStability {
     ALPHA(-1),
     BETA(1),
     RC(2),
@@ -34,7 +36,9 @@ fun isAndroidBuildDep(group: String): Boolean =
         else -> false
     }
 
-enum class KotlinStability(override val stability: Int) : DependencyStability {
+enum class KotlinStability(
+    override val stability: Int,
+) : DependencyStability {
     DEV(-1),
     BETA(1),
     RC(2),

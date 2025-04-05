@@ -17,7 +17,7 @@ pluginManagement {
         id("com.google.devtools.ksp") version "$kotlinVersion-$kspSubVersion"
         id("com.google.dagger.hilt.android") version "2.56.1"
         id("org.gradle.android.cache-fix") version "3.0.1"
-        id("com.autonomousapps.dependency-analysis") version "2.13.3"
+        id("com.autonomousapps.dependency-analysis") version "2.14.0"
     }
 
     includeBuild("build-logic")

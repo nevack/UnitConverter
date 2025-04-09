@@ -40,7 +40,7 @@ android {
 //noinspection KtxExtensionAvailable
 dependencies {
     // Coroutines
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.1"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     // AndroidX

@@ -75,10 +75,10 @@ dependencies {
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt
-    ksp("com.google.dagger:hilt-android-compiler:2.56.1")
-    implementation("com.google.dagger:dagger:2.56.1")
-    implementation("com.google.dagger:hilt-core:2.56.1")
-    implementation("com.google.dagger:hilt-android:2.56.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation("com.google.dagger:dagger:2.56.2")
+    implementation("com.google.dagger:hilt-core:2.56.2")
+    implementation("com.google.dagger:hilt-android:2.56.2")
     implementation("javax.inject:javax.inject:1")
 }
 

@@ -60,10 +60,10 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     // Room
-    implementation("androidx.room:room-common:2.7.0")
-    implementation("androidx.room:room-runtime:2.7.0")
-    ksp("androidx.room:room-compiler:2.7.0")
-    implementation("androidx.sqlite:sqlite:2.5.0")
+    implementation("androidx.room:room-common:2.7.1")
+    implementation("androidx.room:room-runtime:2.7.1")
+    ksp("androidx.room:room-compiler:2.7.1")
+    implementation("androidx.sqlite:sqlite:2.5.1")
     // Okio
     implementation("com.squareup.okio:okio:3.11.0")
     // Moshi

@@ -8,11 +8,11 @@ fun buildRejectStrategy(option: IgnoreConstraintsOption): RejectStrategy {
     val strategies = mutableListOf<RejectStrategy>()
 
     if (option != IgnoreConstraintsOption.ANDROID) {
-        strategies += AndroidRejectStrategy(allowance = 2)
-        strategies += AndroidBuildRejectStrategy(allowance = 0)
+        strategies += AndroidRejectStrategy(allowance = 1)
+        strategies += AndroidBuildRejectStrategy(allowance = 1)
     }
     if (option != IgnoreConstraintsOption.KOTLIN) {
-        strategies += KotlinRejectStrategy(allowance = 1)
+        strategies += KotlinRejectStrategy(allowance = 0)
     }
     strategies += GuavaAndroidRejectStrategy()
     strategies += GroupExcludeRejectStrategy(emptyList()) // Nothing here for now.

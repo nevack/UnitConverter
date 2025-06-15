@@ -65,7 +65,7 @@ dependencies {
     ksp("androidx.room:room-compiler:2.7.1")
     implementation("androidx.sqlite:sqlite:2.5.1")
     // Okio
-    implementation("com.squareup.okio:okio:3.12.0")
+    implementation("com.squareup.okio:okio:3.13.0")
     // Moshi
     implementation("com.squareup.moshi:moshi:1.15.2")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.2")

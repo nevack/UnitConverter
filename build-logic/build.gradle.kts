@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle-api:8.11.0-rc01")
+    implementation("com.android.tools.build:gradle-api:8.13.0-alpha04")
     implementation("com.github.ben-manes:gradle-versions-plugin:0.52.0")
 }
 

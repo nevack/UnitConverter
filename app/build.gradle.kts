@@ -57,7 +57,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.2")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     // Material
-    implementation("com.google.android.material:material:1.13.0-rc01")
+    implementation("com.google.android.material:material:1.14.0-alpha04")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     // Room
     implementation("androidx.room:room-common:2.7.2")

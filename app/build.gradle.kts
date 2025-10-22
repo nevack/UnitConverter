@@ -60,9 +60,9 @@ dependencies {
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     // Room
-    implementation("androidx.room:room-common:2.8.2")
-    implementation("androidx.room:room-runtime:2.8.2")
-    ksp("androidx.room:room-compiler:2.8.2")
+    implementation("androidx.room:room-common:2.8.3")
+    implementation("androidx.room:room-runtime:2.8.3")
+    ksp("androidx.room:room-compiler:2.8.3")
     implementation("androidx.sqlite:sqlite:2.6.1")
     // Okio
     implementation("com.squareup.okio:okio:3.16.1")

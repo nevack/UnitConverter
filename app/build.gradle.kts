@@ -63,7 +63,7 @@ dependencies {
     implementation("androidx.room:room-common:2.8.4")
     implementation("androidx.room:room-runtime:2.8.4")
     ksp("androidx.room:room-compiler:2.8.4")
-    implementation("androidx.sqlite:sqlite:2.6.1")
+    implementation("androidx.sqlite:sqlite:2.6.2")
     // Okio
     implementation("com.squareup.okio:okio:3.16.4")
     // Moshi

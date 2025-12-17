@@ -10,7 +10,7 @@ pluginManagement {
     plugins {
         id("com.github.ben-manes.versions") version "0.53.0"
         id("com.diffplug.spotless") version "8.1.0"
-        id("com.android.application") version "8.13.1"
+        id("com.android.application") version "8.13.2"
         id("org.jetbrains.kotlin.android") version "2.2.21"
         id("com.google.devtools.ksp") version "2.3.3"
         id("com.google.dagger.hilt.android") version "2.57.2"

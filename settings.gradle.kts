@@ -13,7 +13,7 @@ pluginManagement {
         id("com.android.application") version "8.13.2"
         id("org.jetbrains.kotlin.android") version "2.3.0"
         id("com.google.devtools.ksp") version "2.3.4"
-        id("com.google.dagger.hilt.android") version "2.57.2"
+        id("com.google.dagger.hilt.android") version "2.58"
         id("org.gradle.android.cache-fix") version "3.0.3"
         id("com.autonomousapps.dependency-analysis") version "3.5.1"
     }

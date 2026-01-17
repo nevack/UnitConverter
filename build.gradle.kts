@@ -11,7 +11,7 @@ plugins {
 }
 
 spotless {
-    val ktlintVersion = "1.7.1"
+    val ktlintVersion = "1.8.0"
 
     kotlin {
         ktlint(ktlintVersion)

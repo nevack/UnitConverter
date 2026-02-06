@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("dev.nevack.plugins.signing-config")
-    id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.gradle.android.cache-fix")

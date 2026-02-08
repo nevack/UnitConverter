@@ -78,11 +78,15 @@ class HistoryFragment :
                 viewModel.removeAll()
                 true
             }
+
             R.id.filter -> {
                 HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
                 true
             }
-            else -> false
+
+            else -> {
+                false
+            }
         }
 
     private fun shareItem(item: HistoryItem) {

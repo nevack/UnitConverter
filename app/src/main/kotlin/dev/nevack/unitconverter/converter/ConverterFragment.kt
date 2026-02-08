@@ -37,11 +37,15 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                     viewModel.saveResultToHistory(binding.display.convertData)
                     true
                 }
+
                 R.id.history -> {
                     startActivity(Intent(requireContext(), HistoryActivity::class.java))
                     true
                 }
-                else -> false
+
+                else -> {
+                    false
+                }
             }
         }
 

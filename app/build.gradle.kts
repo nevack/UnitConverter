@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("org.gradle.android.cache-fix")
     id("com.autonomousapps.dependency-analysis")
+    id("com.diffplug.spotless")
 }
 
 android {
@@ -82,3 +83,12 @@ dependencies {
 }
 
 kotlin.jvmToolchain(21)
+
+spotless {
+    val ktlintVersion = "1.8.0"
+
+    kotlin {
+        ktlint(ktlintVersion)
+        target("**/*.kt")
+    }
+}

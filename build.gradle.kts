@@ -13,11 +13,6 @@ plugins {
 spotless {
     val ktlintVersion = "1.8.0"
 
-    kotlin {
-        ktlint(ktlintVersion)
-        target("**/*.kt")
-    }
-
     kotlinGradle {
         ktlint(ktlintVersion)
         target("**/*.gradle.kts")

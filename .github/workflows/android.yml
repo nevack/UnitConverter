@@ -39,16 +39,20 @@ jobs:
           ./gradlew
           --stacktrace
           :app:assembleDebug
-      - name: Check code format and dependencies
-        run: >
-          ./gradlew
-          spotlessCheck
-          dependencyUpdates
       - name: Upload APK
         uses: actions/upload-artifact@v6
         with:
           name: UnitConverter.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Check code format
+        run: >
+          ./gradlew
+          spotlessCheck
+      - name: Check dependencies updates
+        run: >
+          ./gradlew
+          --no-parallel
+          dependencyUpdates
       - name: Upload Dependencies report
         uses: actions/upload-artifact@v6
         with:

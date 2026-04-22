@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.databinding.CategoryItemBinding
-import dev.nevack.unitconverter.model.Categories
 import dev.nevack.unitconverter.model.ConverterCategory
 
 internal class ViewHolder(
@@ -22,7 +21,8 @@ internal class ViewHolder(
 }
 
 internal class CategoriesAdapter(
-    private val listener: (Int) -> Unit,
+    private val categories: List<ConverterCategory>,
+    private val listener: (String) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -34,7 +34,7 @@ internal class CategoriesAdapter(
         binding.root.setOnClickListener {
             val position = holder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                listener(Categories[position].index)
+                listener(categories[position].id)
             }
         }
         return holder
@@ -44,8 +44,8 @@ internal class CategoriesAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        holder.bind(Categories[holder.bindingAdapterPosition])
+        holder.bind(categories[holder.bindingAdapterPosition])
     }
 
-    override fun getItemCount(): Int = Categories.size
+    override fun getItemCount(): Int = categories.size
 }

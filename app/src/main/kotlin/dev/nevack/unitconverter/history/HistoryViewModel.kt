@@ -21,17 +21,17 @@ class HistoryViewModel
         private val dao = db.dao()
 
         private val itemsRaw = MutableLiveData<List<HistoryItem>>().also { fetch() }
-        private var filter = MutableLiveData(0)
+        private var filter = MutableLiveData<String?>(null)
         private val itemsFiltered by lazy {
             MediatorLiveData<List<HistoryItem>>().apply {
-                addSource(filter) {
+                addSource(filter) { categoryId ->
                     value = itemsRaw.value?.filter { item ->
-                        it == 0 || ((1 shl item.category) and it) != 0
+                        categoryId == null || item.categoryId == categoryId
                     } ?: emptyList()
                 }
                 addSource(itemsRaw) {
-                    val filter = filter.value ?: 0
-                    value = it.filter { item -> filter == 0 || ((1 shl item.category) and filter) != 0 }
+                    val categoryId = filter.value
+                    value = it.filter { item -> categoryId == null || item.categoryId == categoryId }
                 }
             }
         }
@@ -41,19 +41,19 @@ class HistoryViewModel
         fun removeItem(item: HistoryItem) {
             viewModelScope.launch(Dispatchers.IO) {
                 dao.delete(item)
+                itemsRaw.postValue(dao.getAll())
             }
-            fetch()
         }
 
         fun removeAll() {
             viewModelScope.launch(Dispatchers.IO) {
                 dao.deleteAll()
+                itemsRaw.postValue(dao.getAll())
             }
-            fetch()
         }
 
-        fun filter(mask: Int) {
-            filter.value = mask
+        fun filter(categoryId: String?) {
+            filter.value = categoryId
         }
 
         private fun fetch() {

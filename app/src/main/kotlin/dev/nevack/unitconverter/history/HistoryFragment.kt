@@ -14,11 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
+import dev.nevack.unitconverter.model.ConverterCatalog
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HistoryFragment :
     Fragment(R.layout.fragment_history),
     MenuProvider {
@@ -26,6 +30,9 @@ class HistoryFragment :
     private lateinit var adapter: HistoryAdapter
 
     private val viewModel: HistoryViewModel by activityViewModels()
+
+    @Inject
+    lateinit var catalog: ConverterCatalog
 
     override fun onViewCreated(
         view: View,
@@ -52,7 +59,11 @@ class HistoryFragment :
             }
         }
         adapter =
-            HistoryAdapter(remove = viewModel::removeItem, share = ::shareItem).also {
+            HistoryAdapter(
+                categoriesById = catalog.categories.associateBy { it.id },
+                remove = viewModel::removeItem,
+                share = ::shareItem,
+            ).also {
                 binding.recycler.adapter = it
             }
 
@@ -80,7 +91,7 @@ class HistoryFragment :
             }
 
             R.id.filter -> {
-                HistoryFilterDialog(viewModel::filter).show(childFragmentManager, "dialog")
+                HistoryFilterDialog(catalog.categories, viewModel::filter).show(childFragmentManager, "dialog")
                 true
             }
 

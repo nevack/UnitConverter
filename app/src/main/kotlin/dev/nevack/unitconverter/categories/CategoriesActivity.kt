@@ -13,10 +13,14 @@ import dev.nevack.unitconverter.converter.ConverterActivity
 import dev.nevack.unitconverter.converter.ConverterFragment
 import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.databinding.ActivityCategoriesBinding
-import dev.nevack.unitconverter.model.Categories
+import dev.nevack.unitconverter.model.ConverterCatalog
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesActivity : AppCompatActivity() {
+    @Inject
+    lateinit var catalog: ConverterCatalog
+
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val converterViewModel: ConverterViewModel by viewModels()
 
@@ -38,14 +42,16 @@ class CategoriesActivity : AppCompatActivity() {
 
         categoriesViewModel.converterOpened.observe(this) {
             if (isTablet) {
-                converterViewModel.load(Categories[it], this)
+                converterViewModel.load(it)
             } else {
                 startActivity(ConverterActivity.getIntent(this, it))
             }
         }
 
         if (isTablet) {
-            converterViewModel.load(Categories[0], this)
+            catalog.categories.firstOrNull()?.let { category ->
+                converterViewModel.load(category.id)
+            }
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)

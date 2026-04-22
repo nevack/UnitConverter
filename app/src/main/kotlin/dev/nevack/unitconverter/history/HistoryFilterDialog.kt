@@ -5,29 +5,26 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dev.nevack.unitconverter.model.Categories
+import dev.nevack.unitconverter.model.ConverterCategory
 
-typealias Listener = ((Int) -> Unit)
+typealias Listener = (String?) -> Unit
 
 class HistoryFilterDialog(
+    private val categories: List<ConverterCategory>,
     private val listener: Listener,
 ) : DialogFragment() {
-    private var mask = -1
+    private var categoryId: String? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val names: MutableList<String> = mutableListOf("None")
-        Categories.mapTo(names) { getString(it.categoryName) }
+        categories.mapTo(names) { getString(it.categoryName) }
         return MaterialAlertDialogBuilder(requireContext())
-            .setItems(names.toTypedArray()) { _, which -> mask = which - 1 }
+            .setItems(names.toTypedArray()) { _, which -> categoryId = categories.getOrNull(which - 1)?.id }
             .create()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        if (mask < 0) {
-            listener(0)
-        } else {
-            listener(1 shl mask)
-        }
+        listener(categoryId)
     }
 }

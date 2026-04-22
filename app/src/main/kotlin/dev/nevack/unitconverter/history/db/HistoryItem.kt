@@ -11,5 +11,5 @@ data class HistoryItem(
     @ColumnInfo(name = "unit_to") val unitTo: String,
     @ColumnInfo(name = "value_from") val valueFrom: String,
     @ColumnInfo(name = "value_to") val valueTo: String,
-    @ColumnInfo(name = "category") val category: Int,
+    @ColumnInfo(name = "category_id") val categoryId: String,
 )

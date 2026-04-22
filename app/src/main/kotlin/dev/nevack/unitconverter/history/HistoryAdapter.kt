@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.databinding.HistoryItemBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
-import dev.nevack.unitconverter.model.Categories
 import dev.nevack.unitconverter.model.ConverterCategory
 
 internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
@@ -25,6 +24,7 @@ internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
 }
 
 internal class HistoryAdapter(
+    private val categoriesById: Map<String, ConverterCategory>,
     private val remove: (HistoryItem) -> Unit,
     private val share: (HistoryItem) -> Unit,
 ) : ListAdapter<HistoryItem, ViewHolder>(Differ()) {
@@ -55,7 +55,7 @@ internal class HistoryAdapter(
         position: Int,
     ) {
         val item = getItem(holder.bindingAdapterPosition)
-        val category = Categories[item.category]
+        val category = categoriesById[item.categoryId]
         holder.bind(category, item)
     }
 }
@@ -64,19 +64,21 @@ internal class ViewHolder(
     val binding: HistoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        category: ConverterCategory,
+        category: ConverterCategory?,
         item: HistoryItem,
     ) {
-        binding.categoryName.setText(category.categoryName)
         binding.valueFrom.text = item.valueFrom
         binding.valueTo.text = item.valueTo
         binding.unitFrom.text = item.unitFrom
         binding.unitTo.text = item.unitTo
-        itemView.setBackgroundColor(
-            ContextCompat.getColor(itemView.context, category.color),
-        )
-        binding.categoryIcon.setImageDrawable(
-            AppCompatResources.getDrawable(itemView.context, category.icon),
-        )
+        if (category == null) {
+            binding.categoryName.text = item.categoryId
+            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, android.R.color.transparent))
+            binding.categoryIcon.setImageDrawable(null)
+            return
+        }
+        binding.categoryName.setText(category.categoryName)
+        itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, category.color))
+        binding.categoryIcon.setImageDrawable(AppCompatResources.getDrawable(itemView.context, category.icon))
     }
 }

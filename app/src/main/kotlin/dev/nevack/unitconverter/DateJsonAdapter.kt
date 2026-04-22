@@ -1,33 +1,30 @@
 package dev.nevack.unitconverter
 
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.JsonReader
-import com.squareup.moshi.JsonWriter
-import java.text.DateFormat
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class DateJsonAdapter : JsonAdapter<Date>() {
-    private var df: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+object DateJsonAdapter : KSerializer<Date> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("dev.nevack.unitconverter.DateJsonAdapter", PrimitiveKind.STRING)
 
-    override fun fromJson(reader: JsonReader): Date? {
-        if (reader.peek() == JsonReader.Token.NULL) {
-            return reader.nextNull()
+    private val formatter =
+        ThreadLocal.withInitial {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
         }
-        val string = reader.nextString()
-        return df.parse(string)
-    }
 
-    override fun toJson(
-        writer: JsonWriter,
-        value: Date?,
+    override fun deserialize(decoder: Decoder): Date = formatter.get()!!.parse(decoder.decodeString())!!
+
+    override fun serialize(
+        encoder: Encoder,
+        value: Date,
     ) {
-        if (value == null) {
-            writer.nullValue()
-        } else {
-            val string = df.format(value)
-            writer.value(string)
-        }
+        encoder.encodeString(formatter.get()!!.format(value))
     }
 }

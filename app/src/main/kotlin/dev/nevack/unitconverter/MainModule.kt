@@ -1,7 +1,6 @@
 package dev.nevack.unitconverter
 
 import android.content.Context
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,27 +8,27 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.nevack.unitconverter.model.nbrb.NBRBCurrency
 import dev.nevack.unitconverter.model.nbrb.NBRBRepository
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.io.File
-import java.util.Date
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
     @Provides
-    fun provideMoshi(): Moshi =
-        Moshi
-            .Builder()
-            .add(Date::class.java, DateJsonAdapter())
-            .build()
+    fun provideJson(): Json =
+        Json {
+            ignoreUnknownKeys = true
+        }
 
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit =
+    fun provideRetrofit(json: Json): Retrofit =
         Retrofit
             .Builder()
             .baseUrl("https://api.nbrb.by/exrates/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
 
     @Provides
@@ -39,10 +38,10 @@ object MainModule {
     fun provideNBRBRepository(
         @ApplicationContext context: Context,
         service: NBRBService,
-        moshi: Moshi,
+        json: Json,
     ): NBRBRepository {
         val localeList = context.resources.configuration.locales
         val locale = NBRBCurrency.getCompatibleLocale(localeList)
-        return NBRBRepository(locale, { name -> File(context.filesDir, name) }, service, moshi)
+        return NBRBRepository(locale, { name -> File(context.filesDir, name) }, service, json)
     }
 }

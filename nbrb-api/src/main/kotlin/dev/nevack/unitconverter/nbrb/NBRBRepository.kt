@@ -1,7 +1,8 @@
-package dev.nevack.unitconverter.model.nbrb
+package dev.nevack.unitconverter.nbrb
 
-import dev.nevack.unitconverter.NBRBService
-import dev.nevack.unitconverter.model.ConversionUnit
+import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
+import dev.nevack.unitconverter.nbrb.model.NBRBRate
+import dev.nevack.unitconverter.nbrb.model.NBRBUnit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -17,7 +18,7 @@ import java.util.Locale
 class NBRBRepository(
     private val locale: Locale,
     fileProvider: (String) -> File,
-    private var service: NBRBService,
+    private val service: NBRBService,
     private val json: Json,
 ) {
     private val currenciesFile = fileProvider("currencies.json")
@@ -25,7 +26,7 @@ class NBRBRepository(
     private val ratesSerializer = ListSerializer(NBRBRate.serializer())
     private val currenciesSerializer = ListSerializer(NBRBCurrency.serializer())
 
-    suspend fun getUnits(): List<ConversionUnit> =
+    suspend fun getUnits(): List<NBRBUnit> =
         withContext(Dispatchers.IO) {
             val currenciesAsync =
                 async {
@@ -36,8 +37,7 @@ class NBRBRepository(
                     loadWithCache(ratesSerializer, ratesFile) { allRatesForToday() }
                 }
             val currencies = currenciesAsync.await().associateBy { it.curID }
-            val rates = ratesAsync.await()
-            rates
+            ratesAsync.await()
                 .filter { currencies.containsKey(it.curID) }
                 .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
         }

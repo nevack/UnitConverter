@@ -3,7 +3,7 @@ package dev.nevack.unitconverter.model.converter
 import android.content.Context
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.model.ConversionUnit
-import dev.nevack.unitconverter.model.nbrb.NBRBRepository
+import dev.nevack.unitconverter.nbrb.NBRBRepository
 
 class CurrencyConverter(
     context: Context,
@@ -16,7 +16,9 @@ class CurrencyConverter(
 
     override suspend fun load() {
         val repository = requireNotNull(repository) { "Repository must not be null!" }
-        repository.getUnits().forEach { unit -> registerUnit(unit) }
+        repository.getUnits().forEach { unit ->
+            registerUnit(ConversionUnit(unit.name, unit.factor, unit.symbol))
+        }
         sortUnitsWith { a, b -> a.name.compareTo(b.name, ignoreCase = true) }
     }
 

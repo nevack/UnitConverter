@@ -11,7 +11,7 @@ import dev.nevack.unitconverter.history.db.HistoryItem
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.converter.Converter
 import dev.nevack.unitconverter.model.converter.CurrencyConverter
-import dev.nevack.unitconverter.model.nbrb.NBRBRepository
+import dev.nevack.unitconverter.nbrb.NBRBRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

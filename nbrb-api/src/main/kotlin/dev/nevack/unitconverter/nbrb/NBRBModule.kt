@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter
+package dev.nevack.unitconverter.nbrb
 
 import android.content.Context
 import dagger.Module
@@ -6,8 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.nevack.unitconverter.model.nbrb.NBRBCurrency
-import dev.nevack.unitconverter.model.nbrb.NBRBRepository
+import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
@@ -16,7 +15,7 @@ import java.io.File
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MainModule {
+object NBRBModule {
     @Provides
     fun provideJson(): Json =
         Json {
@@ -40,8 +39,7 @@ object MainModule {
         service: NBRBService,
         json: Json,
     ): NBRBRepository {
-        val localeList = context.resources.configuration.locales
-        val locale = NBRBCurrency.getCompatibleLocale(localeList)
+        val locale = NBRBCurrency.getCompatibleLocale(context.resources.configuration.locales)
         return NBRBRepository(locale, { name -> File(context.filesDir, name) }, service, json)
     }
 }

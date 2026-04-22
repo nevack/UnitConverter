@@ -1,7 +1,7 @@
-package dev.nevack.unitconverter.model.nbrb
+package dev.nevack.unitconverter.nbrb.model
 
 import android.os.LocaleList
-import dev.nevack.unitconverter.DateJsonAdapter
+import dev.nevack.unitconverter.nbrb.DateJsonAdapter
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.Date
@@ -47,9 +47,9 @@ data class NBRBCurrency(
     val curScale: Int,
 ) {
     companion object {
-        private val EN = Locale("en")
-        private val RU = Locale("ru")
-        private val BE = Locale("be")
+        private val EN = Locale.forLanguageTag("en")
+        private val RU = Locale.forLanguageTag("ru")
+        private val BE = Locale.forLanguageTag("be")
         private val LANGUAGES = listOf(EN, RU, BE).map { it.language }.toSet()
 
         fun getCompatibleLocale(list: LocaleList): Locale {

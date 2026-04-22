@@ -1,7 +1,7 @@
-package dev.nevack.unitconverter
+package dev.nevack.unitconverter.nbrb
 
-import dev.nevack.unitconverter.model.nbrb.NBRBCurrency
-import dev.nevack.unitconverter.model.nbrb.NBRBRate
+import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
+import dev.nevack.unitconverter.nbrb.model.NBRBRate
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

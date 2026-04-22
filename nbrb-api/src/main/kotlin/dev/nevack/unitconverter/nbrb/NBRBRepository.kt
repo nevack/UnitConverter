@@ -37,7 +37,8 @@ class NBRBRepository(
                     loadWithCache(ratesSerializer, ratesFile) { allRatesForToday() }
                 }
             val currencies = currenciesAsync.await().associateBy { it.curID }
-            ratesAsync.await()
+            ratesAsync
+                .await()
                 .filter { currencies.containsKey(it.curID) }
                 .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
         }

@@ -11,6 +11,7 @@ pluginManagement {
         id("com.github.ben-manes.versions") version "0.54.0"
         id("com.diffplug.spotless") version "8.4.0"
         id("com.android.application") version "9.2.0"
+        id("com.android.library") version "9.2.0"
         id("org.jetbrains.kotlin.android") version "2.3.20"
         id("org.jetbrains.kotlin.plugin.serialization") version "2.3.20"
         id("com.google.devtools.ksp") version "2.3.7"
@@ -33,3 +34,4 @@ dependencyResolutionManagement {
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 include(":app")
+include(":nbrb-api")

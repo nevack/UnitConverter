@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("dev.nevack.plugins.signing-config")
-    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.gradle.android.cache-fix")
@@ -40,6 +39,7 @@ android {
 
 //noinspection KtxExtensionAvailable
 dependencies {
+    implementation(project(":nbrb-api"))
     // Coroutines
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
@@ -67,11 +67,6 @@ dependencies {
     implementation("androidx.sqlite:sqlite:2.6.2")
     // Okio
     implementation("com.squareup.okio:okio:3.17.0")
-    // Kotlinx serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt

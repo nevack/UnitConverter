@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter
+package dev.nevack.unitconverter.nbrb
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -12,7 +12,7 @@ import java.util.Locale
 
 object DateJsonAdapter : KSerializer<Date> {
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("dev.nevack.unitconverter.DateJsonAdapter", PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor("dev.nevack.unitconverter.nbrb.DateJsonAdapter", PrimitiveKind.STRING)
 
     private val formatter =
         ThreadLocal.withInitial {

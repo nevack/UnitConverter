@@ -19,5 +19,3 @@ gradlePlugin {
         }
     }
 }
-
-tasks.checkKotlinGradlePluginConfigurationErrors { enabled = false }

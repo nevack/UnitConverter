@@ -1,46 +1,49 @@
 package dev.nevack.unitconverter.model.nbrb
 
 import android.os.LocaleList
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import dev.nevack.unitconverter.DateJsonAdapter
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.util.Date
 import java.util.Locale
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class NBRBCurrency(
-    @Json(name = "Cur_Abbreviation")
+    @SerialName("Cur_Abbreviation")
     val curAbbreviation: String,
-    @Json(name = "Cur_Code")
+    @SerialName("Cur_Code")
     val curCode: String,
-    @Json(name = "Cur_DateEnd")
+    @SerialName("Cur_DateEnd")
+    @Serializable(with = DateJsonAdapter::class)
     val curDateEnd: Date,
-    @Json(name = "Cur_DateStart")
+    @SerialName("Cur_DateStart")
+    @Serializable(with = DateJsonAdapter::class)
     val curDateStart: Date,
-    @Json(name = "Cur_ID")
+    @SerialName("Cur_ID")
     val curID: Int,
-    @Json(name = "Cur_Name")
+    @SerialName("Cur_Name")
     val curName: String,
-    @Json(name = "Cur_Name_Bel")
+    @SerialName("Cur_Name_Bel")
     val curNameBel: String,
-    @Json(name = "Cur_Name_BelMulti")
+    @SerialName("Cur_Name_BelMulti")
     val curNameBelMulti: String,
-    @Json(name = "Cur_Name_Eng")
+    @SerialName("Cur_Name_Eng")
     val curNameEng: String,
-    @Json(name = "Cur_Name_EngMulti")
+    @SerialName("Cur_Name_EngMulti")
     val curNameEngMulti: String,
-    @Json(name = "Cur_NameMulti")
+    @SerialName("Cur_NameMulti")
     val curNameMulti: String,
-    @Json(name = "Cur_ParentID")
+    @SerialName("Cur_ParentID")
     val curParentID: Int,
-    @Json(name = "Cur_Periodicity")
+    @SerialName("Cur_Periodicity")
     val curPeriodicity: Int,
-    @Json(name = "Cur_QuotName")
+    @SerialName("Cur_QuotName")
     val curQuotName: String,
-    @Json(name = "Cur_QuotName_Bel")
+    @SerialName("Cur_QuotName_Bel")
     val curQuotNameBel: String,
-    @Json(name = "Cur_QuotName_Eng")
+    @SerialName("Cur_QuotName_Eng")
     val curQuotNameEng: String,
-    @Json(name = "Cur_Scale")
+    @SerialName("Cur_Scale")
     val curScale: Int,
 ) {
     companion object {

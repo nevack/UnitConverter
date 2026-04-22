@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("dev.nevack.plugins.signing-config")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.gradle.android.cache-fix")
@@ -66,12 +67,11 @@ dependencies {
     implementation("androidx.sqlite:sqlite:2.6.2")
     // Okio
     implementation("com.squareup.okio:okio:3.17.0")
-    // Moshi
-    implementation("com.squareup.moshi:moshi:1.15.2")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.2")
+    // Kotlinx serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-moshi:3.0.0")
+    implementation("com.squareup.retrofit2:converter-kotlinx-serialization:3.0.0")
     // Insetter
     implementation("dev.chrisbanes.insetter:insetter:0.6.1")
     // Dagger + Hilt

@@ -1,6 +1,5 @@
 package dev.nevack.unitconverter.converter
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,10 +7,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.history.db.HistoryItem
-import dev.nevack.unitconverter.model.ConverterCategory
+import dev.nevack.unitconverter.model.ConverterCatalog
 import dev.nevack.unitconverter.model.converter.Converter
-import dev.nevack.unitconverter.model.converter.CurrencyConverter
-import dev.nevack.unitconverter.nbrb.NBRBRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +18,7 @@ class ConverterViewModel
     @Inject
     constructor(
         private val database: HistoryDatabase,
-        private val repository: NBRBRepository,
+        private val catalog: ConverterCatalog,
     ) : ViewModel() {
         private val _drawerOpened = MutableLiveData(false)
         val drawerOpened: LiveData<Boolean>
@@ -35,9 +32,9 @@ class ConverterViewModel
         val title: LiveData<Int>
             get() = _title
 
-        private val _category = MutableLiveData<Int>()
-        val category: LiveData<Int>
-            get() = _category
+        private val _categoryId = MutableLiveData<String>()
+        val categoryId: LiveData<String>
+            get() = _categoryId
 
         private val _converter = MutableLiveData<Converter>()
         val converter: LiveData<Converter>
@@ -53,20 +50,14 @@ class ConverterViewModel
             return changed
         }
 
-        fun load(
-            category: ConverterCategory,
-            context: Context,
-        ) {
+        fun load(categoryId: String) {
+            val category = catalog.getCategory(categoryId) ?: return
             _title.value = category.categoryName
             _backgroundColor.value = category.color
 
-            _category.value = category.index
+            _categoryId.value = category.id
 
-            val converter = category.getConverter(context)
-
-            if (converter is CurrencyConverter) {
-                converter.repository = repository
-            }
+            val converter = catalog.createConverter(categoryId)
 
             viewModelScope.launch {
                 converter.load()
@@ -97,6 +88,7 @@ class ConverterViewModel
 
         fun saveResultToHistory(result: ConvertData) {
             val converter = converter.value ?: return
+            val categoryId = _categoryId.value ?: return
             val item =
                 HistoryItem(
                     0,
@@ -104,7 +96,7 @@ class ConverterViewModel
                     converter[result.to].name,
                     result.value,
                     result.result,
-                    _category.value ?: 0,
+                    categoryId,
                 )
             viewModelScope.launch(Dispatchers.IO) {
                 database.dao().insertAll(item)

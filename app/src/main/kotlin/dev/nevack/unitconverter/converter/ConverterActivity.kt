@@ -17,10 +17,14 @@ import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
-import dev.nevack.unitconverter.model.Categories
+import dev.nevack.unitconverter.model.ConverterCatalog
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
+    @Inject
+    lateinit var catalog: ConverterCatalog
+
     private val viewModel: ConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,24 +55,29 @@ class ConverterActivity : AppCompatActivity() {
             replace<ConverterFragment>(R.id.container, args = bundleOf(SHOW_NAV_BUTTON_ARG to true))
         }
 
-        viewModel.category.observe(this) {
-            binding.navigationView.menu[it].isChecked = true
+        viewModel.categoryId.observe(this) { categoryId ->
+            val categoryIndex = catalog.categories.indexOfFirst { it.id == categoryId }
+            if (categoryIndex != -1) {
+                binding.navigationView.menu[categoryIndex].isChecked = true
+            }
         }
 
-        val category = intent.getIntExtra(CONVERTER_ID_EXTRA, 0)
-        viewModel.load(Categories[category], this)
+        val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
+        val initialCategoryId = categoryId ?: catalog.categories.firstOrNull()?.id ?: return
+        viewModel.load(initialCategoryId)
     }
 
     private fun setupNavigation(binding: ActivityConverterBinding) =
         with(binding.navigationView) {
-            for ((i, unit) in Categories.withIndex()) {
+            for ((i, unit) in catalog.categories.withIndex()) {
                 menu
                     .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
                     .setCheckable(true)
                     .setIcon(unit.icon)
             }
             setNavigationItemSelectedListener { menuItem ->
-                viewModel.load(Categories[menuItem.order], this@ConverterActivity)
+                val category = catalog.categories.getOrNull(menuItem.order) ?: return@setNavigationItemSelectedListener false
+                viewModel.load(category.id)
                 viewModel.setDrawerOpened(false)
                 true
             }
@@ -79,15 +88,15 @@ class ConverterActivity : AppCompatActivity() {
         }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        viewModel.category.value?.let { outState.putInt(CONVERTER_ID_EXTRA, it) }
+        viewModel.categoryId.value?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val category = savedInstanceState.getInt(CONVERTER_ID_EXTRA, -1)
-        if (category != -1) {
-            viewModel.load(Categories[category], this)
+        val categoryId = savedInstanceState.getString(CONVERTER_ID_EXTRA)
+        if (categoryId != null) {
+            viewModel.load(categoryId)
         }
     }
 
@@ -96,10 +105,10 @@ class ConverterActivity : AppCompatActivity() {
 
         fun getIntent(
             context: Context,
-            category: Int,
+            categoryId: String,
         ): Intent =
             Intent(context, ConverterActivity::class.java).apply {
-                putExtra(CONVERTER_ID_EXTRA, category)
+                putExtra(CONVERTER_ID_EXTRA, categoryId)
             }
     }
 }

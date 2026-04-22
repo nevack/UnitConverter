@@ -7,15 +7,13 @@ import dev.nevack.unitconverter.nbrb.NBRBRepository
 
 class CurrencyConverter(
     context: Context,
+    private val repository: NBRBRepository,
 ) : Converter() {
-    internal var repository: NBRBRepository? = null
-
     init {
         registerUnit(getBYNLocalized(context))
     }
 
     override suspend fun load() {
-        val repository = requireNotNull(repository) { "Repository must not be null!" }
         repository.getUnits().forEach { unit ->
             registerUnit(ConversionUnit(unit.name, unit.factor, unit.symbol))
         }

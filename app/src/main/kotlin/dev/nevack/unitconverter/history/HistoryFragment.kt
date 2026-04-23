@@ -18,8 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
-import dev.nevack.unitconverter.history.db.HistoryItem
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,7 +31,7 @@ class HistoryFragment :
     private val viewModel: HistoryViewModel by activityViewModels()
 
     @Inject
-    lateinit var catalog: ConverterCatalog
+    lateinit var catalog: AppConverterCatalog
 
     override fun onViewCreated(
         view: View,
@@ -100,7 +99,7 @@ class HistoryFragment :
             }
         }
 
-    private fun shareItem(item: HistoryItem) {
+    private fun shareItem(item: HistoryRecord) {
         val message = "${item.valueFrom} ${item.unitFrom} = ${item.valueTo} ${item.unitTo}"
         val sendIntent =
             Intent(Intent.ACTION_SEND).apply {

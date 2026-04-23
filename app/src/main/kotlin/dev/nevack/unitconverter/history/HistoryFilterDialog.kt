@@ -5,12 +5,12 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dev.nevack.unitconverter.model.ConverterCategory
+import dev.nevack.unitconverter.model.AppConverterCategory
 
 typealias Listener = (String?) -> Unit
 
 class HistoryFilterDialog(
-    private val categories: List<ConverterCategory>,
+    private val categories: List<AppConverterCategory>,
     private val listener: Listener,
 ) : DialogFragment() {
     private var categoryId: String? = null

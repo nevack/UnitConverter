@@ -1,5 +1,6 @@
 package dev.nevack.unitconverter.nbrb.model
 
+import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.nbrb.DateJsonAdapter
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -21,8 +22,8 @@ data class NBRBRate(
     @Serializable(with = DateJsonAdapter::class)
     val date: Date,
 ) {
-    fun toUnitLocalized(name: String): NBRBUnit =
-        NBRBUnit(
+    fun toUnitLocalized(name: String): ConversionUnit =
+        ConversionUnit(
             name,
             curOfficialRate / curScale,
             curAbbreviation,

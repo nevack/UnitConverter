@@ -17,13 +17,13 @@ import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
     @Inject
-    lateinit var catalog: ConverterCatalog
+    lateinit var catalog: AppConverterCatalog
 
     private val viewModel: ConverterViewModel by viewModels()
 

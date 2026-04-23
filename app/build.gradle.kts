@@ -39,6 +39,7 @@ android {
 
 //noinspection KtxExtensionAvailable
 dependencies {
+    implementation(project(":converter-core"))
     implementation(project(":nbrb-api"))
     // Coroutines
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))

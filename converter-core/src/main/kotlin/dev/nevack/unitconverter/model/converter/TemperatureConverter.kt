@@ -1,36 +1,16 @@
 package dev.nevack.unitconverter.model.converter
 
-import android.content.Context
-import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.model.ConversionUnit
 import java.lang.ArithmeticException
 import java.math.BigDecimal
 
 class TemperatureConverter(
-    private val context: Context,
+    units: List<ConversionUnit>,
 ) : Converter() {
+    private val unitsToRegister = units
+
     override suspend fun load() {
-        registerUnit(
-            ConversionUnit(
-                context.getString(R.string.kelvin),
-                1.0,
-                context.getString(R.string.kelvinsymbol),
-            ),
-        )
-        registerUnit(
-            ConversionUnit(
-                context.getString(R.string.celsius),
-                1.0,
-                context.getString(R.string.celsiussymbol),
-            ),
-        )
-        registerUnit(
-            ConversionUnit(
-                context.getString(R.string.fahrenheit),
-                1.0,
-                context.getString(R.string.fahrenheitsymbol),
-            ),
-        )
+        unitsToRegister.forEach(::registerUnit)
     }
 
     @Throws(ArithmeticException::class)
@@ -104,5 +84,14 @@ class TemperatureConverter(
             private val FAHRENHEIT_OFFSET = BigDecimal(32, MC)
             private val FAHRENHEIT_MULTIPLIER = BigDecimal(1.8, MC)
         }
+    }
+
+    companion object {
+        val DEFINITIONS =
+            listOf(
+                UnitDefinition("kelvin", 1.0),
+                UnitDefinition("celsius", 1.0),
+                UnitDefinition("fahrenheit", 1.0),
+            )
     }
 }

@@ -9,7 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentCategoriesBinding
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -17,7 +17,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val viewModel: CategoriesViewModel by activityViewModels()
 
     @Inject
-    lateinit var catalog: ConverterCatalog
+    lateinit var catalog: AppConverterCatalog
 
     override fun onViewCreated(
         view: View,

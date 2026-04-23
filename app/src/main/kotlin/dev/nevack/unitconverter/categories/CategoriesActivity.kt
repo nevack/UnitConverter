@@ -13,13 +13,13 @@ import dev.nevack.unitconverter.converter.ConverterActivity
 import dev.nevack.unitconverter.converter.ConverterFragment
 import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.databinding.ActivityCategoriesBinding
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesActivity : AppCompatActivity() {
     @Inject
-    lateinit var catalog: ConverterCatalog
+    lateinit var catalog: AppConverterCatalog
 
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val converterViewModel: ConverterViewModel by viewModels()

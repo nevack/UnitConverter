@@ -12,7 +12,6 @@ import dev.nevack.unitconverter.model.AppConverterCategory
 import dev.nevack.unitconverter.model.AppConverterFactory
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.ConverterCategoryIds
-import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.nbrb.NBRBRepository
 
 @Module
@@ -155,11 +154,7 @@ object ConvertersModule {
         ) {
             CurrencyConverter(
                 bynUnit = context.bynUnit(),
-                loadUnits = {
-                    repository.getUnits().map { unit ->
-                        ConversionUnit(unit.name, unit.factor, unit.symbol)
-                    }
-                },
+                loadUnits = repository::getUnits,
             )
         }
 

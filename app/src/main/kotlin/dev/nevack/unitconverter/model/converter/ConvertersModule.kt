@@ -12,6 +12,7 @@ import dev.nevack.unitconverter.model.AppConverterCategory
 import dev.nevack.unitconverter.model.AppConverterFactory
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.ConverterCategoryIds
+import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.nbrb.NBRBRepository
 
 @Module
@@ -30,7 +31,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_weight,
                     color = R.color.material_red_500,
                 ),
-        ) { MassConverter(context) }
+        ) { MassConverter(context.massUnits()) }
 
     @Provides
     @IntoSet
@@ -45,7 +46,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_volume,
                     color = R.color.material_green_accent_700,
                 ),
-        ) { VolumeConverter(context) }
+        ) { VolumeConverter(context.volumeUnits()) }
 
     @Provides
     @IntoSet
@@ -60,7 +61,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_temperature,
                     color = R.color.material_purple_500,
                 ),
-        ) { TemperatureConverter(context) }
+        ) { TemperatureConverter(context.temperatureUnits()) }
 
     @Provides
     @IntoSet
@@ -75,7 +76,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_speed,
                     color = R.color.material_indigo_500,
                 ),
-        ) { SpeedConverter(context) }
+        ) { SpeedConverter(context.speedUnits()) }
 
     @Provides
     @IntoSet
@@ -90,7 +91,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_ruler,
                     color = R.color.material_bluegrey_500,
                 ),
-        ) { LengthConverter(context) }
+        ) { LengthConverter(context.lengthUnits()) }
 
     @Provides
     @IntoSet
@@ -105,7 +106,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_area,
                     color = R.color.material_teal_500,
                 ),
-        ) { AreaConverter(context) }
+        ) { AreaConverter(context.areaUnits()) }
 
     @Provides
     @IntoSet
@@ -120,7 +121,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_memory,
                     color = R.color.material_blue_500,
                 ),
-        ) { MemoryConverter(context) }
+        ) { MemoryConverter(context.memoryUnits()) }
 
     @Provides
     @IntoSet
@@ -135,7 +136,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_timer,
                     color = R.color.material_orange_500,
                 ),
-        ) { TimeConverter(context) }
+        ) { TimeConverter(context.timeUnits()) }
 
     @Provides
     @IntoSet
@@ -151,7 +152,16 @@ object ConvertersModule {
                     icon = R.drawable.ic_currency_usd,
                     color = R.color.material_green_800,
                 ),
-        ) { CurrencyConverter(context, repository) }
+        ) {
+            CurrencyConverter(
+                bynUnit = context.bynUnit(),
+                loadUnits = {
+                    repository.getUnits().map { unit ->
+                        ConversionUnit(unit.name, unit.factor, unit.symbol)
+                    }
+                },
+            )
+        }
 
     @Provides
     @IntoSet
@@ -166,7 +176,7 @@ object ConvertersModule {
                     icon = R.drawable.ic_other,
                     color = R.color.material_deep_purple_500,
                 ),
-        ) { OtherConverter(context) }
+        ) { OtherConverter(context.otherUnits()) }
 }
 
 private class LambdaAppConverterFactory(

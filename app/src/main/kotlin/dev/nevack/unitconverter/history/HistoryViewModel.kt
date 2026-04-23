@@ -6,11 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.nevack.unitconverter.history.HistoryRecord
-import dev.nevack.unitconverter.history.db.HistoryDatabase
-import dev.nevack.unitconverter.history.db.toEntity
-import dev.nevack.unitconverter.history.db.toRecord
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,10 +13,10 @@ import javax.inject.Inject
 class HistoryViewModel
     @Inject
     constructor(
-        db: HistoryDatabase,
+        private val getHistoryUseCase: GetHistoryUseCase,
+        private val removeHistoryItemUseCase: RemoveHistoryItemUseCase,
+        private val clearHistoryUseCase: ClearHistoryUseCase,
     ) : ViewModel() {
-        private val dao = db.dao()
-
         private val itemsRaw = MutableLiveData<List<HistoryRecord>>().also { fetch() }
         private var filter = MutableLiveData<String?>(null)
         private val itemsFiltered by lazy {
@@ -41,16 +36,16 @@ class HistoryViewModel
             get() = itemsFiltered
 
         fun removeItem(item: HistoryRecord) {
-            viewModelScope.launch(Dispatchers.IO) {
-                dao.delete(item.toEntity())
-                itemsRaw.postValue(dao.getAll().map { it.toRecord() })
+            viewModelScope.launch {
+                removeHistoryItemUseCase(item)
+                refreshItems()
             }
         }
 
         fun removeAll() {
-            viewModelScope.launch(Dispatchers.IO) {
-                dao.deleteAll()
-                itemsRaw.postValue(dao.getAll().map { it.toRecord() })
+            viewModelScope.launch {
+                clearHistoryUseCase()
+                refreshItems()
             }
         }
 
@@ -59,9 +54,12 @@ class HistoryViewModel
         }
 
         private fun fetch() {
-            viewModelScope.launch(Dispatchers.IO) {
-                val items = dao.getAll().map { it.toRecord() }
-                itemsRaw.postValue(items)
+            viewModelScope.launch {
+                refreshItems()
             }
+        }
+
+        private suspend fun refreshItems() {
+            itemsRaw.postValue(getHistoryUseCase())
         }
     }

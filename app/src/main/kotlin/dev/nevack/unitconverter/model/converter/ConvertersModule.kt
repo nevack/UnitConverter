@@ -12,7 +12,7 @@ import dev.nevack.unitconverter.model.AppConverterCategory
 import dev.nevack.unitconverter.model.AppConverterFactory
 import dev.nevack.unitconverter.model.ConverterCategory
 import dev.nevack.unitconverter.model.ConverterCategoryIds
-import dev.nevack.unitconverter.nbrb.NBRBRepository
+import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -141,7 +141,7 @@ object ConvertersModule {
     @IntoSet
     fun provideCurrencyConverterFactory(
         @ApplicationContext context: Context,
-        repository: NBRBRepository,
+        repository: CurrencyUnitsRepository,
     ): AppConverterFactory =
         LambdaAppConverterFactory(
             appCategory =

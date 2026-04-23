@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -34,11 +35,11 @@ object NBRBModule {
     fun provideNBRBService(retrofit: Retrofit): NBRBService = retrofit.create(NBRBService::class.java)
 
     @Provides
-    fun provideNBRBRepository(
+    fun provideCurrencyUnitsRepository(
         @ApplicationContext context: Context,
         service: NBRBService,
         json: Json,
-    ): NBRBRepository {
+    ): CurrencyUnitsRepository {
         val locale = NBRBCurrency.getCompatibleLocale(context.resources.configuration.locales)
         return NBRBRepository(locale, { name -> File(context.filesDir, name) }, service, json)
     }

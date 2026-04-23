@@ -5,11 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.nevack.unitconverter.history.HistoryRecord
-import dev.nevack.unitconverter.history.db.HistoryDatabase
-import dev.nevack.unitconverter.history.db.toEntity
-import dev.nevack.unitconverter.model.AppConverterCatalog
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +12,10 @@ import javax.inject.Inject
 class ConverterViewModel
     @Inject
     constructor(
-        private val database: HistoryDatabase,
-        private val catalog: AppConverterCatalog,
+        private val getConverterCategoryUseCase: GetConverterCategoryUseCase,
+        private val loadConverterUseCase: LoadConverterUseCase,
+        private val convertValueUseCase: ConvertValueUseCase,
+        private val saveResultToHistoryUseCase: SaveResultToHistoryUseCase,
     ) : ViewModel() {
         private val _uiState = MutableLiveData(ConverterUiState())
         val uiState: LiveData<ConverterUiState>
@@ -31,8 +28,7 @@ class ConverterViewModel
         }
 
         fun load(categoryId: String) {
-            val category = catalog.getCategory(categoryId) ?: return
-            val converter = catalog.createConverter(categoryId)
+            val category = getConverterCategoryUseCase(categoryId) ?: return
 
             updateUiState {
                 copy(
@@ -45,29 +41,17 @@ class ConverterViewModel
             }
 
             viewModelScope.launch {
-                converter.load()
+                val converter = loadConverterUseCase(categoryId) ?: return@launch
                 updateUiState { copy(converter = converter) }
             }
         }
 
         fun convert(data: ConvertData) {
-            val converter = uiState.value?.converter
-            if (converter == null) {
-                updateUiState { copy(result = Result.Empty) }
-                return
-            }
-            try {
-                val result =
-                    Result.Converted(
-                        converter.convert(
-                            data.value,
-                            data.from,
-                            data.to,
-                        ),
-                    )
-                updateUiState { copy(result = result) }
-            } catch (ex: Exception) {
-                updateUiState { copy(result = Result.Empty) }
+            val result = convertValueUseCase(uiState.value?.converter, data)
+            updateUiState {
+                copy(
+                    result = result?.let { Result.Converted(it) } ?: Result.Empty,
+                )
             }
         }
 
@@ -75,16 +59,8 @@ class ConverterViewModel
             val uiState = _uiState.value ?: return
             val converter = uiState.converter ?: return
             val categoryId = uiState.categoryId ?: return
-            val item =
-                HistoryRecord(
-                    unitFrom = converter[result.from].name,
-                    unitTo = converter[result.to].name,
-                    valueFrom = result.value,
-                    valueTo = result.result,
-                    categoryId = categoryId,
-                )
-            viewModelScope.launch(Dispatchers.IO) {
-                database.dao().insertAll(item.toEntity())
+            viewModelScope.launch {
+                saveResultToHistoryUseCase(converter, categoryId, result)
             }
         }
 

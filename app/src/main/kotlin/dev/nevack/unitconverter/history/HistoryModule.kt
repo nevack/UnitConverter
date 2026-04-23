@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.nevack.unitconverter.history.db.HistoryDao
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 
 @Module
@@ -22,6 +23,12 @@ object HistoryModule {
             .databaseBuilder(context, HistoryDatabase::class.java, "history-db")
             .addMigrations(MIGRATION_1_2)
             .build()
+
+    @Provides
+    fun provideHistoryDao(database: HistoryDatabase): HistoryDao = database.dao()
+
+    @Provides
+    fun provideHistoryRepository(dao: HistoryDao): HistoryRepository = RoomHistoryRepository(dao)
 
     private val MIGRATION_1_2 =
         object : Migration(1, 2) {

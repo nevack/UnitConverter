@@ -15,15 +15,16 @@ import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
+import dev.nevack.unitconverter.categories.GetCategoriesUseCase
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.databinding.ActivityConverterBinding
-import dev.nevack.unitconverter.model.AppConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCategory
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
     @Inject
-    lateinit var catalog: AppConverterCatalog
+    lateinit var getCategoriesUseCase: GetCategoriesUseCase
 
     private val viewModel: ConverterViewModel by viewModels()
 
@@ -34,8 +35,9 @@ class ConverterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        val categories = getCategoriesUseCase()
 
-        setupNavigation(binding)
+        setupNavigation(binding, categories)
 
         val callback =
             onBackPressedDispatcher.addCallback(this) {
@@ -49,7 +51,7 @@ class ConverterActivity : AppCompatActivity() {
                 binding.navigationDrawer.close()
             }
             val categoryId = state.categoryId ?: return@observe
-            val categoryIndex = catalog.categories.indexOfFirst { it.id == categoryId }
+            val categoryIndex = categories.indexOfFirst { it.id == categoryId }
             if (categoryIndex != -1) {
                 binding.navigationView.menu[categoryIndex].isChecked = true
             }
@@ -61,29 +63,31 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
-        val initialCategoryId = categoryId ?: catalog.categories.firstOrNull()?.id ?: return
+        val initialCategoryId = categoryId ?: categories.firstOrNull()?.id ?: return
         viewModel.load(initialCategoryId)
     }
 
-    private fun setupNavigation(binding: ActivityConverterBinding) =
-        with(binding.navigationView) {
-            for ((i, unit) in catalog.categories.withIndex()) {
-                menu
-                    .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
-                    .setCheckable(true)
-                    .setIcon(unit.icon)
-            }
-            setNavigationItemSelectedListener { menuItem ->
-                val category = catalog.categories.getOrNull(menuItem.order) ?: return@setNavigationItemSelectedListener false
-                viewModel.load(category.id)
-                viewModel.setDrawerOpened(false)
-                true
-            }
-            applyInsetter {
-                type(statusBars = true) { margin(top = true) }
-                type(navigationBars = true) { margin(bottom = true) }
-            }
+    private fun setupNavigation(
+        binding: ActivityConverterBinding,
+        categories: List<AppConverterCategory>,
+    ) = with(binding.navigationView) {
+        for ((i, unit) in categories.withIndex()) {
+            menu
+                .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                .setCheckable(true)
+                .setIcon(unit.icon)
         }
+        setNavigationItemSelectedListener { menuItem ->
+            val category = categories.getOrNull(menuItem.order) ?: return@setNavigationItemSelectedListener false
+            viewModel.load(category.id)
+            viewModel.setDrawerOpened(false)
+            true
+        }
+        applyInsetter {
+            type(statusBars = true) { margin(top = true) }
+            type(navigationBars = true) { margin(bottom = true) }
+        }
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         viewModel.uiState.value

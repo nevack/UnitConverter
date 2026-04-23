@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.history.db.HistoryItem
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import dev.nevack.unitconverter.model.converter.Converter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class ConverterViewModel
     @Inject
     constructor(
         private val database: HistoryDatabase,
-        private val catalog: ConverterCatalog,
+        private val catalog: AppConverterCatalog,
     ) : ViewModel() {
         private val _drawerOpened = MutableLiveData(false)
         val drawerOpened: LiveData<Boolean>

@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.databinding.CategoryItemBinding
-import dev.nevack.unitconverter.model.ConverterCategory
+import dev.nevack.unitconverter.model.AppConverterCategory
 
 internal class ViewHolder(
     private val binding: CategoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(category: ConverterCategory) =
+    fun bind(category: AppConverterCategory) =
         with(binding) {
             categoryName.setText(category.categoryName)
             categoryIcon.setImageResource(category.icon)
@@ -21,7 +21,7 @@ internal class ViewHolder(
 }
 
 internal class CategoriesAdapter(
-    private val categories: List<ConverterCategory>,
+    private val categories: List<AppConverterCategory>,
     private val listener: (String) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(

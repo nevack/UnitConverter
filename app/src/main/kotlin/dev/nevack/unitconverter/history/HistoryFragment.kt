@@ -19,7 +19,7 @@ import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
 import dev.nevack.unitconverter.history.db.HistoryItem
-import dev.nevack.unitconverter.model.ConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCatalog
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,7 +32,7 @@ class HistoryFragment :
     private val viewModel: HistoryViewModel by activityViewModels()
 
     @Inject
-    lateinit var catalog: ConverterCatalog
+    lateinit var catalog: AppConverterCatalog
 
     override fun onViewCreated(
         view: View,

@@ -8,7 +8,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import dev.nevack.unitconverter.R
+import dev.nevack.unitconverter.model.AppConverterCategory
+import dev.nevack.unitconverter.model.AppConverterFactory
 import dev.nevack.unitconverter.model.ConverterCategory
+import dev.nevack.unitconverter.model.ConverterCategoryIds
 import dev.nevack.unitconverter.nbrb.NBRBRepository
 
 @Module
@@ -18,24 +21,29 @@ object ConvertersModule {
     @IntoSet
     fun provideMassConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category = ConverterCategory("mass", R.string.mass, R.drawable.ic_weight, R.color.material_red_500, 0),
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.MASS, 0),
+                    categoryName = R.string.mass,
+                    icon = R.drawable.ic_weight,
+                    color = R.color.material_red_500,
+                ),
         ) { MassConverter(context) }
 
     @Provides
     @IntoSet
     fun provideVolumeConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "volume",
-                    R.string.volume,
-                    R.drawable.ic_volume,
-                    R.color.material_green_accent_700,
-                    1,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.VOLUME, 1),
+                    categoryName = R.string.volume,
+                    icon = R.drawable.ic_volume,
+                    color = R.color.material_green_accent_700,
                 ),
         ) { VolumeConverter(context) }
 
@@ -43,15 +51,14 @@ object ConvertersModule {
     @IntoSet
     fun provideTemperatureConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "temperature",
-                    R.string.temperature,
-                    R.drawable.ic_temperature,
-                    R.color.material_purple_500,
-                    2,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.TEMPERATURE, 2),
+                    categoryName = R.string.temperature,
+                    icon = R.drawable.ic_temperature,
+                    color = R.color.material_purple_500,
                 ),
         ) { TemperatureConverter(context) }
 
@@ -59,15 +66,14 @@ object ConvertersModule {
     @IntoSet
     fun provideSpeedConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "speed",
-                    R.string.speed,
-                    R.drawable.ic_speed,
-                    R.color.material_indigo_500,
-                    3,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.SPEED, 3),
+                    categoryName = R.string.speed,
+                    icon = R.drawable.ic_speed,
+                    color = R.color.material_indigo_500,
                 ),
         ) { SpeedConverter(context) }
 
@@ -75,15 +81,14 @@ object ConvertersModule {
     @IntoSet
     fun provideLengthConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "length",
-                    R.string.length,
-                    R.drawable.ic_ruler,
-                    R.color.material_bluegrey_500,
-                    4,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.LENGTH, 4),
+                    categoryName = R.string.length,
+                    icon = R.drawable.ic_ruler,
+                    color = R.color.material_bluegrey_500,
                 ),
         ) { LengthConverter(context) }
 
@@ -91,24 +96,29 @@ object ConvertersModule {
     @IntoSet
     fun provideAreaConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category = ConverterCategory("area", R.string.area, R.drawable.ic_area, R.color.material_teal_500, 5),
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.AREA, 5),
+                    categoryName = R.string.area,
+                    icon = R.drawable.ic_area,
+                    color = R.color.material_teal_500,
+                ),
         ) { AreaConverter(context) }
 
     @Provides
     @IntoSet
     fun provideMemoryConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "memory",
-                    R.string.memory,
-                    R.drawable.ic_memory,
-                    R.color.material_blue_500,
-                    6,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.MEMORY, 6),
+                    categoryName = R.string.memory,
+                    icon = R.drawable.ic_memory,
+                    color = R.color.material_blue_500,
                 ),
         ) { MemoryConverter(context) }
 
@@ -116,9 +126,15 @@ object ConvertersModule {
     @IntoSet
     fun provideTimeConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category = ConverterCategory("time", R.string.time, R.drawable.ic_timer, R.color.material_orange_500, 7),
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.TIME, 7),
+                    categoryName = R.string.time,
+                    icon = R.drawable.ic_timer,
+                    color = R.color.material_orange_500,
+                ),
         ) { TimeConverter(context) }
 
     @Provides
@@ -126,15 +142,14 @@ object ConvertersModule {
     fun provideCurrencyConverterFactory(
         @ApplicationContext context: Context,
         repository: NBRBRepository,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "currency",
-                    R.string.currency,
-                    R.drawable.ic_currency_usd,
-                    R.color.material_green_800,
-                    8,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.CURRENCY, 8),
+                    categoryName = R.string.currency,
+                    icon = R.drawable.ic_currency_usd,
+                    color = R.color.material_green_800,
                 ),
         ) { CurrencyConverter(context, repository) }
 
@@ -142,22 +157,24 @@ object ConvertersModule {
     @IntoSet
     fun provideOtherConverterFactory(
         @ApplicationContext context: Context,
-    ): ConverterFactory =
-        LambdaConverterFactory(
-            category =
-                ConverterCategory(
-                    "other",
-                    R.string.other,
-                    R.drawable.ic_other,
-                    R.color.material_deep_purple_500,
-                    9,
+    ): AppConverterFactory =
+        LambdaAppConverterFactory(
+            appCategory =
+                AppConverterCategory(
+                    category = ConverterCategory(ConverterCategoryIds.OTHER, 9),
+                    categoryName = R.string.other,
+                    icon = R.drawable.ic_other,
+                    color = R.color.material_deep_purple_500,
                 ),
         ) { OtherConverter(context) }
 }
 
-private class LambdaConverterFactory(
-    override val category: ConverterCategory,
+private class LambdaAppConverterFactory(
+    override val appCategory: AppConverterCategory,
     private val createConverter: () -> Converter,
-) : ConverterFactory {
+) : AppConverterFactory {
+    override val category: ConverterCategory
+        get() = appCategory.category
+
     override fun create(): Converter = createConverter()
 }

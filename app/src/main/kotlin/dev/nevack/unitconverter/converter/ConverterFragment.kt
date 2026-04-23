@@ -108,6 +108,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                 binding.display.showResult(state.result.result)
             }
 
+            if (state.messageResId != null && state.messageResId != oldState?.messageResId) {
+                Snackbar.make(binding.root, state.messageResId, Snackbar.LENGTH_SHORT).show()
+                viewModel.clearMessage()
+            }
+
             previousState = state
         }
     }

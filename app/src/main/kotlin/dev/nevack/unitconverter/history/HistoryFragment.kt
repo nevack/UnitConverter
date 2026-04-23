@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
@@ -72,6 +73,12 @@ class HistoryFragment :
         viewModel.items.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             binding.recycler.isInvisible = it.isEmpty()
+        }
+        viewModel.messageResId.observe(viewLifecycleOwner) { messageResId ->
+            if (messageResId != null) {
+                Snackbar.make(binding.root, messageResId, Snackbar.LENGTH_SHORT).show()
+                viewModel.clearMessage()
+            }
         }
 
         val menuHost: MenuHost = requireActivity()

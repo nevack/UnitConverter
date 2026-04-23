@@ -4,21 +4,22 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HistoryDao {
     @Query("SELECT * FROM history")
-    fun getAll(): List<HistoryItem>
+    fun getAll(): Flow<List<HistoryItem>>
 
     @Query("SELECT * FROM history WHERE id IN (:ids)")
     fun loadAllByIds(ids: IntArray): List<HistoryItem>
 
     @Insert
-    fun insertAll(vararg items: HistoryItem)
+    suspend fun insertAll(vararg items: HistoryItem)
 
     @Delete
-    fun delete(item: HistoryItem)
+    suspend fun delete(item: HistoryItem)
 
     @Query("DELETE FROM history")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

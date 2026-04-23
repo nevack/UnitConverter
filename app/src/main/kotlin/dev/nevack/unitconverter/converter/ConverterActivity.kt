@@ -62,9 +62,11 @@ class ConverterActivity : AppCompatActivity() {
             replace<ConverterFragment>(R.id.container, args = bundleOf(SHOW_NAV_BUTTON_ARG to true))
         }
 
-        val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
-        val initialCategoryId = categoryId ?: categories.firstOrNull()?.id ?: return
-        viewModel.load(initialCategoryId)
+        if (viewModel.uiState.value?.categoryId == null) {
+            val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
+            val initialCategoryId = categoryId ?: categories.firstOrNull()?.id ?: return
+            viewModel.load(initialCategoryId)
+        }
     }
 
     private fun setupNavigation(
@@ -86,21 +88,6 @@ class ConverterActivity : AppCompatActivity() {
         applyInsetter {
             type(statusBars = true) { margin(top = true) }
             type(navigationBars = true) { margin(bottom = true) }
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        viewModel.uiState.value
-            ?.categoryId
-            ?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val categoryId = savedInstanceState.getString(CONVERTER_ID_EXTRA)
-        if (categoryId != null) {
-            viewModel.load(categoryId)
         }
     }
 

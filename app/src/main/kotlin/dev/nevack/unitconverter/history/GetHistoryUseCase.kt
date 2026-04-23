@@ -1,5 +1,6 @@
 package dev.nevack.unitconverter.history
 
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetHistoryUseCase
@@ -7,5 +8,5 @@ class GetHistoryUseCase
     constructor(
         private val historyRepository: HistoryRepository,
     ) {
-        suspend operator fun invoke(): List<HistoryRecord> = historyRepository.getAll()
+        operator fun invoke(): Flow<List<HistoryRecord>> = historyRepository.getAll()
     }

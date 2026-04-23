@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
     // Room
     implementation("androidx.room:room-common:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
     implementation("androidx.room:room-runtime:2.8.4")
     ksp("androidx.room:room-compiler:2.8.4")
     implementation("androidx.sqlite:sqlite:2.6.2")

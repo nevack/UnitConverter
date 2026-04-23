@@ -1,11 +1,16 @@
 package dev.nevack.unitconverter.history
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.nevack.unitconverter.R
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,35 +22,48 @@ class HistoryViewModel
         private val removeHistoryItemUseCase: RemoveHistoryItemUseCase,
         private val clearHistoryUseCase: ClearHistoryUseCase,
     ) : ViewModel() {
-        private val itemsRaw = MutableLiveData<List<HistoryRecord>>().also { fetch() }
-        private var filter = MutableLiveData<String?>(null)
-        private val itemsFiltered by lazy {
-            MediatorLiveData<List<HistoryRecord>>().apply {
-                addSource(filter) { categoryId ->
-                    value = itemsRaw.value?.filter { item ->
-                        categoryId == null || item.categoryId == categoryId
-                    } ?: emptyList()
-                }
-                addSource(itemsRaw) {
-                    val categoryId = filter.value
-                    value = it.filter { item -> categoryId == null || item.categoryId == categoryId }
-                }
+        private val filter = MutableStateFlow<String?>(null)
+        private val _items = MutableLiveData<List<HistoryRecord>>(emptyList())
+        val items: LiveData<List<HistoryRecord>>
+            get() = _items
+
+        private val _messageResId = MutableLiveData<Int?>(null)
+        val messageResId: LiveData<Int?>
+            get() = _messageResId
+
+        init {
+            viewModelScope.launch {
+                getHistoryUseCase()
+                    .combine(filter) { items, categoryId ->
+                        items.filter { item -> categoryId == null || item.categoryId == categoryId }
+                    }.catch {
+                        _messageResId.value = R.string.failed_to_load_history
+                        emit(emptyList())
+                    }.collect { _items.value = it }
             }
         }
-        val items: LiveData<List<HistoryRecord>>
-            get() = itemsFiltered
 
         fun removeItem(item: HistoryRecord) {
             viewModelScope.launch {
-                removeHistoryItemUseCase(item)
-                refreshItems()
+                try {
+                    removeHistoryItemUseCase(item)
+                } catch (ignored: CancellationException) {
+                    throw ignored
+                } catch (ignored: Exception) {
+                    _messageResId.value = R.string.failed_to_update_history
+                }
             }
         }
 
         fun removeAll() {
             viewModelScope.launch {
-                clearHistoryUseCase()
-                refreshItems()
+                try {
+                    clearHistoryUseCase()
+                } catch (ignored: CancellationException) {
+                    throw ignored
+                } catch (ignored: Exception) {
+                    _messageResId.value = R.string.failed_to_update_history
+                }
             }
         }
 
@@ -53,13 +71,7 @@ class HistoryViewModel
             filter.value = categoryId
         }
 
-        private fun fetch() {
-            viewModelScope.launch {
-                refreshItems()
-            }
-        }
-
-        private suspend fun refreshItems() {
-            itemsRaw.postValue(getHistoryUseCase())
+        fun clearMessage() {
+            _messageResId.value = null
         }
     }

@@ -172,5 +172,9 @@
     <string name="swap_source_and_result_units_and_values">Swap source and result units and values button</string>
     <string name="share_button">Share button</string>
     <string name="remove_item_button">Remove item button</string>
+    <string name="failed_to_load_converter">Failed to load converter data</string>
+    <string name="failed_to_save_history">Failed to save history item</string>
+    <string name="failed_to_load_history">Failed to load history</string>
+    <string name="failed_to_update_history">Failed to update history</string>
 
 </resources>

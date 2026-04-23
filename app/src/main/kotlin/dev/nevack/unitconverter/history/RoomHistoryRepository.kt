@@ -3,32 +3,21 @@ package dev.nevack.unitconverter.history
 import dev.nevack.unitconverter.history.db.HistoryDao
 import dev.nevack.unitconverter.history.db.toEntity
 import dev.nevack.unitconverter.history.db.toRecord
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class RoomHistoryRepository(
     private val dao: HistoryDao,
 ) : HistoryRepository {
-    override suspend fun getAll(): List<HistoryRecord> =
-        withContext(Dispatchers.IO) {
-            dao.getAll().map { it.toRecord() }
-        }
+    override fun getAll(): Flow<List<HistoryRecord>> = dao.getAll().map { items -> items.map { it.toRecord() } }
 
     override suspend fun save(record: HistoryRecord) {
-        withContext(Dispatchers.IO) {
-            dao.insertAll(record.toEntity())
-        }
+        dao.insertAll(record.toEntity())
     }
 
     override suspend fun delete(record: HistoryRecord) {
-        withContext(Dispatchers.IO) {
-            dao.delete(record.toEntity())
-        }
+        dao.delete(record.toEntity())
     }
 
-    override suspend fun deleteAll() {
-        withContext(Dispatchers.IO) {
-            dao.deleteAll()
-        }
-    }
+    override suspend fun deleteAll() = dao.deleteAll()
 }

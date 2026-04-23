@@ -6,6 +6,11 @@ plugins {
 
 kotlin.jvmToolchain(21)
 
+dependencies {
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+}
+
 spotless {
     val ktlintVersion = "1.8.0"
 

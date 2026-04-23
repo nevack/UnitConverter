@@ -6,6 +6,9 @@ import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import dev.nevack.unitconverter.nbrb.model.NBRBRate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
@@ -26,52 +29,62 @@ class NBRBRepository(
     private val ratesFile = fileProvider("rates.json")
     private val ratesSerializer = ListSerializer(NBRBRate.serializer())
     private val currenciesSerializer = ListSerializer(NBRBCurrency.serializer())
+    private val loadMutex = Mutex()
 
     override suspend fun getUnits(): List<ConversionUnit> =
-        withContext(Dispatchers.IO) {
-            val currenciesAsync =
-                async {
-                    loadWithCache(currenciesSerializer, currenciesFile) { allCurrencies() }
-                }
-            val ratesAsync =
-                async {
-                    loadWithCache(ratesSerializer, ratesFile) { allRatesForToday() }
-                }
-            val currencies = currenciesAsync.await().associateBy { it.curID }
-            ratesAsync
-                .await()
-                .filter { currencies.containsKey(it.curID) }
-                .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
+        loadMutex.withLock {
+            coroutineScope {
+                val currenciesAsync =
+                    async {
+                        loadWithCache(currenciesSerializer, currenciesFile) { allCurrencies() }
+                    }
+                val ratesAsync =
+                    async {
+                        loadWithCache(ratesSerializer, ratesFile) { allRatesForToday() }
+                    }
+                val currencies = currenciesAsync.await().associateBy { it.curID }
+                ratesAsync
+                    .await()
+                    .filter { currencies.containsKey(it.curID) }
+                    .map { it.toUnitLocalized(currencies[it.curID]!!.getLocalizedName(locale)) }
+            }
         }
 
     private suspend fun <T> loadWithCache(
         serializer: KSerializer<T>,
         file: File,
         block: suspend NBRBService.() -> T,
-    ): T =
-        withContext(Dispatchers.IO) {
-            if (file.exists()) {
-                val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
-                if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
-                    val cached = serializer.load(file)
-                    if (cached != null) {
-                        return@withContext cached
-                    }
+    ): T {
+        val cached =
+            withContext(Dispatchers.IO) {
+                if (!file.exists()) {
+                    return@withContext null
                 }
+                val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
+                val now = Calendar.getInstance()
+                if (
+                    now[Calendar.YEAR] != calendar[Calendar.YEAR] ||
+                    now[Calendar.DAY_OF_YEAR] != calendar[Calendar.DAY_OF_YEAR]
+                ) {
+                    return@withContext null
+                }
+                serializer.load(file)
             }
-            loadFromWeb(serializer, file, block)
+        if (cached != null) {
+            return cached
         }
+        return loadFromWeb(serializer, file, block)
+    }
 
     private suspend fun <T> loadFromWeb(
         serializer: KSerializer<T>,
         cache: File,
         block: suspend NBRBService.() -> T,
-    ): T =
-        withContext(Dispatchers.IO) {
-            val result = service.block()
-            serializer.save(result to cache)
-            result
-        }
+    ): T {
+        val result = service.block()
+        serializer.save(result to cache)
+        return result
+    }
 
     private suspend fun <T> KSerializer<T>.save(what: Pair<T, File>) =
         withContext(Dispatchers.IO) {

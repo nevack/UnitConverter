@@ -48,7 +48,7 @@ class CategoriesActivity : AppCompatActivity() {
             }
         }
 
-        if (isTablet) {
+        if (isTablet && converterViewModel.uiState.value?.categoryId == null) {
             categories.firstOrNull()?.let { category ->
                 converterViewModel.load(category.id)
             }

@@ -8,26 +8,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.databinding.HistoryItemBinding
-import dev.nevack.unitconverter.history.db.HistoryItem
 import dev.nevack.unitconverter.model.AppConverterCategory
 
-internal class Differ : DiffUtil.ItemCallback<HistoryItem>() {
+internal class Differ : DiffUtil.ItemCallback<HistoryRecord>() {
     override fun areItemsTheSame(
-        oldItem: HistoryItem,
-        newItem: HistoryItem,
+        oldItem: HistoryRecord,
+        newItem: HistoryRecord,
     ): Boolean = newItem.id == oldItem.id
 
     override fun areContentsTheSame(
-        oldItem: HistoryItem,
-        newItem: HistoryItem,
+        oldItem: HistoryRecord,
+        newItem: HistoryRecord,
     ): Boolean = newItem == oldItem
 }
 
 internal class HistoryAdapter(
     private val categoriesById: Map<String, AppConverterCategory>,
-    private val remove: (HistoryItem) -> Unit,
-    private val share: (HistoryItem) -> Unit,
-) : ListAdapter<HistoryItem, ViewHolder>(Differ()) {
+    private val remove: (HistoryRecord) -> Unit,
+    private val share: (HistoryRecord) -> Unit,
+) : ListAdapter<HistoryRecord, ViewHolder>(Differ()) {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int,
@@ -65,7 +64,7 @@ internal class ViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         category: AppConverterCategory?,
-        item: HistoryItem,
+        item: HistoryRecord,
     ) {
         binding.valueFrom.text = item.valueFrom
         binding.valueTo.text = item.valueTo

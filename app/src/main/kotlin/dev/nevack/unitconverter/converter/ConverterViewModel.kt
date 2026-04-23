@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.nevack.unitconverter.history.HistoryRecord
 import dev.nevack.unitconverter.history.db.HistoryDatabase
-import dev.nevack.unitconverter.history.db.HistoryItem
+import dev.nevack.unitconverter.history.db.toEntity
 import dev.nevack.unitconverter.model.AppConverterCatalog
 import dev.nevack.unitconverter.model.converter.Converter
 import kotlinx.coroutines.Dispatchers
@@ -90,16 +91,15 @@ class ConverterViewModel
             val converter = converter.value ?: return
             val categoryId = _categoryId.value ?: return
             val item =
-                HistoryItem(
-                    0,
-                    converter[result.from].name,
-                    converter[result.to].name,
-                    result.value,
-                    result.result,
-                    categoryId,
+                HistoryRecord(
+                    unitFrom = converter[result.from].name,
+                    unitTo = converter[result.to].name,
+                    valueFrom = result.value,
+                    valueTo = result.result,
+                    categoryId = categoryId,
                 )
             viewModelScope.launch(Dispatchers.IO) {
-                database.dao().insertAll(item)
+                database.dao().insertAll(item.toEntity())
             }
         }
     }

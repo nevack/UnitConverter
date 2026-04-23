@@ -86,20 +86,29 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         }
         binding.keypad.setNumericListener { binding.display.appendText(it) }
 
-        viewModel.backgroundColor.observe(viewLifecycleOwner) {
-            binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
-        }
+        var previousState: ConverterUiState? = null
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            val oldState = previousState
 
-        viewModel.title.observe(viewLifecycleOwner) {
-            binding.toolbar.setTitle(it)
-        }
+            if (state.backgroundColor != oldState?.backgroundColor) {
+                state.backgroundColor?.let {
+                    binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
+                }
+            }
 
-        viewModel.converter.observe(viewLifecycleOwner) {
-            binding.display.setUnits(it.units)
-        }
+            if (state.title != oldState?.title) {
+                state.title?.let(binding.toolbar::setTitle)
+            }
 
-        viewModel.result.observe(viewLifecycleOwner) {
-            binding.display.showResult(it.result)
+            if (state.converter !== oldState?.converter) {
+                state.converter?.let { binding.display.setUnits(it.units) }
+            }
+
+            if (state.result != oldState?.result) {
+                binding.display.showResult(state.result.result)
+            }
+
+            previousState = state
         }
     }
 

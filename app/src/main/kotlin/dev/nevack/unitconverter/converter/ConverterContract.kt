@@ -1,5 +1,7 @@
 package dev.nevack.unitconverter.converter
 
+import dev.nevack.unitconverter.model.converter.Converter
+
 data class ConvertData(
     val value: String,
     val result: String,
@@ -18,3 +20,12 @@ sealed class Result(
         result: String,
     ) : Result(result)
 }
+
+data class ConverterUiState(
+    val drawerOpened: Boolean = false,
+    val backgroundColor: Int? = null,
+    val title: Int? = null,
+    val categoryId: String? = null,
+    val converter: Converter? = null,
+    val result: Result = Result.Empty,
+)

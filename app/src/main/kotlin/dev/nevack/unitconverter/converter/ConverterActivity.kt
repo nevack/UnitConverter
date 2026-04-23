@@ -41,25 +41,23 @@ class ConverterActivity : AppCompatActivity() {
             onBackPressedDispatcher.addCallback(this) {
                 viewModel.setDrawerOpened(false)
             }
-        viewModel.drawerOpened.observe(this) { opened ->
-            callback.isEnabled = opened
-            if (opened) {
+        viewModel.uiState.observe(this) { state ->
+            callback.isEnabled = state.drawerOpened
+            if (state.drawerOpened) {
                 binding.navigationDrawer.open()
             } else {
                 binding.navigationDrawer.close()
+            }
+            val categoryId = state.categoryId ?: return@observe
+            val categoryIndex = catalog.categories.indexOfFirst { it.id == categoryId }
+            if (categoryIndex != -1) {
+                binding.navigationView.menu[categoryIndex].isChecked = true
             }
         }
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace<ConverterFragment>(R.id.container, args = bundleOf(SHOW_NAV_BUTTON_ARG to true))
-        }
-
-        viewModel.categoryId.observe(this) { categoryId ->
-            val categoryIndex = catalog.categories.indexOfFirst { it.id == categoryId }
-            if (categoryIndex != -1) {
-                binding.navigationView.menu[categoryIndex].isChecked = true
-            }
         }
 
         val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
@@ -88,7 +86,9 @@ class ConverterActivity : AppCompatActivity() {
         }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        viewModel.categoryId.value?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
+        viewModel.uiState.value
+            ?.categoryId
+            ?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
         super.onSaveInstanceState(outState)
     }
 

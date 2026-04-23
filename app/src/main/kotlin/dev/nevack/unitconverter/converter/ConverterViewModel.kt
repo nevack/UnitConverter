@@ -9,7 +9,6 @@ import dev.nevack.unitconverter.history.HistoryRecord
 import dev.nevack.unitconverter.history.db.HistoryDatabase
 import dev.nevack.unitconverter.history.db.toEntity
 import dev.nevack.unitconverter.model.AppConverterCatalog
-import dev.nevack.unitconverter.model.converter.Converter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,55 +20,40 @@ class ConverterViewModel
         private val database: HistoryDatabase,
         private val catalog: AppConverterCatalog,
     ) : ViewModel() {
-        private val _drawerOpened = MutableLiveData(false)
-        val drawerOpened: LiveData<Boolean>
-            get() = _drawerOpened
-
-        private val _backgroundColor = MutableLiveData<Int>()
-        val backgroundColor: LiveData<Int>
-            get() = _backgroundColor
-
-        private val _title = MutableLiveData<Int>()
-        val title: LiveData<Int>
-            get() = _title
-
-        private val _categoryId = MutableLiveData<String>()
-        val categoryId: LiveData<String>
-            get() = _categoryId
-
-        private val _converter = MutableLiveData<Converter>()
-        val converter: LiveData<Converter>
-            get() = _converter
-
-        private val _result = MutableLiveData<Result>()
-        val result: LiveData<Result>
-            get() = _result
+        private val _uiState = MutableLiveData(ConverterUiState())
+        val uiState: LiveData<ConverterUiState>
+            get() = _uiState
 
         fun setDrawerOpened(opened: Boolean): Boolean {
-            val changed = _drawerOpened.value != opened
-            _drawerOpened.value = opened
+            val changed = _uiState.value?.drawerOpened != opened
+            updateUiState { copy(drawerOpened = opened) }
             return changed
         }
 
         fun load(categoryId: String) {
             val category = catalog.getCategory(categoryId) ?: return
-            _title.value = category.categoryName
-            _backgroundColor.value = category.color
-
-            _categoryId.value = category.id
-
             val converter = catalog.createConverter(categoryId)
+
+            updateUiState {
+                copy(
+                    title = category.categoryName,
+                    backgroundColor = category.color,
+                    categoryId = category.id,
+                    converter = null,
+                    result = Result.Empty,
+                )
+            }
 
             viewModelScope.launch {
                 converter.load()
-                _converter.value = converter
+                updateUiState { copy(converter = converter) }
             }
         }
 
         fun convert(data: ConvertData) {
-            val converter = converter.value
+            val converter = uiState.value?.converter
             if (converter == null) {
-                _result.value = Result.Empty
+                updateUiState { copy(result = Result.Empty) }
                 return
             }
             try {
@@ -81,15 +65,16 @@ class ConverterViewModel
                             data.to,
                         ),
                     )
-                _result.value = result
+                updateUiState { copy(result = result) }
             } catch (ex: Exception) {
-                _result.value = Result.Empty
+                updateUiState { copy(result = Result.Empty) }
             }
         }
 
         fun saveResultToHistory(result: ConvertData) {
-            val converter = converter.value ?: return
-            val categoryId = _categoryId.value ?: return
+            val uiState = _uiState.value ?: return
+            val converter = uiState.converter ?: return
+            val categoryId = uiState.categoryId ?: return
             val item =
                 HistoryRecord(
                     unitFrom = converter[result.from].name,
@@ -101,5 +86,9 @@ class ConverterViewModel
             viewModelScope.launch(Dispatchers.IO) {
                 database.dao().insertAll(item.toEntity())
             }
+        }
+
+        private inline fun updateUiState(update: ConverterUiState.() -> ConverterUiState) {
+            _uiState.value = update(_uiState.value ?: ConverterUiState())
         }
     }

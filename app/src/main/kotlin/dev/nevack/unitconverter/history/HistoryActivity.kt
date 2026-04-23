@@ -9,14 +9,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.ActivityHistoryBinding
-import dev.nevack.unitconverter.history.db.HistoryDatabase
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HistoryActivity : AppCompatActivity() {
-    @Inject
-    lateinit var db: HistoryDatabase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityHistoryBinding.inflate(layoutInflater)

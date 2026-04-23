@@ -1,6 +1,7 @@
 package dev.nevack.unitconverter.nbrb
 
 import dev.nevack.unitconverter.model.ConversionUnit
+import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import dev.nevack.unitconverter.nbrb.model.NBRBRate
 import kotlinx.coroutines.Dispatchers
@@ -20,13 +21,13 @@ class NBRBRepository(
     fileProvider: (String) -> File,
     private val service: NBRBService,
     private val json: Json,
-) {
+) : CurrencyUnitsRepository {
     private val currenciesFile = fileProvider("currencies.json")
     private val ratesFile = fileProvider("rates.json")
     private val ratesSerializer = ListSerializer(NBRBRate.serializer())
     private val currenciesSerializer = ListSerializer(NBRBCurrency.serializer())
 
-    suspend fun getUnits(): List<ConversionUnit> =
+    override suspend fun getUnits(): List<ConversionUnit> =
         withContext(Dispatchers.IO) {
             val currenciesAsync =
                 async {

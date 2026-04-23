@@ -17,8 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
+import dev.nevack.unitconverter.categories.GetCategoriesUseCase
 import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
-import dev.nevack.unitconverter.model.AppConverterCatalog
+import dev.nevack.unitconverter.model.AppConverterCategory
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,11 +28,12 @@ class HistoryFragment :
     MenuProvider {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
+    private var categories: List<AppConverterCategory> = emptyList()
 
     private val viewModel: HistoryViewModel by activityViewModels()
 
     @Inject
-    lateinit var catalog: AppConverterCatalog
+    lateinit var getCategoriesUseCase: GetCategoriesUseCase
 
     override fun onViewCreated(
         view: View,
@@ -43,6 +45,7 @@ class HistoryFragment :
         binding.root.applyInsetter {
             type(navigationBars = true) { padding(horizontal = true) }
         }
+        categories = getCategoriesUseCase()
 
         with(binding.recycler) {
             layoutManager = LinearLayoutManager(requireContext())
@@ -59,7 +62,7 @@ class HistoryFragment :
         }
         adapter =
             HistoryAdapter(
-                categoriesById = catalog.categories.associateBy { it.id },
+                categoriesById = categories.associateBy { it.id },
                 remove = viewModel::removeItem,
                 share = ::shareItem,
             ).also {
@@ -90,7 +93,7 @@ class HistoryFragment :
             }
 
             R.id.filter -> {
-                HistoryFilterDialog(catalog.categories, viewModel::filter).show(childFragmentManager, "dialog")
+                HistoryFilterDialog(categories, viewModel::filter).show(childFragmentManager, "dialog")
                 true
             }
 

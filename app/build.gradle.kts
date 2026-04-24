@@ -1,20 +1,15 @@
 plugins {
-    id("com.android.application")
+    id("dev.nevack.plugins.android-application-module")
     id("dev.nevack.plugins.signing-config")
-    id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
-    id("org.gradle.android.cache-fix")
-    id("com.autonomousapps.dependency-analysis")
-    id("com.diffplug.spotless")
+    id("dev.nevack.plugins.android-hilt")
+    id("dev.nevack.plugins.android-viewbinding")
 }
 
 android {
     namespace = "dev.nevack.unitconverter"
-    compileSdk = 36
 
     defaultConfig {
         applicationId = "dev.nevack.unitconverter"
-        minSdk = 26
         targetSdk = 36
         versionCode = 7
         versionName = "1.1.7"
@@ -30,10 +25,6 @@ android {
                 file("proguard-rules.pro"),
             )
         }
-    }
-
-    buildFeatures {
-        viewBinding = true
     }
 }
 
@@ -72,15 +63,4 @@ dependencies {
     implementation("com.google.dagger:hilt-core:2.59.2")
     implementation("com.google.dagger:hilt-android:2.59.2")
     implementation("javax.inject:javax.inject:1")
-}
-
-kotlin.jvmToolchain(21)
-
-spotless {
-    val ktlintVersion = "1.8.0"
-
-    kotlin {
-        ktlint(ktlintVersion)
-        target("**/*.kt")
-    }
 }

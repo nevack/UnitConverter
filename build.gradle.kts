@@ -19,6 +19,7 @@ spotless {
     kotlinGradle {
         ktlint(ktlintVersion)
         target("**/*.gradle.kts")
+        targetExclude("**/build/**/*.gradle.kts")
     }
 }
 

@@ -1,0 +1,151 @@
+<resources>
+    <string name="title_activity_convert">Converter</string>
+
+    <string name="mass">Mass</string>
+    <string name="temperature">Temperature</string>
+    <string name="volume">Volume</string>
+    <string name="speed">Speed</string>
+    <string name="length">Length</string>
+    <string name="memory">Memory</string>
+    <string name="other">Other</string>
+    <string name="time">Time</string>
+    <string name="area">Area</string>
+    <string name="currency">Currencies</string>
+
+    <string name="kilogram">Kilogram</string>
+    <string name="milligram">Milligram</string>
+    <string name="gram">Gram</string>
+    <string name="tonne">Tonne</string>
+    <string name="hundredweight">Hundredweight</string>
+
+    <string name="kilogramsymbol">kg</string>
+    <string name="gramsymbol">g</string>
+    <string name="milligramsymbol">mg</string>
+    <string name="hundredweightsymbol">cwt</string>
+    <string name="tonnesymbol">t</string>
+
+    <string name="millilitre">Millilitre</string>
+    <string name="cubicmetre">Cubic metre</string>
+    <string name="litre">Litre</string>
+
+    <string name="litresymbol">L</string>
+    <string name="millilitresymbol">mL</string>
+
+    <string name="metre">Metre</string>
+    <string name="millimetre">Millimetre</string>
+    <string name="centimetre">Centimetre</string>
+    <string name="decimetre">Decimetre</string>
+    <string name="kilometre">Kilometre</string>
+    <string name="inch">Inch</string>
+    <string name="mile">Mile</string>
+    <string name="foot">Foot</string>
+    <string name="yard">Yard</string>
+
+    <string name="metresymbol">m</string>
+    <string name="millimetresymbol">mm</string>
+    <string name="centimetresymbol">cm</string>
+    <string name="decimetresymbol">dm</string>
+    <string name="kilometresymbol">km</string>
+    <string name="inchsymbol">in</string>
+    <string name="milesymbol">mi</string>
+    <string name="footsymbol">ft</string>
+    <string name="yardsymbol">yd</string>
+
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="celsius">Celsius</string>
+    <string name="kelvin">Kelvin</string>
+
+    <string name="kelvinsymbol">K</string>
+    <string name="celsiussymbol" translatable="false">°C</string>
+    <string name="fahrenheitsymbol" translatable="false">°F</string>
+
+    <string name="metrespersecond">Metres per second</string>
+    <string name="kilometresperhour">Kilometres per hour</string>
+    <string name="knots">Knots</string>
+    <string name="footspersecond">Feet per second</string>
+    <string name="milesperhour">Miles per hour</string>
+
+    <string name="mpssymbol">m/s</string>
+    <string name="kmpssymbol">km/h</string>
+    <string name="miphsymbol">mi/h</string>
+    <string name="ftpssymbol">ft/s</string>
+    <string name="knotssymbol">kn</string>
+
+    <string name="microsecond">Microsecond</string>
+    <string name="millisecond">Millisecond</string>
+    <string name="second">Second</string>
+    <string name="minute">Minute</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="year">Year</string>
+
+    <string name="millisecondsymbol">ms</string>
+    <string name="microsecondsymbol">μs</string>
+    <string name="secondsymbol">s</string>
+    <string name="minutesymbol">min</string>
+    <string name="hoursymbol">h</string>
+    <string name="daysymbol">d</string>
+    <string name="weeksymbol">w</string>
+    <string name="yearsymbol">y</string>
+
+    <string name="bit">Bit</string>
+    <string name="memorybyte">Byte</string>
+    <string name="kilobyte">Kilobyte</string>
+    <string name="megabyte">Megabyte</string>
+    <string name="gigabyte">GigaByte</string>
+    <string name="terabyte">TeraByte</string>
+    <string name="petabyte">PetaByte</string>
+
+    <string name="bit_symbol">b</string>
+    <string name="memorybytesymbol">B</string>
+    <string name="kilobytesymbol">kB</string>
+    <string name="megabytesymbol">MB</string>
+    <string name="gigabytesymbol">GB</string>
+    <string name="terabytesymbol">TB</string>
+    <string name="petabytesymbol">PB</string>
+
+    <string name="squaremetre">Square metre</string>
+    <string name="squarecentimetre">Square centimetre</string>
+    <string name="squaremillimetre">Square millimetre</string>
+    <string name="squarekilometre">Square kilometre</string>
+    <string name="squarefoot">Square foot</string>
+    <string name="squareyard">Square yard</string>
+    <string name="squaremile">Square mile</string>
+    <string name="squareinch">Square inch</string>
+    <string name="hectare">Hectare</string>
+    <string name="are">Are</string>
+    <string name="acre">Acre</string>
+
+    <string name="hectaresymbol">ha</string>
+    <string name="aresymbol">a</string>
+    <string name="acresymbol">Acre</string>
+
+    <string name="pico">Pico</string>
+    <string name="nano">Nano</string>
+    <string name="micro">Micro</string>
+    <string name="milli">Milli</string>
+    <string name="kilo">Kilo</string>
+    <string name="mega">Mega</string>
+    <string name="giga">Giga</string>
+    <string name="tera">Tera</string>
+    <string name="copy_result_toast">Copied to clipboard</string>
+    <string name="description_copy_button">Copy result button</string>
+    <string name="description_paste_button">Paste value button</string>
+    <string name="description_icon">Category icon</string>
+    <string name="zero_hint" translatable="false">0</string>
+    <string name="gallon">US Gallon</string>
+    <string name="gallonsymbol">gal</string>
+    <string name="barrel">Barrel</string>
+    <string name="barrelsymbol">ba</string>
+    <string name="astronomicalunit">Astronomical unit</string>
+    <string name="astronomicalunitsymbol">au</string>
+    <string name="parsec">Parsec</string>
+    <string name="parsecsymbol">pc</string>
+    <string name="lightyear">Light-year</string>
+    <string name="lightyearsymbol">ly</string>
+    <string name="menu_history_label">History</string>
+    <string name="menu_save_label">Save</string>
+    <string name="currency_byn_name">Belarussian Ruble</string>
+    <string name="swap_source_and_result_units_and_values">Swap source and result units and values button</string>
+</resources>

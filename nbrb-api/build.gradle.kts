@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":converter-core"))
+    implementation(project(":core:converter"))
 
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.10.2"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")

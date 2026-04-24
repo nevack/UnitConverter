@@ -39,7 +39,7 @@ android {
 
 //noinspection KtxExtensionAvailable
 dependencies {
-    implementation(project(":converter-core"))
+    implementation(project(":feature:converter"))
     implementation(project(":feature:history"))
     implementation(project(":nbrb-api"))
     // Coroutines

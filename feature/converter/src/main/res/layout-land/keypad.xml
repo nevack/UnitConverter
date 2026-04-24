@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/keypad_background_color"
+    tools:ignore="HardcodedText"
+    tools:layout_width="320dp"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/button7"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/button_dot"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="." />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/button8"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/button0"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/button9"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/button_minus"
+            style="@style/Widget.App.Button.KeyPad.NumberButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="-" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        tools:background="@color/keypad_background_color">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <Button
+                android:id="@+id/button_backspace"
+                style="@style/Widget.App.Button.KeyPad.ClearButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
+                android:text="C" />
+
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/button_copy"
+            style="@style/Widget.App.Button.KeyPad.CopyPasteButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/description_copy_button"
+            app:srcCompat="@drawable/ic_content_copy" />
+
+        <ImageButton
+            android:id="@+id/button_paste"
+            style="@style/Widget.App.Button.KeyPad.CopyPasteButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/description_paste_button"
+            app:srcCompat="@drawable/ic_content_paste" />
+
+    </LinearLayout>
+
+</merge>

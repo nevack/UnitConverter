@@ -35,6 +35,8 @@ dependencyResolutionManagement {
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 include(":app")
-include(":converter-core")
+include(":core:converter")
+include(":feature:converter")
+include(":feature:history-api")
 include(":feature:history")
 include(":nbrb-api")

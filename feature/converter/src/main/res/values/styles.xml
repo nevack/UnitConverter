@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="Widget.App.Button.KeyPad.NumberButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">?textAppearanceDisplayMedium</item>
+        <item name="android:textColor">?colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.KeyPad.ClearButton" parent="Widget.Material3.Button">
+        <item name="android:textAppearance">?textAppearanceDisplayMedium</item>
+        <item name="android:textColor">?colorOnSecondary</item>
+        <item name="backgroundTint">?colorSecondary</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="Widget.App.Button.KeyPad.CopyPasteButton" parent="Widget.Material3.Button.TextButton.Icon">
+    </style>
+
+</resources>

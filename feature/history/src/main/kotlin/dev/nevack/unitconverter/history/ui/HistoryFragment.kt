@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.feature.history.R
 import dev.nevack.unitconverter.feature.history.databinding.FragmentHistoryBinding
+import dev.nevack.unitconverter.history.HistoryCategoriesProvider
+import dev.nevack.unitconverter.history.HistoryCategory
+import dev.nevack.unitconverter.history.HistoryRecord
 import javax.inject.Inject
 
 @AndroidEntryPoint

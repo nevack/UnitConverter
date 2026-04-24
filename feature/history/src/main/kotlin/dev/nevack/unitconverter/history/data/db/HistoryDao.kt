@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history.db
+package dev.nevack.unitconverter.history.data.db
 
 import androidx.room.Dao
 import androidx.room.Delete

@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.nevack.unitconverter.feature.history.databinding.HistoryItemBinding
+import dev.nevack.unitconverter.history.HistoryCategory
+import dev.nevack.unitconverter.history.HistoryRecord
 
 internal class Differ : DiffUtil.ItemCallback<HistoryRecord>() {
     override fun areItemsTheSame(

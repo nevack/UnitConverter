@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history.db
+package dev.nevack.unitconverter.history.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

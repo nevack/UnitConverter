@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name="dev.nevack.unitconverter.history.HistoryActivity"
+            android:name="dev.nevack.unitconverter.history.ui.HistoryActivity"
             android:label="@string/title_activity_history" />
     </application>
 

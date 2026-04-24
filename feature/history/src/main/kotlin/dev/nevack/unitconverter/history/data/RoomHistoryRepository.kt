@@ -1,8 +1,10 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.data
 
-import dev.nevack.unitconverter.history.db.HistoryDao
-import dev.nevack.unitconverter.history.db.toEntity
-import dev.nevack.unitconverter.history.db.toRecord
+import dev.nevack.unitconverter.history.HistoryRecord
+import dev.nevack.unitconverter.history.HistoryRepository
+import dev.nevack.unitconverter.history.data.db.HistoryDao
+import dev.nevack.unitconverter.history.data.db.toEntity
+import dev.nevack.unitconverter.history.data.db.toRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -6,6 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.nevack.unitconverter.history.HistoryRecord
+import dev.nevack.unitconverter.history.usecase.ClearHistoryUseCase
+import dev.nevack.unitconverter.history.usecase.GetHistoryUseCase
+import dev.nevack.unitconverter.history.usecase.RemoveHistoryItemUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

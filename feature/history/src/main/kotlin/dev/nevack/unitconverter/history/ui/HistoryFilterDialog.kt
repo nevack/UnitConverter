@@ -1,10 +1,11 @@
-package dev.nevack.unitconverter.history
+package dev.nevack.unitconverter.history.ui
 
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dev.nevack.unitconverter.history.HistoryCategory
 
 typealias Listener = (String?) -> Unit
 

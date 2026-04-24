@@ -1,0 +1,67 @@
+[versions]
+agp = "9.2.0"
+kotlin = "2.3.20"
+ksp = "2.3.7"
+hilt = "2.59.2"
+androidCacheFix = "3.0.3"
+gradleVersions = "0.54.0"
+spotless = "8.4.0"
+dependencyAnalysis = "3.9.0"
+coroutines = "1.10.2"
+annotation = "1.10.0"
+coreKtx = "1.18.0"
+activity = "1.13.0"
+fragment = "1.8.9"
+appcompat = "1.7.1"
+lifecycle = "2.10.0"
+recyclerview = "1.4.0"
+material = "1.13.0"
+drawerlayout = "1.2.0"
+okio = "3.17.0"
+insetter = "0.6.1"
+room = "2.8.4"
+sqlite = "2.6.2"
+retrofit = "3.0.0"
+serializationJson = "1.11.0"
+javaxInject = "1"
+
+[libraries]
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+android-cache-fix-gradle-plugin = { module = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin", version.ref = "androidCacheFix" }
+gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersions" }
+spotless-gradle-plugin = { module = "com.diffplug.spotless:com.diffplug.spotless.gradle.plugin", version.ref = "spotless" }
+dependency-analysis-gradle-plugin = { module = "com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin", version.ref = "dependencyAnalysis" }
+kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version.ref = "appcompat" }
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
+androidx-lifecycle-livedata-core = { module = "androidx.lifecycle:lifecycle-livedata-core", version.ref = "lifecycle" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "drawerlayout" }
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+insetter = { module = "dev.chrisbanes.insetter:insetter", version.ref = "insetter" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "hilt" }
+hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }

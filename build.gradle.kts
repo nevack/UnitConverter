@@ -1,16 +1,16 @@
 plugins {
-    id("com.github.ben-manes.versions") apply false
-    id("com.android.application") apply false
-    id("com.android.library") apply false
-    id("org.jetbrains.kotlin.jvm") apply false
-    id("org.jetbrains.kotlin.android") apply false
-    id("org.jetbrains.kotlin.plugin.serialization") apply false
-    id("com.google.devtools.ksp") apply false
-    id("com.google.dagger.hilt.android") apply false
-    id("org.gradle.android.cache-fix") apply false
+    alias(libs.plugins.gradle.versions) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt.android) apply false
+    alias(libs.plugins.android.cache.fix) apply false
     id("dev.nevack.plugins.dependency-updates")
-    id("com.diffplug.spotless")
-    id("com.autonomousapps.dependency-analysis")
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.dependency.analysis)
 }
 
 spotless {

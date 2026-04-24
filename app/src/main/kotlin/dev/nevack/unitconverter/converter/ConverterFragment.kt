@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentConverterBinding
-import dev.nevack.unitconverter.history.HistoryActivity
+import dev.nevack.unitconverter.history.ui.HistoryActivity
 
 @AndroidEntryPoint
 class ConverterFragment : Fragment(R.layout.fragment_converter) {

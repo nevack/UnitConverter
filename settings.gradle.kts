@@ -36,4 +36,5 @@ enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 include(":app")
 include(":converter-core")
+include(":feature:history")
 include(":nbrb-api")

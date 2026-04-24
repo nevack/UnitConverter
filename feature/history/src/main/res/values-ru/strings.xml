@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_history">История</string>
+    <string name="no_history_items">Вы еще не сохранили ни одного результата в историю</string>
+    <string name="description_no_history_icon">Иконка отсутствия сохранённых результатов</string>
+    <string name="menu_delete_label">Delete history</string>
+    <string name="menu_filter_label">Фильтр результатов</string>
+    <string name="share_button">Кнопка "Поделиться"</string>
+    <string name="remove_item_button">Кнопка "Удалить элемент"</string>
+</resources>

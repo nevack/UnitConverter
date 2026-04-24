@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    tools:background="?colorPrimary">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/history_shade_color">
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Temperature" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/share_item"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/share_button"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_share" />
+
+            <ImageView
+                android:id="@+id/remove_item"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/remove_item_button"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_close" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/history_round_background"
+            android:padding="12dp"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_history" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="64dp">
+
+            <TextView
+                android:id="@+id/unit_from"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lines="1"
+                android:textColor="?colorSurface"
+                android:textSize="16sp"
+                tools:text="Kelvin" />
+
+            <TextView
+                android:id="@+id/value_from"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:gravity="end"
+                android:lines="1"
+                android:textColor="?colorSurface"
+                android:textSize="16sp"
+                tools:text="20K" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="64dp">
+
+            <TextView
+                android:id="@+id/unit_to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lines="1"
+                android:textColor="?colorSurface"
+                android:textSize="16sp"
+                tools:text="Celsius" />
+
+            <TextView
+                android:id="@+id/value_to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:gravity="end"
+                android:lines="1"
+                android:textColor="?colorSurface"
+                android:textSize="16sp"
+                tools:text="30C" />
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

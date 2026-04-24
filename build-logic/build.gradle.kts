@@ -3,8 +3,14 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle-api:9.2.0")
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.54.0")
+    implementation(libs.android.gradle.plugin)
+    implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.ksp.gradle.plugin)
+    implementation(libs.hilt.gradle.plugin)
+    implementation(libs.android.cache.fix.gradle.plugin)
+    implementation(libs.gradle.versions.plugin)
+    implementation(libs.spotless.gradle.plugin)
+    implementation(libs.dependency.analysis.gradle.plugin)
 }
 
 gradlePlugin {

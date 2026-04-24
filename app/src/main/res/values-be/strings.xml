@@ -124,19 +124,12 @@
     <string name="parsecsymbol">пс</string>
     <string name="lightyear">Светлавы год</string>
     <string name="lightyearsymbol">св.г.</string>
-    <string name="title_activity_history">Гісторыя</string>
-    <string name="no_history_items">Вы яшчэ не захавалі ніводнага выніку ў гісторыю</string>
-    <string name="description_no_history_icon">Абразок адсутнасці захаваных вынікаў</string>
     <string name="history_shortcut_short_label">Гісторыя</string>
     <string name="history_shortcut_long_label">Гісторыя</string>
     <string name="history_shortcut_disabled_label">Гісторыя</string>
     <string name="menu_history_label">Гісторыя</string>
     <string name="menu_save_label">Захаваць</string>
-    <string name="menu_delete_label">Delete history</string>
-    <string name="menu_filter_label">Фільтр вынікаў</string>
     <string name="currency_byn_name">Беларускі рубель</string>
     <string name="description_icon">Абразок катэгорыі</string>
     <string name="swap_source_and_result_units_and_values">Кнопка памяняць адзінкі і значэнні крыніцы і выніку</string>
-    <string name="share_button">Кнопка \"Падзяліцца\"</string>
-    <string name="remove_item_button">Кнопка \"Выдаліць элемент\"</string>
 </resources>

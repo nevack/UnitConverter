@@ -16,10 +16,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.R
-import dev.nevack.unitconverter.categories.GetCategoriesUseCase
-import dev.nevack.unitconverter.databinding.FragmentHistoryBinding
-import dev.nevack.unitconverter.model.AppConverterCategory
+import dev.nevack.unitconverter.feature.history.R
+import dev.nevack.unitconverter.feature.history.databinding.FragmentHistoryBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,12 +26,12 @@ class HistoryFragment :
     MenuProvider {
     private lateinit var binding: FragmentHistoryBinding
     private lateinit var adapter: HistoryAdapter
-    private var categories: List<AppConverterCategory> = emptyList()
+    private var categories: List<HistoryCategory> = emptyList()
 
     private val viewModel: HistoryViewModel by activityViewModels()
 
     @Inject
-    lateinit var getCategoriesUseCase: GetCategoriesUseCase
+    lateinit var historyCategoriesProvider: HistoryCategoriesProvider
 
     override fun onViewCreated(
         view: View,
@@ -45,7 +43,7 @@ class HistoryFragment :
         binding.root.applyInsetter {
             type(navigationBars = true) { padding(horizontal = true) }
         }
-        categories = getCategoriesUseCase()
+        categories = historyCategoriesProvider()
 
         with(binding.recycler) {
             layoutManager = LinearLayoutManager(requireContext())

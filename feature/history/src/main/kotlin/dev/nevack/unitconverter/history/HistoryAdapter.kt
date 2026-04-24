@@ -7,8 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.nevack.unitconverter.databinding.HistoryItemBinding
-import dev.nevack.unitconverter.model.AppConverterCategory
+import dev.nevack.unitconverter.feature.history.databinding.HistoryItemBinding
 
 internal class Differ : DiffUtil.ItemCallback<HistoryRecord>() {
     override fun areItemsTheSame(
@@ -23,7 +22,7 @@ internal class Differ : DiffUtil.ItemCallback<HistoryRecord>() {
 }
 
 internal class HistoryAdapter(
-    private val categoriesById: Map<String, AppConverterCategory>,
+    private val categoriesById: Map<String, HistoryCategory>,
     private val remove: (HistoryRecord) -> Unit,
     private val share: (HistoryRecord) -> Unit,
 ) : ListAdapter<HistoryRecord, ViewHolder>(Differ()) {
@@ -63,7 +62,7 @@ internal class ViewHolder(
     val binding: HistoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        category: AppConverterCategory?,
+        category: HistoryCategory?,
         item: HistoryRecord,
     ) {
         binding.valueFrom.text = item.valueFrom
@@ -76,8 +75,8 @@ internal class ViewHolder(
             binding.categoryIcon.setImageDrawable(null)
             return
         }
-        binding.categoryName.setText(category.categoryName)
-        itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, category.color))
-        binding.categoryIcon.setImageDrawable(AppCompatResources.getDrawable(itemView.context, category.icon))
+        binding.categoryName.setText(category.nameRes)
+        itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, category.colorRes))
+        binding.categoryIcon.setImageDrawable(AppCompatResources.getDrawable(itemView.context, category.iconRes))
     }
 }

@@ -30,8 +30,5 @@
             android:label="@string/title_activity_convert"
             android:parentActivityName=".categories.CategoriesActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
-        <activity
-            android:name=".history.HistoryActivity"
-            android:label="@string/title_activity_history" />
     </application>
 </manifest>

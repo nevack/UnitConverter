@@ -7,8 +7,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.R
-import dev.nevack.unitconverter.databinding.ActivityHistoryBinding
+import dev.nevack.unitconverter.feature.history.R
+import dev.nevack.unitconverter.feature.history.databinding.ActivityHistoryBinding
 
 @AndroidEntryPoint
 class HistoryActivity : AppCompatActivity() {

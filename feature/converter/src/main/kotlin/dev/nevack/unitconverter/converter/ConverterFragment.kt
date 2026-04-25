@@ -41,7 +41,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.save -> {
-                    viewModel.saveResultToHistory(binding.display.convertData)
+                    viewModel.saveResultToHistory()
                     true
                 }
 
@@ -110,11 +110,23 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                     }
 
                     if (state.converter !== oldState?.converter) {
-                        state.converter?.let { binding.display.setUnits(it.units) }
+                        state.converter?.let {
+                            binding.display.setUnits(it.units)
+                            // Restore selected unit indices and input value. On a fresh view
+                            // (rotation or first load), this re-populates what the user had before.
+                            // The convertData setter sets indices before setText so the
+                            // doAfterTextChanged callback fires with a fully consistent state.
+                            binding.display.convertData = state.convertData
+                        }
                     }
 
                     if (state.result != oldState?.result) {
                         binding.display.showResult(state.result.result)
+                    }
+
+                    if (state.loadError != null && state.loadError != oldState?.loadError) {
+                        Snackbar.make(binding.root, state.loadError, Snackbar.LENGTH_LONG).show()
+                        viewModel.clearLoadError()
                     }
 
                     previousState = state

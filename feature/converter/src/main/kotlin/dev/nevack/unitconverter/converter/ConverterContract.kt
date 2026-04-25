@@ -27,5 +27,7 @@ data class ConverterUiState(
     val title: Int? = null,
     val categoryId: String? = null,
     val converter: Converter? = null,
+    val convertData: ConvertData = ConvertData("", "", 0, 1),
     val result: Result = Result.Empty,
+    val loadError: String? = null,
 )

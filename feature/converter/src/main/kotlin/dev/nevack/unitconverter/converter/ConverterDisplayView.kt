@@ -79,12 +79,14 @@ internal class ConverterDisplayView
                 }
             set(convertData) =
                 with(binding) {
-                    sourceValue.setText(convertData.value)
-                    resultValue.setText(convertData.result)
+                    // Set indices and spinner labels before setText so that doAfterTextChanged
+                    // fires with a fully consistent ConvertData (correct from/to already set).
                     sourceIndex = convertData.from
                     resultIndex = convertData.to
                     sourceSpinner.setText(conversionUnits[sourceIndex].name, false)
                     resultSpinner.setText(conversionUnits[resultIndex].name, false)
+                    resultValue.setText(convertData.result)
+                    sourceValue.setText(convertData.value)
                 }
 
         fun getCopyResult(withUnitSymbols: Boolean): String =

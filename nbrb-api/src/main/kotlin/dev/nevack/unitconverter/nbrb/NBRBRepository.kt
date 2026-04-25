@@ -1,5 +1,6 @@
 package dev.nevack.unitconverter.nbrb
 
+import android.util.Log
 import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
@@ -52,7 +53,10 @@ class NBRBRepository(
         withContext(Dispatchers.IO) {
             if (file.exists()) {
                 val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
-                if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
+                val today = Calendar.getInstance()
+                if (today[Calendar.YEAR] == calendar[Calendar.YEAR] &&
+                    today[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]
+                ) {
                     val cached = serializer.load(file)
                     if (cached != null) {
                         return@withContext cached
@@ -86,10 +90,16 @@ class NBRBRepository(
         withContext(Dispatchers.IO) {
             try {
                 json.decodeFromString(this@load, from.readText())
-            } catch (ignored: IOException) {
+            } catch (e: IOException) {
+                Log.w(TAG, "Failed to read cache file ${from.name}", e)
                 null
-            } catch (ignored: SerializationException) {
+            } catch (e: SerializationException) {
+                Log.w(TAG, "Failed to deserialize cache file ${from.name}", e)
                 null
             }
         }
+
+    companion object {
+        private const val TAG = "NBRBRepository"
+    }
 }

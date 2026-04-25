@@ -8,6 +8,10 @@ android {
     namespace = "dev.nevack.unitconverter.feature.history"
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(project(":feature:history-api"))
 

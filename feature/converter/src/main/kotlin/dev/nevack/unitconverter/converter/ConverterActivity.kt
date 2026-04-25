@@ -16,20 +16,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.categories.GetCategoriesUseCase
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
-    @Inject
-    lateinit var getCategoriesUseCase: GetCategoriesUseCase
-
     private val viewModel: ConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +34,7 @@ class ConverterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val categories = getCategoriesUseCase()
+        val categories = viewModel.categories
 
         setupNavigation(binding, categories)
 
@@ -59,7 +54,10 @@ class ConverterActivity : AppCompatActivity() {
                     val categoryId = state.categoryId ?: return@collect
                     val categoryIndex = categories.indexOfFirst { it.id == categoryId }
                     if (categoryIndex != -1) {
-                        binding.navigationView.menu[categoryIndex].isChecked = true
+                        // findItem uses itemId which we set to the list index, so this is stable.
+                        binding.navigationView.menu
+                            .findItem(categoryIndex)
+                            ?.isChecked = true
                     }
                 }
             }
@@ -73,9 +71,15 @@ class ConverterActivity : AppCompatActivity() {
             )
         }
 
-        val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
-        val initialCategoryId = categoryId ?: categories.firstOrNull()?.id ?: return
-        viewModel.load(initialCategoryId)
+        // Only load on a fresh launch; SavedStateHandle restores categoryId across
+        // configuration changes and process death automatically.
+        if (savedInstanceState == null) {
+            val categoryId =
+                intent.getStringExtra(CONVERTER_ID_EXTRA)
+                    ?: categories.firstOrNull()?.id
+                    ?: return
+            viewModel.load(categoryId)
+        }
     }
 
     private fun setupNavigation(
@@ -83,13 +87,15 @@ class ConverterActivity : AppCompatActivity() {
         categories: List<AppConverterCategory>,
     ) = with(binding.navigationView) {
         for ((i, unit) in categories.withIndex()) {
+            // Use the list index as a stable itemId so the listener can look up the category
+            // directly by ID rather than relying on the display order of menu items.
             menu
-                .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                .add(Menu.NONE, i, i, unit.categoryName)
                 .setCheckable(true)
                 .setIcon(unit.icon)
         }
         setNavigationItemSelectedListener { menuItem ->
-            val category = categories.getOrNull(menuItem.order) ?: return@setNavigationItemSelectedListener false
+            val category = categories.getOrNull(menuItem.itemId) ?: return@setNavigationItemSelectedListener false
             viewModel.load(category.id)
             viewModel.setDrawerOpened(false)
             true
@@ -97,21 +103,6 @@ class ConverterActivity : AppCompatActivity() {
         applyInsetter {
             type(statusBars = true) { margin(top = true) }
             type(navigationBars = true) { margin(bottom = true) }
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        viewModel.uiState.value
-            .categoryId
-            ?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val categoryId = savedInstanceState.getString(CONVERTER_ID_EXTRA)
-        if (categoryId != null) {
-            viewModel.load(categoryId)
         }
     }
 

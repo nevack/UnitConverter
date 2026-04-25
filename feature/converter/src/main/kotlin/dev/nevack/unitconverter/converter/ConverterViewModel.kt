@@ -50,6 +50,7 @@ class ConverterViewModel
                     backgroundColor = category.color,
                     categoryId = category.id,
                     converter = null,
+                    convertData = ConvertData("", "", 0, 1),
                     result = Result.Empty,
                 )
             }
@@ -69,20 +70,21 @@ class ConverterViewModel
         }
 
         fun convert(data: ConvertData) {
-            val result = convertValueUseCase(uiState.value.converter, data)
+            val resultString = convertValueUseCase(uiState.value.converter, data)
             updateUiState {
                 copy(
-                    result = result?.let { Result.Converted(it) } ?: Result.Empty,
+                    convertData = data.copy(result = resultString ?: ""),
+                    result = resultString?.let { Result.Converted(it) } ?: Result.Empty,
                 )
             }
         }
 
-        fun saveResultToHistory(result: ConvertData) {
+        fun saveResultToHistory() {
             val uiState = _uiState.value
             val converter = uiState.converter ?: return
             val categoryId = uiState.categoryId ?: return
             viewModelScope.launch {
-                saveResultToHistoryUseCase(converter, categoryId, result)
+                saveResultToHistoryUseCase(converter, categoryId, uiState.convertData)
             }
         }
 

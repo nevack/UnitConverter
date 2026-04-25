@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import dev.nevack.unitconverter.history.HistoryRepository
 import dev.nevack.unitconverter.history.data.RoomHistoryRepository
 import dev.nevack.unitconverter.history.data.db.HistoryDao
@@ -18,6 +19,7 @@ import dev.nevack.unitconverter.history.data.db.HistoryDatabase
 @InstallIn(SingletonComponent::class)
 object HistoryModule {
     @Provides
+    @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context,
     ): HistoryDatabase =
@@ -27,9 +29,11 @@ object HistoryModule {
             .build()
 
     @Provides
+    @Singleton
     fun provideHistoryDao(database: HistoryDatabase): HistoryDao = database.dao()
 
     @Provides
+    @Singleton
     fun provideHistoryRepository(dao: HistoryDao): HistoryRepository = RoomHistoryRepository(dao)
 
     private val MIGRATION_1_2 =

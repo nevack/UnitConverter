@@ -18,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.FragmentConverterBinding
-import dev.nevack.unitconverter.history.HistoryLauncher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +27,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
     private lateinit var binding: FragmentConverterBinding
 
     @Inject
-    lateinit var historyLauncher: HistoryLauncher
+    lateinit var historyOpener: ConverterHistoryOpener
 
     private val viewModel: ConverterViewModel by activityViewModels()
 
@@ -47,7 +46,7 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                 }
 
                 R.id.history -> {
-                    historyLauncher.open(requireContext())
+                    historyOpener.open(requireContext())
                     true
                 }
 

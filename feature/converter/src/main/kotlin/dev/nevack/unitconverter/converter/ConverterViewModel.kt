@@ -67,8 +67,7 @@ class ConverterViewModel
                                     copy(converter = converter, loadError = null)
                                 }
                             }
-                        }
-                        .onFailure { e ->
+                        }.onFailure { e ->
                             updateUiState {
                                 if (this.categoryId != categoryId) {
                                     this

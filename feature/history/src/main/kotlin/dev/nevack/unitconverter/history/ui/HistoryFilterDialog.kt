@@ -16,15 +16,15 @@ class HistoryFilterDialog : DialogFragment() {
         val ids = requireArguments().getStringArray(ARG_IDS)!!
         val nameRes = requireArguments().getIntArray(ARG_NAME_RES)!!
 
-        val names = Array(ids.size + 1) { i ->
-            if (i == 0) getString(android.R.string.cancel).let { "None" } else getString(nameRes[i - 1])
-        }
+        val names =
+            Array(ids.size + 1) { i ->
+                if (i == 0) getString(android.R.string.cancel).let { "None" } else getString(nameRes[i - 1])
+            }
 
         return MaterialAlertDialogBuilder(requireContext())
             .setItems(names) { _, which ->
                 selectedCategoryId = ids.getOrNull(which - 1)
-            }
-            .create()
+            }.create()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

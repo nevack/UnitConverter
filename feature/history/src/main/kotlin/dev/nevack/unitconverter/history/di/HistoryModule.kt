@@ -9,11 +9,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import dev.nevack.unitconverter.history.HistoryRepository
 import dev.nevack.unitconverter.history.data.RoomHistoryRepository
 import dev.nevack.unitconverter.history.data.db.HistoryDao
 import dev.nevack.unitconverter.history.data.db.HistoryDatabase
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

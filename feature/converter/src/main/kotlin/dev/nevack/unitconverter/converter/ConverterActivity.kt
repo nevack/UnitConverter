@@ -54,7 +54,10 @@ class ConverterActivity : AppCompatActivity() {
                     val categoryId = state.categoryId ?: return@collect
                     val categoryIndex = categories.indexOfFirst { it.id == categoryId }
                     if (categoryIndex != -1) {
-                        binding.navigationView.menu[categoryIndex].isChecked = true
+                        // findItem uses itemId which we set to the list index, so this is stable.
+                        binding.navigationView.menu
+                            .findItem(categoryIndex)
+                            ?.isChecked = true
                     }
                 }
             }
@@ -71,9 +74,10 @@ class ConverterActivity : AppCompatActivity() {
         // Only load on a fresh launch; SavedStateHandle restores categoryId across
         // configuration changes and process death automatically.
         if (savedInstanceState == null) {
-            val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)
-                ?: categories.firstOrNull()?.id
-                ?: return
+            val categoryId =
+                intent.getStringExtra(CONVERTER_ID_EXTRA)
+                    ?: categories.firstOrNull()?.id
+                    ?: return
             viewModel.load(categoryId)
         }
     }
@@ -83,13 +87,15 @@ class ConverterActivity : AppCompatActivity() {
         categories: List<AppConverterCategory>,
     ) = with(binding.navigationView) {
         for ((i, unit) in categories.withIndex()) {
+            // Use the list index as a stable itemId so the listener can look up the category
+            // directly by ID rather than relying on the display order of menu items.
             menu
-                .add(Menu.NONE, Menu.NONE, i, unit.categoryName)
+                .add(Menu.NONE, i, i, unit.categoryName)
                 .setCheckable(true)
                 .setIcon(unit.icon)
         }
         setNavigationItemSelectedListener { menuItem ->
-            val category = categories.getOrNull(menuItem.order) ?: return@setNavigationItemSelectedListener false
+            val category = categories.getOrNull(menuItem.itemId) ?: return@setNavigationItemSelectedListener false
             viewModel.load(category.id)
             viewModel.setDrawerOpened(false)
             true

@@ -1,10 +1,10 @@
 package dev.nevack.unitconverter.nbrb
 
+import android.util.Log
 import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import dev.nevack.unitconverter.nbrb.model.NBRBRate
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext

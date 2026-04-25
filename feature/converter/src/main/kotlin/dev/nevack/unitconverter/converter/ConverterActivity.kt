@@ -7,7 +7,6 @@ import android.view.Menu
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.fragment.app.commit
@@ -68,7 +67,10 @@ class ConverterActivity : AppCompatActivity() {
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace<ConverterFragment>(R.id.container, args = bundleOf(SHOW_NAV_BUTTON_ARG to true))
+            replace<ConverterFragment>(
+                R.id.container,
+                args = Bundle().apply { putBoolean(SHOW_NAV_BUTTON_ARG, true) },
+            )
         }
 
         val categoryId = intent.getStringExtra(CONVERTER_ID_EXTRA)

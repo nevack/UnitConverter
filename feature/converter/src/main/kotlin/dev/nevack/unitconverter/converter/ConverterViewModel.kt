@@ -3,6 +3,8 @@ package dev.nevack.unitconverter.converter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.nevack.unitconverter.categories.GetCategoriesUseCase
+import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,11 +17,13 @@ import javax.inject.Inject
 class ConverterViewModel
     @Inject
     constructor(
+        getCategoriesUseCase: GetCategoriesUseCase,
         private val getConverterCategoryUseCase: GetConverterCategoryUseCase,
         private val loadConverterUseCase: LoadConverterUseCase,
         private val convertValueUseCase: ConvertValueUseCase,
         private val saveResultToHistoryUseCase: SaveResultToHistoryUseCase,
     ) : ViewModel() {
+        val categories: List<AppConverterCategory> = getCategoriesUseCase()
         private val _uiState = MutableStateFlow(ConverterUiState())
         val uiState: StateFlow<ConverterUiState> = _uiState.asStateFlow()
         private var loadJob: Job? = null

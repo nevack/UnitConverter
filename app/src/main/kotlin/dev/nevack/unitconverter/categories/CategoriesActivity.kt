@@ -18,13 +18,9 @@ import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.databinding.ActivityCategoriesBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesActivity : AppCompatActivity() {
-    @Inject
-    lateinit var getCategoriesUseCase: GetCategoriesUseCase
-
     private val categoriesViewModel: CategoriesViewModel by viewModels()
     private val converterViewModel: ConverterViewModel by viewModels()
 
@@ -33,7 +29,6 @@ class CategoriesActivity : AppCompatActivity() {
         val binding = ActivityCategoriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        val categories = getCategoriesUseCase()
 
         val isTablet = binding.converterContainer != null
 
@@ -58,7 +53,7 @@ class CategoriesActivity : AppCompatActivity() {
         }
 
         if (isTablet) {
-            categories.firstOrNull()?.let { category ->
+            categoriesViewModel.categories.firstOrNull()?.let { category ->
                 converterViewModel.load(category.id)
             }
         }

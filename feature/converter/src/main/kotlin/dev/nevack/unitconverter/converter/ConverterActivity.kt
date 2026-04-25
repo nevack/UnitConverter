@@ -16,20 +16,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.categories.GetCategoriesUseCase
 import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
-    @Inject
-    lateinit var getCategoriesUseCase: GetCategoriesUseCase
-
     private val viewModel: ConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +34,7 @@ class ConverterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val categories = getCategoriesUseCase()
+        val categories = viewModel.categories
 
         setupNavigation(binding, categories)
 

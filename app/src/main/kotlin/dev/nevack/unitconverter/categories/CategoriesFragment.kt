@@ -9,14 +9,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
 import dev.nevack.unitconverter.databinding.FragmentCategoriesBinding
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val viewModel: CategoriesViewModel by activityViewModels()
-
-    @Inject
-    lateinit var getCategoriesUseCase: GetCategoriesUseCase
 
     override fun onViewCreated(
         view: View,
@@ -27,7 +23,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             layoutManager =
                 GridLayoutManager(requireContext(), resources.getInteger(R.integer.column_count))
             setHasFixedSize(true)
-            adapter = CategoriesAdapter(getCategoriesUseCase(), viewModel::openConverter)
+            adapter = CategoriesAdapter(viewModel.categories, viewModel::openConverter)
 
             applyInsetter { type(navigationBars = true) { padding() } }
         }

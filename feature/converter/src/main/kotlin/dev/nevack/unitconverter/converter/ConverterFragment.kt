@@ -124,6 +124,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
                         binding.display.showResult(state.result.result)
                     }
 
+                    if (state.loadError != null && state.loadError != oldState?.loadError) {
+                        Snackbar.make(binding.root, state.loadError, Snackbar.LENGTH_LONG).show()
+                        viewModel.clearLoadError()
+                    }
+
                     previousState = state
                 }
             }

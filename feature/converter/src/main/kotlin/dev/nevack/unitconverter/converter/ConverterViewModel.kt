@@ -58,14 +58,25 @@ class ConverterViewModel
             loadJob?.cancel()
             loadJob =
                 viewModelScope.launch {
-                    val converter = loadConverterUseCase(categoryId) ?: return@launch
-                    updateUiState {
-                        if (this.categoryId != categoryId) {
-                            this
-                        } else {
-                            copy(converter = converter)
+                    runCatching { loadConverterUseCase(categoryId) }
+                        .onSuccess { converter ->
+                            updateUiState {
+                                if (this.categoryId != categoryId) {
+                                    this
+                                } else {
+                                    copy(converter = converter, loadError = null)
+                                }
+                            }
                         }
-                    }
+                        .onFailure { e ->
+                            updateUiState {
+                                if (this.categoryId != categoryId) {
+                                    this
+                                } else {
+                                    copy(loadError = e.localizedMessage)
+                                }
+                            }
+                        }
                 }
         }
 
@@ -77,6 +88,10 @@ class ConverterViewModel
                     result = resultString?.let { Result.Converted(it) } ?: Result.Empty,
                 )
             }
+        }
+
+        fun clearLoadError() {
+            updateUiState { copy(loadError = null) }
         }
 
         fun saveResultToHistory() {

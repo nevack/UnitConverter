@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -122,6 +123,11 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
 
                     if (state.result != oldState?.result) {
                         binding.display.showResult(state.result.result)
+                    }
+
+                    if (state.isLoading != oldState?.isLoading) {
+                        binding.loadingIndicator.isVisible = state.isLoading
+                        binding.keypad.isEnabled = !state.isLoading
                     }
 
                     if (state.loadError != null && state.loadError != oldState?.loadError) {

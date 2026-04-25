@@ -24,6 +24,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/loading_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
     <dev.nevack.unitconverter.converter.ConverterDisplayView
         android:id="@+id/display"
         android:layout_width="match_parent"

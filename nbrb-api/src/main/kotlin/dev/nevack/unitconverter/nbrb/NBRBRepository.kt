@@ -52,7 +52,10 @@ class NBRBRepository(
         withContext(Dispatchers.IO) {
             if (file.exists()) {
                 val calendar = Calendar.getInstance().apply { timeInMillis = file.lastModified() }
-                if (Calendar.getInstance()[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]) {
+                val today = Calendar.getInstance()
+                if (today[Calendar.YEAR] == calendar[Calendar.YEAR] &&
+                    today[Calendar.DAY_OF_YEAR] == calendar[Calendar.DAY_OF_YEAR]
+                ) {
                     val cached = serializer.load(file)
                     if (cached != null) {
                         return@withContext cached

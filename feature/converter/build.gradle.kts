@@ -10,7 +10,6 @@ android {
 
 dependencies {
     implementation(project(":core:converter"))
-    implementation(project(":feature:history-api"))
     implementation(project(":nbrb-api"))
 
     implementation(platform(libs.kotlinx.coroutines.bom))

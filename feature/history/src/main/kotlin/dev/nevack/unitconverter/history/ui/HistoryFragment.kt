@@ -85,6 +85,14 @@ class HistoryFragment :
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        childFragmentManager.setFragmentResultListener(
+            HistoryFilterDialog.REQUEST_KEY,
+            viewLifecycleOwner,
+        ) { _, result ->
+            val categoryId = result.getString(HistoryFilterDialog.KEY_SELECTED_ID)
+            viewModel.filter(categoryId)
+        }
     }
 
     override fun onCreateMenu(
@@ -102,7 +110,7 @@ class HistoryFragment :
             }
 
             R.id.filter -> {
-                HistoryFilterDialog(categories, viewModel::filter).show(childFragmentManager, "dialog")
+                HistoryFilterDialog.newInstance(categories).show(childFragmentManager, "dialog")
                 true
             }
 

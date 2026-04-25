@@ -8,4 +8,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.annotation)
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
 }

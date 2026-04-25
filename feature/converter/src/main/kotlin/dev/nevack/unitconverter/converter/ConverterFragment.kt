@@ -10,12 +10,17 @@ import androidx.core.content.getSystemService
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.FragmentConverterBinding
 import dev.nevack.unitconverter.history.HistoryLauncher
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -90,28 +95,32 @@ class ConverterFragment : Fragment(R.layout.fragment_converter) {
         binding.keypad.setNumericListener { binding.display.appendText(it) }
 
         var previousState: ConverterUiState? = null
-        viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            val oldState = previousState
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    val oldState = previousState
 
-            if (state.backgroundColor != oldState?.backgroundColor) {
-                state.backgroundColor?.let {
-                    binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
+                    if (state.backgroundColor != oldState?.backgroundColor) {
+                        state.backgroundColor?.let {
+                            binding.background.setBackgroundColor(ContextCompat.getColor(requireContext(), it))
+                        }
+                    }
+
+                    if (state.title != oldState?.title) {
+                        state.title?.let(binding.toolbar::setTitle)
+                    }
+
+                    if (state.converter !== oldState?.converter) {
+                        state.converter?.let { binding.display.setUnits(it.units) }
+                    }
+
+                    if (state.result != oldState?.result) {
+                        binding.display.showResult(state.result.result)
+                    }
+
+                    previousState = state
                 }
             }
-
-            if (state.title != oldState?.title) {
-                state.title?.let(binding.toolbar::setTitle)
-            }
-
-            if (state.converter !== oldState?.converter) {
-                state.converter?.let { binding.display.setUnits(it.units) }
-            }
-
-            if (state.result != oldState?.result) {
-                binding.display.showResult(state.result.result)
-            }
-
-            previousState = state
         }
     }
 

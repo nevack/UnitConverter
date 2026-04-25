@@ -12,6 +12,9 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.categories.GetCategoriesUseCase
@@ -19,6 +22,8 @@ import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_B
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.AppConverterCategory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,17 +48,21 @@ class ConverterActivity : AppCompatActivity() {
             onBackPressedDispatcher.addCallback(this) {
                 viewModel.setDrawerOpened(false)
             }
-        viewModel.uiState.observe(this) { state ->
-            callback.isEnabled = state.drawerOpened
-            if (state.drawerOpened) {
-                binding.navigationDrawer.open()
-            } else {
-                binding.navigationDrawer.close()
-            }
-            val categoryId = state.categoryId ?: return@observe
-            val categoryIndex = categories.indexOfFirst { it.id == categoryId }
-            if (categoryIndex != -1) {
-                binding.navigationView.menu[categoryIndex].isChecked = true
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    callback.isEnabled = state.drawerOpened
+                    if (state.drawerOpened) {
+                        binding.navigationDrawer.open()
+                    } else {
+                        binding.navigationDrawer.close()
+                    }
+                    val categoryId = state.categoryId ?: return@collect
+                    val categoryIndex = categories.indexOfFirst { it.id == categoryId }
+                    if (categoryIndex != -1) {
+                        binding.navigationView.menu[categoryIndex].isChecked = true
+                    }
+                }
             }
         }
 
@@ -91,7 +100,7 @@ class ConverterActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         viewModel.uiState.value
-            ?.categoryId
+            .categoryId
             ?.let { outState.putString(CONVERTER_ID_EXTRA, it) }
         super.onSaveInstanceState(outState)
     }

@@ -1,10 +1,13 @@
 package dev.nevack.unitconverter.converter
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,12 +20,12 @@ class ConverterViewModel
         private val convertValueUseCase: ConvertValueUseCase,
         private val saveResultToHistoryUseCase: SaveResultToHistoryUseCase,
     ) : ViewModel() {
-        private val _uiState = MutableLiveData(ConverterUiState())
-        val uiState: LiveData<ConverterUiState>
-            get() = _uiState
+        private val _uiState = MutableStateFlow(ConverterUiState())
+        val uiState: StateFlow<ConverterUiState> = _uiState.asStateFlow()
+        private var loadJob: Job? = null
 
         fun setDrawerOpened(opened: Boolean): Boolean {
-            val changed = _uiState.value?.drawerOpened != opened
+            val changed = _uiState.value.drawerOpened != opened
             updateUiState { copy(drawerOpened = opened) }
             return changed
         }
@@ -40,14 +43,22 @@ class ConverterViewModel
                 )
             }
 
-            viewModelScope.launch {
-                val converter = loadConverterUseCase(categoryId) ?: return@launch
-                updateUiState { copy(converter = converter) }
-            }
+            loadJob?.cancel()
+            loadJob =
+                viewModelScope.launch {
+                    val converter = loadConverterUseCase(categoryId) ?: return@launch
+                    updateUiState {
+                        if (this.categoryId != categoryId) {
+                            this
+                        } else {
+                            copy(converter = converter)
+                        }
+                    }
+                }
         }
 
         fun convert(data: ConvertData) {
-            val result = convertValueUseCase(uiState.value?.converter, data)
+            val result = convertValueUseCase(uiState.value.converter, data)
             updateUiState {
                 copy(
                     result = result?.let { Result.Converted(it) } ?: Result.Empty,
@@ -56,7 +67,7 @@ class ConverterViewModel
         }
 
         fun saveResultToHistory(result: ConvertData) {
-            val uiState = _uiState.value ?: return
+            val uiState = _uiState.value
             val converter = uiState.converter ?: return
             val categoryId = uiState.categoryId ?: return
             viewModelScope.launch {
@@ -65,6 +76,6 @@ class ConverterViewModel
         }
 
         private inline fun updateUiState(update: ConverterUiState.() -> ConverterUiState) {
-            _uiState.value = update(_uiState.value ?: ConverterUiState())
+            _uiState.update(update)
         }
     }

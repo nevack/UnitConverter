@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.lifecycle.Lifecycle
@@ -37,6 +39,23 @@ class ConverterActivity : AppCompatActivity() {
         val categories = viewModel.categories
 
         setupNavigation(binding, categories)
+
+        binding.navigationDrawer.addDrawerListener(
+            object : DrawerLayout.DrawerListener {
+                override fun onDrawerSlide(
+                    drawerView: View,
+                    slideOffset: Float,
+                ) = Unit
+
+                override fun onDrawerOpened(drawerView: View) = Unit
+
+                override fun onDrawerStateChanged(newState: Int) = Unit
+
+                override fun onDrawerClosed(drawerView: View) {
+                    viewModel.setDrawerOpened(false)
+                }
+            },
+        )
 
         val callback =
             onBackPressedDispatcher.addCallback(this) {

@@ -52,6 +52,7 @@ class ConverterViewModel
                     converter = null,
                     convertData = ConvertData("", "", 0, 1),
                     result = Result.Empty,
+                    isLoading = true,
                 )
             }
 
@@ -64,7 +65,7 @@ class ConverterViewModel
                                 if (this.categoryId != categoryId) {
                                     this
                                 } else {
-                                    copy(converter = converter, loadError = null)
+                                    copy(converter = converter, loadError = null, isLoading = false)
                                 }
                             }
                         }.onFailure { e ->
@@ -72,7 +73,7 @@ class ConverterViewModel
                                 if (this.categoryId != categoryId) {
                                     this
                                 } else {
-                                    copy(loadError = e.localizedMessage)
+                                    copy(loadError = e.localizedMessage, isLoading = false)
                                 }
                             }
                         }

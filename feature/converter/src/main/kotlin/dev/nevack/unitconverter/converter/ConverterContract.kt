@@ -30,4 +30,5 @@ data class ConverterUiState(
     val convertData: ConvertData = ConvertData("", "", 0, 1),
     val result: Result = Result.Empty,
     val loadError: String? = null,
+    val isLoading: Boolean = false,
 )

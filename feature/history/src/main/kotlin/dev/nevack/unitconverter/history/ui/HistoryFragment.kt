@@ -13,6 +13,8 @@ import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
@@ -21,6 +23,8 @@ import dev.nevack.unitconverter.feature.history.databinding.FragmentHistoryBindi
 import dev.nevack.unitconverter.history.HistoryCategoriesProvider
 import dev.nevack.unitconverter.history.HistoryCategory
 import dev.nevack.unitconverter.history.HistoryRecord
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -70,9 +74,13 @@ class HistoryFragment :
                 binding.recycler.adapter = it
             }
 
-        viewModel.items.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            binding.recycler.isInvisible = it.isEmpty()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.items.collect {
+                    adapter.submitList(it)
+                    binding.recycler.isInvisible = it.isEmpty()
+                }
+            }
         }
 
         val menuHost: MenuHost = requireActivity()

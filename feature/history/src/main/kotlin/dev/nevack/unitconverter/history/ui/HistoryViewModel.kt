@@ -1,8 +1,5 @@
 package dev.nevack.unitconverter.history.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +7,11 @@ import dev.nevack.unitconverter.history.HistoryRecord
 import dev.nevack.unitconverter.history.usecase.ClearHistoryUseCase
 import dev.nevack.unitconverter.history.usecase.GetHistoryUseCase
 import dev.nevack.unitconverter.history.usecase.RemoveHistoryItemUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,49 +23,29 @@ class HistoryViewModel
         private val removeHistoryItemUseCase: RemoveHistoryItemUseCase,
         private val clearHistoryUseCase: ClearHistoryUseCase,
     ) : ViewModel() {
-        private val itemsRaw = MutableLiveData<List<HistoryRecord>>().also { fetch() }
-        private var filter = MutableLiveData<String?>(null)
-        private val itemsFiltered by lazy {
-            MediatorLiveData<List<HistoryRecord>>().apply {
-                addSource(filter) { categoryId ->
-                    value = itemsRaw.value?.filter { item ->
-                        categoryId == null || item.categoryId == categoryId
-                    } ?: emptyList()
-                }
-                addSource(itemsRaw) {
-                    val categoryId = filter.value
-                    value = it.filter { item -> categoryId == null || item.categoryId == categoryId }
-                }
-            }
-        }
-        val items: LiveData<List<HistoryRecord>>
-            get() = itemsFiltered
+        private val filter = MutableStateFlow<String?>(null)
+        val items: StateFlow<List<HistoryRecord>> =
+            combine(getHistoryUseCase(), filter) { items, categoryId ->
+                items.filter { item -> categoryId == null || item.categoryId == categoryId }
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList(),
+            )
 
         fun removeItem(item: HistoryRecord) {
             viewModelScope.launch {
                 removeHistoryItemUseCase(item)
-                refreshItems()
             }
         }
 
         fun removeAll() {
             viewModelScope.launch {
                 clearHistoryUseCase()
-                refreshItems()
             }
         }
 
         fun filter(categoryId: String?) {
             filter.value = categoryId
-        }
-
-        private fun fetch() {
-            viewModelScope.launch {
-                refreshItems()
-            }
-        }
-
-        private suspend fun refreshItems() {
-            itemsRaw.postValue(getHistoryUseCase())
         }
     }

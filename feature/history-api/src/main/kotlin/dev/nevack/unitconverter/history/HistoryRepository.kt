@@ -1,7 +1,9 @@
 package dev.nevack.unitconverter.history
 
+import kotlinx.coroutines.flow.Flow
+
 interface HistoryRepository {
-    suspend fun getAll(): List<HistoryRecord>
+    fun observeAll(): Flow<List<HistoryRecord>>
 
     suspend fun save(record: HistoryRecord)
 

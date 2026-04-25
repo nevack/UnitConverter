@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 import dev.nevack.unitconverter.R
@@ -13,6 +16,8 @@ import dev.nevack.unitconverter.converter.ConverterActivity
 import dev.nevack.unitconverter.converter.ConverterFragment
 import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.databinding.ActivityCategoriesBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,11 +45,15 @@ class CategoriesActivity : AppCompatActivity() {
             }
         }
 
-        categoriesViewModel.converterOpened.observe(this) {
-            if (isTablet) {
-                converterViewModel.load(it)
-            } else {
-                startActivity(ConverterActivity.getIntent(this, it))
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                categoriesViewModel.converterOpened.collect {
+                    if (isTablet) {
+                        converterViewModel.load(it)
+                    } else {
+                        startActivity(ConverterActivity.getIntent(this@CategoriesActivity, it))
+                    }
+                }
             }
         }
 

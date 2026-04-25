@@ -4,6 +4,7 @@ import dev.nevack.unitconverter.model.ConversionUnit
 import dev.nevack.unitconverter.model.CurrencyUnitsRepository
 import dev.nevack.unitconverter.nbrb.model.NBRBCurrency
 import dev.nevack.unitconverter.nbrb.model.NBRBRate
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -89,10 +90,16 @@ class NBRBRepository(
         withContext(Dispatchers.IO) {
             try {
                 json.decodeFromString(this@load, from.readText())
-            } catch (ignored: IOException) {
+            } catch (e: IOException) {
+                Log.w(TAG, "Failed to read cache file ${from.name}", e)
                 null
-            } catch (ignored: SerializationException) {
+            } catch (e: SerializationException) {
+                Log.w(TAG, "Failed to deserialize cache file ${from.name}", e)
                 null
             }
         }
+
+    companion object {
+        private const val TAG = "NBRBRepository"
+    }
 }

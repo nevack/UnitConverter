@@ -1,5 +1,6 @@
 package dev.nevack.unitconverter.converter
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class ConverterViewModel
     @Inject
     constructor(
+        private val savedState: SavedStateHandle,
         getCategoriesUseCase: GetCategoriesUseCase,
         private val getConverterCategoryUseCase: GetConverterCategoryUseCase,
         private val loadConverterUseCase: LoadConverterUseCase,
@@ -28,6 +30,10 @@ class ConverterViewModel
         val uiState: StateFlow<ConverterUiState> = _uiState.asStateFlow()
         private var loadJob: Job? = null
 
+        init {
+            savedState.get<String>(KEY_CATEGORY_ID)?.let { load(it) }
+        }
+
         fun setDrawerOpened(opened: Boolean): Boolean {
             val changed = _uiState.value.drawerOpened != opened
             updateUiState { copy(drawerOpened = opened) }
@@ -36,6 +42,7 @@ class ConverterViewModel
 
         fun load(categoryId: String) {
             val category = getConverterCategoryUseCase(categoryId) ?: return
+            savedState[KEY_CATEGORY_ID] = categoryId
 
             updateUiState {
                 copy(
@@ -81,5 +88,9 @@ class ConverterViewModel
 
         private inline fun updateUiState(update: ConverterUiState.() -> ConverterUiState) {
             _uiState.update(update)
+        }
+
+        companion object {
+            private const val KEY_CATEGORY_ID = "category_id"
         }
     }

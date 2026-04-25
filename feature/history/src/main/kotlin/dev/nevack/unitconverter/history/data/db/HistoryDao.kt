@@ -15,11 +15,11 @@ interface HistoryDao {
     fun loadAllByIds(ids: IntArray): List<HistoryItem>
 
     @Insert
-    fun insertAll(vararg items: HistoryItem)
+    suspend fun insertAll(vararg items: HistoryItem)
 
     @Delete
-    fun delete(item: HistoryItem)
+    suspend fun delete(item: HistoryItem)
 
     @Query("DELETE FROM history")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

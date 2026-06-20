@@ -3,8 +3,9 @@
     <string name="title_activity_history">Гісторыя</string>
     <string name="no_history_items">Вы яшчэ не захавалі ніводнага выніку ў гісторыю</string>
     <string name="description_no_history_icon">Абразок адсутнасці захаваных вынікаў</string>
-    <string name="menu_delete_label">Delete history</string>
+    <string name="menu_delete_label">Выдаліць гісторыю</string>
     <string name="menu_filter_label">Фільтр вынікаў</string>
+    <string name="history_filter_all">Усе катэгорыі</string>
     <string name="share_button">Кнопка "Падзяліцца"</string>
     <string name="remove_item_button">Кнопка "Выдаліць элемент"</string>
 </resources>

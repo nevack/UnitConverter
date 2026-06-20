@@ -5,6 +5,7 @@
     <string name="description_no_history_icon">No history message icon</string>
     <string name="menu_delete_label">Delete history</string>
     <string name="menu_filter_label">Filter results</string>
+    <string name="history_filter_all">All categories</string>
     <string name="share_button">Share button</string>
     <string name="remove_item_button">Remove item button</string>
 </resources>

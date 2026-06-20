@@ -10,6 +10,7 @@ import dev.nevack.unitconverter.history.usecase.RemoveHistoryItemUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -23,9 +24,11 @@ class HistoryViewModel
         private val removeHistoryItemUseCase: RemoveHistoryItemUseCase,
         private val clearHistoryUseCase: ClearHistoryUseCase,
     ) : ViewModel() {
-        private val filter = MutableStateFlow<String?>(null)
+        private val selectedCategoryId = MutableStateFlow<String?>(null)
+        val filter: StateFlow<String?> = selectedCategoryId.asStateFlow()
+
         val items: StateFlow<List<HistoryRecord>> =
-            combine(getHistoryUseCase(), filter) { items, categoryId ->
+            combine(getHistoryUseCase(), selectedCategoryId) { items, categoryId ->
                 items.filter { item -> categoryId == null || item.categoryId == categoryId }
             }.stateIn(
                 scope = viewModelScope,
@@ -46,6 +49,6 @@ class HistoryViewModel
         }
 
         fun filter(categoryId: String?) {
-            filter.value = categoryId
+            selectedCategoryId.value = categoryId
         }
     }

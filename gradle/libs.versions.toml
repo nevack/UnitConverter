@@ -2,7 +2,7 @@
 agp = "9.2.0"
 kotlin = "2.3.20"
 ksp = "2.3.7"
-hilt = "2.59.2"
+hilt = "2.60"
 androidCacheFix = "3.0.3"
 gradleVersions = "0.54.0"
 spotless = "8.4.0"

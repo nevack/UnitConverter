@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HistoryDao {
-    @Query("SELECT * FROM history")
+    @Query("SELECT * FROM history ORDER BY id DESC")
     fun observeAll(): Flow<List<HistoryItem>>
 
     @Query("SELECT * FROM history WHERE id IN (:ids)")

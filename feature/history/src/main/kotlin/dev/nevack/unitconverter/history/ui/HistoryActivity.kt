@@ -1,32 +1,46 @@
 package dev.nevack.unitconverter.history.ui
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.feature.history.R
-import dev.nevack.unitconverter.feature.history.databinding.ActivityHistoryBinding
+import dev.nevack.unitconverter.history.HistoryCategoriesProvider
+import dev.nevack.unitconverter.history.HistoryRecord
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HistoryActivity : AppCompatActivity() {
+    @Inject
+    lateinit var historyCategoriesProvider: HistoryCategoriesProvider
+
+    private val viewModel: HistoryViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityHistoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<HistoryFragment>(R.id.container)
-        }
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        binding.toolbarLayout.applyInsetter {
-            type(statusBars = true) { padding(top = true) }
-            type(navigationBars = true) { margin(horizontal = true) }
+        val categories = historyCategoriesProvider()
+        setContent {
+            historyTheme {
+                historyRoute(
+                    viewModel = viewModel,
+                    categories = categories,
+                    onShareItem = ::shareItem,
+                )
+            }
         }
+    }
+
+    private fun shareItem(item: HistoryRecord) {
+        val message = "${item.valueFrom} ${item.unitFrom} = ${item.valueTo} ${item.unitTo}"
+        val sendIntent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, message)
+            }
+        startActivity(Intent.createChooser(sendIntent, message))
     }
 }

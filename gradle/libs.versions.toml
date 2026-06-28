@@ -24,7 +24,7 @@ sqlite = "2.6.2"
 retrofit = "3.0.0"
 serializationJson = "1.11.0"
 javaxInject = "1"
-composeBom = "2026.05.00"
+composeBom = "2026.06.00"
 
 [libraries]
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }

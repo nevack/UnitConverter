@@ -2,7 +2,6 @@ plugins {
     id("dev.nevack.plugins.android-application-module")
     id("dev.nevack.plugins.signing-config")
     id("dev.nevack.plugins.android-hilt")
-    id("dev.nevack.plugins.android-viewbinding")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -47,7 +46,6 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.appcompat.resources)
     implementation(platform(libs.androidx.compose.bom))
@@ -59,14 +57,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-    implementation(libs.androidx.recyclerview)
     // Material
     implementation(libs.material)
-    implementation(libs.androidx.drawerlayout)
     // Okio
     implementation(libs.okio)
-    // Insetter
-    implementation(libs.insetter)
     // Dagger + Hilt
     ksp(libs.hilt.android.compiler)
     implementation(libs.dagger)

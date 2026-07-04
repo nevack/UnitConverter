@@ -8,26 +8,27 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.MaterialTheme
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
-import dev.nevack.unitconverter.converter.ConverterFragment.Companion.SHOW_NAV_BUTTON_ARG
-import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.feature.converter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConverterActivity : AppCompatActivity() {
     private val viewModel: ConverterViewModel by viewModels()
+
+    @Inject
+    lateinit var historyOpener: ConverterHistoryOpener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,12 +83,14 @@ class ConverterActivity : AppCompatActivity() {
             }
         }
 
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<ConverterFragment>(
-                R.id.container,
-                args = Bundle().apply { putBoolean(SHOW_NAV_BUTTON_ARG, true) },
-            )
+        binding.container.setContent {
+            MaterialTheme {
+                converterRoute(
+                    viewModel = viewModel,
+                    showNavigationButton = true,
+                    onOpenHistory = { historyOpener.open(this@ConverterActivity) },
+                )
+            }
         }
 
         // Only load on a fresh launch; SavedStateHandle restores categoryId across

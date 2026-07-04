@@ -1,7 +1,6 @@
 plugins {
     id("dev.nevack.plugins.android-library-module")
     id("dev.nevack.plugins.android-hilt")
-    id("dev.nevack.plugins.android-viewbinding")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -22,6 +21,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
@@ -36,10 +36,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-    implementation(libs.androidx.drawerlayout)
-
-    implementation(libs.material)
-    implementation(libs.insetter)
 
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.android)

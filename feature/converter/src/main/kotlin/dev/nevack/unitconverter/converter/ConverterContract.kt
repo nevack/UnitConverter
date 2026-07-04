@@ -1,5 +1,6 @@
 package dev.nevack.unitconverter.converter
 
+import androidx.annotation.ColorInt
 import dev.nevack.unitconverter.model.converter.Converter
 
 data class ConvertData(
@@ -23,7 +24,7 @@ sealed class Result(
 
 data class ConverterUiState(
     val drawerOpened: Boolean = false,
-    val backgroundColor: Int? = null,
+    @param:ColorInt val backgroundColor: Int? = null,
     val title: Int? = null,
     val categoryId: String? = null,
     val converter: Converter? = null,

@@ -33,8 +33,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
@@ -51,6 +51,8 @@ import dev.nevack.unitconverter.converter.ConverterActivity
 import dev.nevack.unitconverter.converter.ConverterHistoryOpener
 import dev.nevack.unitconverter.converter.ConverterViewModel
 import dev.nevack.unitconverter.converter.converterRoute
+import dev.nevack.unitconverter.design.UnitConverterColors
+import dev.nevack.unitconverter.design.unitConverterTheme
 import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -72,7 +74,7 @@ class CategoriesActivity : AppCompatActivity() {
         setContentView(
             ComposeView(this).apply {
                 setContent {
-                    MaterialTheme {
+                    unitConverterTheme {
                         categoriesMainScreen(
                             categories = categoriesViewModel.categories,
                             isTablet = isTablet,
@@ -191,7 +193,7 @@ private fun categoryItem(
             Modifier
                 .padding(2.dp)
                 .aspectRatio(1f)
-                .background(colorResource(category.color))
+                .background(Color(category.color))
                 .clickable(onClick = onClick),
     ) {
         Image(
@@ -206,7 +208,7 @@ private fun categoryItem(
 
         Text(
             text = stringResource(category.categoryName),
-            color = MaterialTheme.colorScheme.surface,
+            color = UnitConverterColors.OnCategory,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.bodyLarge,
@@ -215,7 +217,7 @@ private fun categoryItem(
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .height(48.dp)
-                    .background(colorResource(R.color.shade_color))
+                    .background(UnitConverterColors.ShadeOverlay)
                     .padding(horizontal = 16.dp)
                     .wrapContentHeight(Alignment.CenterVertically),
         )

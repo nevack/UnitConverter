@@ -22,6 +22,7 @@ enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 include(":app")
 include(":core:converter")
+include(":core:design")
 include(":feature:converter")
 include(":feature:history-api")
 include(":feature:history")

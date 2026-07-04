@@ -55,7 +55,6 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -68,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.nevack.unitconverter.design.UnitConverterColors
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.model.ConversionUnit
 import kotlinx.coroutines.launch
@@ -133,7 +133,7 @@ private fun converterScreen(
     onPaste: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = state.backgroundColor?.let { colorResource(it) } ?: MaterialTheme.colorScheme.primary
+    val backgroundColor = state.backgroundColor?.let(::Color) ?: MaterialTheme.colorScheme.primary
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     Scaffold(
@@ -265,9 +265,9 @@ private fun converterTopBar(
         colors =
             TopAppBarDefaults.topAppBarColors(
                 containerColor = Color.Transparent,
-                titleContentColor = MaterialTheme.colorScheme.surface,
-                navigationIconContentColor = MaterialTheme.colorScheme.surface,
-                actionIconContentColor = MaterialTheme.colorScheme.surface,
+                titleContentColor = UnitConverterColors.OnCategory,
+                navigationIconContentColor = UnitConverterColors.OnCategory,
+                actionIconContentColor = UnitConverterColors.OnCategory,
             ),
         title = { title?.let { Text(text = stringResource(it)) } },
         navigationIcon = {
@@ -328,7 +328,7 @@ private fun converterDisplay(
             FloatingActionButton(
                 onClick = { onConvert(data.swap()) },
                 modifier = Modifier.size(48.dp),
-                containerColor = colorResource(R.color.colorSecondary),
+                containerColor = UnitConverterColors.Secondary,
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_swap_vert),
@@ -375,7 +375,7 @@ private fun valueText(
         val isPlaceholder = value.isEmpty()
         Text(
             text = buildValueText(value.ifEmpty { stringResource(R.string.zero_hint) }, suffix),
-            color = MaterialTheme.colorScheme.surface.copy(alpha = if (isPlaceholder) 0.5f else 1f),
+            color = UnitConverterColors.OnCategory.copy(alpha = if (isPlaceholder) 0.5f else 1f),
             fontSize = 48.sp,
             textAlign = TextAlign.End,
         )
@@ -392,7 +392,7 @@ private fun unitDropdown(
     var anchorWidth by remember { mutableIntStateOf(0) }
     val density = LocalDensity.current
     val selected = units.getOrNull(selectedIndex)?.name.orEmpty()
-    val borderColor = MaterialTheme.colorScheme.surface
+    val borderColor = UnitConverterColors.OnCategory
 
     Box(
         modifier =
@@ -417,7 +417,7 @@ private fun unitDropdown(
                 text = selected,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start,
-                color = MaterialTheme.colorScheme.surface,
+                color = UnitConverterColors.OnCategory,
             )
         }
         DropdownMenu(
@@ -453,7 +453,7 @@ private fun converterKeypad(
     Row(
         modifier =
             modifier
-                .background(colorResource(R.color.keypad_background_color))
+                .background(UnitConverterColors.KeypadOverlay)
                 .padding(end = 2.dp),
     ) {
         keypadNumberColumn(listOf("1", "4", "7", "."), enabled, onDigit, Modifier.weight(3f))
@@ -464,7 +464,7 @@ private fun converterKeypad(
                 Modifier
                     .weight(2f)
                     .fillMaxHeight()
-                    .background(colorResource(R.color.keypad_background_color)),
+                    .background(UnitConverterColors.KeypadOverlay),
         ) {
             Box(
                 modifier =
@@ -477,7 +477,7 @@ private fun converterKeypad(
                     modifier =
                         Modifier
                             .fillMaxSize()
-                            .background(colorResource(R.color.colorSecondary), RoundedCornerShape(4.dp))
+                            .background(UnitConverterColors.Secondary, RoundedCornerShape(4.dp))
                             .combinedClickable(
                                 enabled = enabled,
                                 onClick = { onBackspace(false) },

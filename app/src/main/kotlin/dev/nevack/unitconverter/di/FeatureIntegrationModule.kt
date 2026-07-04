@@ -47,7 +47,7 @@ object FeatureIntegrationModule {
                     id = category.id,
                     nameRes = category.categoryName,
                     iconRes = category.icon,
-                    colorRes = category.color,
+                    color = category.color,
                 )
             }
         }

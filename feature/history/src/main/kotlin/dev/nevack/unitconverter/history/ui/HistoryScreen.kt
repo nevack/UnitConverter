@@ -43,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -51,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.nevack.unitconverter.design.UnitConverterColors
 import dev.nevack.unitconverter.feature.history.R
 import dev.nevack.unitconverter.history.HistoryCategory
 import dev.nevack.unitconverter.history.HistoryRecord
@@ -182,9 +182,9 @@ private fun historyItem(
     onRemove: () -> Unit,
     onShare: () -> Unit,
 ) {
-    val backgroundColor = category?.let { colorResource(it.colorRes) } ?: Color.Transparent
-    val contentColor = if (category == null) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface
-    val shadeColor = colorResource(R.color.history_shade_color)
+    val backgroundColor = category?.let { Color(it.color) } ?: Color.Transparent
+    val contentColor = if (category == null) MaterialTheme.colorScheme.onSurface else UnitConverterColors.OnCategory
+    val shadeColor = UnitConverterColors.ShadeOverlay
 
     Surface(
         color = backgroundColor,

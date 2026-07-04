@@ -25,7 +25,7 @@ dependencies {
 
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.foundation)
@@ -33,7 +33,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.viewmodel)
 
     implementation(libs.androidx.room.common)

@@ -17,6 +17,7 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":core:design"))
     implementation(project(":feature:history-api"))
 
     implementation(platform(libs.kotlinx.coroutines.bom))

@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import dev.nevack.unitconverter.design.UnitConverterColors
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.model.AppConverterCategory
 import dev.nevack.unitconverter.model.AppConverterFactory
@@ -28,7 +29,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.MASS, 0),
                     categoryName = R.string.mass,
                     icon = R.drawable.ic_weight,
-                    color = R.color.material_red_500,
+                    color = UnitConverterColors.Category.Mass,
                 ),
         ) { MassConverter(context.massUnits()) }
 
@@ -43,7 +44,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.VOLUME, 1),
                     categoryName = R.string.volume,
                     icon = R.drawable.ic_volume,
-                    color = R.color.material_green_accent_700,
+                    color = UnitConverterColors.Category.Volume,
                 ),
         ) { VolumeConverter(context.volumeUnits()) }
 
@@ -58,7 +59,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.TEMPERATURE, 2),
                     categoryName = R.string.temperature,
                     icon = R.drawable.ic_temperature,
-                    color = R.color.material_purple_500,
+                    color = UnitConverterColors.Category.Temperature,
                 ),
         ) { TemperatureConverter(context.temperatureUnits()) }
 
@@ -73,7 +74,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.SPEED, 3),
                     categoryName = R.string.speed,
                     icon = R.drawable.ic_speed,
-                    color = R.color.material_indigo_500,
+                    color = UnitConverterColors.Category.Speed,
                 ),
         ) { SpeedConverter(context.speedUnits()) }
 
@@ -88,7 +89,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.LENGTH, 4),
                     categoryName = R.string.length,
                     icon = R.drawable.ic_ruler,
-                    color = R.color.material_bluegrey_500,
+                    color = UnitConverterColors.Category.Length,
                 ),
         ) { LengthConverter(context.lengthUnits()) }
 
@@ -103,7 +104,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.AREA, 5),
                     categoryName = R.string.area,
                     icon = R.drawable.ic_area,
-                    color = R.color.material_teal_500,
+                    color = UnitConverterColors.Category.Area,
                 ),
         ) { AreaConverter(context.areaUnits()) }
 
@@ -118,7 +119,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.MEMORY, 6),
                     categoryName = R.string.memory,
                     icon = R.drawable.ic_memory,
-                    color = R.color.material_blue_500,
+                    color = UnitConverterColors.Category.Memory,
                 ),
         ) { MemoryConverter(context.memoryUnits()) }
 
@@ -133,7 +134,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.TIME, 7),
                     categoryName = R.string.time,
                     icon = R.drawable.ic_timer,
-                    color = R.color.material_orange_500,
+                    color = UnitConverterColors.Category.Time,
                 ),
         ) { TimeConverter(context.timeUnits()) }
 
@@ -149,7 +150,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.CURRENCY, 8),
                     categoryName = R.string.currency,
                     icon = R.drawable.ic_currency_usd,
-                    color = R.color.material_green_800,
+                    color = UnitConverterColors.Category.Currency,
                 ),
         ) {
             CurrencyConverter(
@@ -169,7 +170,7 @@ object ConvertersModule {
                     category = ConverterCategory(ConverterCategoryIds.OTHER, 9),
                     categoryName = R.string.other,
                     icon = R.drawable.ic_other,
-                    color = R.color.material_deep_purple_500,
+                    color = UnitConverterColors.Category.Other,
                 ),
         ) { OtherConverter(context.otherUnits()) }
 }

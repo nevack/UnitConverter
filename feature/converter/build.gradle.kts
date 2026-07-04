@@ -15,6 +15,7 @@ android {
 
 dependencies {
     implementation(project(":core:converter"))
+    implementation(project(":core:design"))
     implementation(project(":nbrb-api"))
 
     implementation(platform(libs.kotlinx.coroutines.bom))

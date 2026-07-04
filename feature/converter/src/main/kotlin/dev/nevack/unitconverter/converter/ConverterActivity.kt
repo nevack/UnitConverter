@@ -8,7 +8,6 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.MaterialTheme
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
+import dev.nevack.unitconverter.design.unitConverterTheme
 import dev.nevack.unitconverter.feature.converter.databinding.ActivityConverterBinding
 import dev.nevack.unitconverter.model.AppConverterCategory
 import kotlinx.coroutines.flow.collect
@@ -84,7 +84,7 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         binding.container.setContent {
-            MaterialTheme {
+            unitConverterTheme {
                 converterRoute(
                     viewModel = viewModel,
                     showNavigationButton = true,

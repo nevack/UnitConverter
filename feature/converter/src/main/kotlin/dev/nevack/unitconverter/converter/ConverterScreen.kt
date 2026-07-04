@@ -4,11 +4,7 @@ import android.content.ClipData
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.res.Configuration
-import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,10 +48,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -68,50 +62,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.getSystemService
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dagger.hilt.android.AndroidEntryPoint
 import dev.nevack.unitconverter.feature.converter.R
 import dev.nevack.unitconverter.model.ConversionUnit
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-
-@AndroidEntryPoint
-class ConverterFragment : Fragment() {
-    @Inject
-    lateinit var historyOpener: ConverterHistoryOpener
-
-    private val viewModel: ConverterViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View =
-        ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                MaterialTheme {
-                    converterRoute(
-                        viewModel = viewModel,
-                        showNavigationButton = arguments?.getBoolean(SHOW_NAV_BUTTON_ARG) == true,
-                        onOpenHistory = { historyOpener.open(requireContext()) },
-                    )
-                }
-            }
-        }
-
-    companion object {
-        const val SHOW_NAV_BUTTON_ARG = "showNavButton"
-    }
-}
 
 @Composable
-private fun converterRoute(
+fun converterRoute(
     viewModel: ConverterViewModel,
     showNavigationButton: Boolean,
     onOpenHistory: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -149,6 +110,7 @@ private fun converterRoute(
                 }
             }
         },
+        modifier = modifier,
     )
 }
 
@@ -164,11 +126,13 @@ private fun converterScreen(
     onCopy: (Boolean) -> Unit,
     onCopied: suspend () -> Unit,
     onPaste: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val backgroundColor = state.backgroundColor?.let { colorResource(it) } ?: MaterialTheme.colorScheme.primary
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     Scaffold(
+        modifier = modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = backgroundColor,

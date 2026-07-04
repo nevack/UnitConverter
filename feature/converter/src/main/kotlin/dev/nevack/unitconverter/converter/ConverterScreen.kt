@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.res.Configuration
 import android.text.Html
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,12 +17,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,7 +33,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -41,6 +43,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -48,8 +51,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -257,7 +262,13 @@ private fun converterTopBar(
     onOpenHistory: () -> Unit,
 ) {
     TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Transparent,
+                titleContentColor = MaterialTheme.colorScheme.surface,
+                navigationIconContentColor = MaterialTheme.colorScheme.surface,
+                actionIconContentColor = MaterialTheme.colorScheme.surface,
+            ),
         title = { title?.let { Text(text = stringResource(it)) } },
         navigationIcon = {
             if (showNavigationButton) {
@@ -317,7 +328,7 @@ private fun converterDisplay(
             FloatingActionButton(
                 onClick = { onConvert(data.swap()) },
                 modifier = Modifier.size(48.dp),
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = colorResource(R.color.colorSecondary),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_swap_vert),
@@ -361,9 +372,10 @@ private fun valueText(
                 .padding(horizontal = 8.dp, vertical = 4.dp),
         contentAlignment = if (alignBottom) Alignment.BottomEnd else Alignment.TopEnd,
     ) {
+        val isPlaceholder = value.isEmpty()
         Text(
             text = buildValueText(value.ifEmpty { stringResource(R.string.zero_hint) }, suffix),
-            color = MaterialTheme.colorScheme.surface,
+            color = MaterialTheme.colorScheme.surface.copy(alpha = if (isPlaceholder) 0.5f else 1f),
             fontSize = 48.sp,
             textAlign = TextAlign.End,
         )
@@ -377,13 +389,29 @@ private fun unitDropdown(
     onSelected: (Int) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var anchorWidth by remember { mutableIntStateOf(0) }
+    val density = LocalDensity.current
     val selected = units.getOrNull(selectedIndex)?.name.orEmpty()
+    val borderColor = MaterialTheme.colorScheme.surface
 
-    Box(modifier = Modifier.fillMaxWidth()) {
-        OutlinedButton(
-            onClick = { expanded = true },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = units.isNotEmpty(),
+    Box(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+                .onSizeChanged { anchorWidth = it.width },
+    ) {
+        Box(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .border(width = 2.dp, color = borderColor, shape = RoundedCornerShape(4.dp))
+                    .combinedClickable(
+                        enabled = units.isNotEmpty(),
+                        onClick = { expanded = true },
+                    ).padding(horizontal = 16.dp),
+            contentAlignment = Alignment.CenterStart,
         ) {
             Text(
                 text = selected,
@@ -395,6 +423,7 @@ private fun unitDropdown(
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
+            modifier = if (anchorWidth == 0) Modifier else Modifier.width(with(density) { anchorWidth.toDp() }),
         ) {
             units.forEachIndexed { index, unit ->
                 DropdownMenuItem(
@@ -448,7 +477,7 @@ private fun converterKeypad(
                     modifier =
                         Modifier
                             .fillMaxSize()
-                            .background(colorResource(R.color.colorSecondary))
+                            .background(colorResource(R.color.colorSecondary), RoundedCornerShape(4.dp))
                             .combinedClickable(
                                 enabled = enabled,
                                 onClick = { onBackspace(false) },
@@ -456,7 +485,7 @@ private fun converterKeypad(
                             ),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(text = "C", fontSize = 48.sp)
+                    Text(text = "C", color = MaterialTheme.colorScheme.onSecondary, fontSize = 48.sp)
                 }
             }
             keypadIconButton(
@@ -505,7 +534,11 @@ private fun keypadNumberColumn(
                         .weight(1f)
                         .fillMaxWidth(),
             ) {
-                Text(text = value, color = MaterialTheme.colorScheme.onPrimary, fontSize = 48.sp)
+                Text(
+                    text = value,
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = if (enabled) 1f else 0.38f),
+                    fontSize = 48.sp,
+                )
             }
         }
     }
@@ -534,6 +567,7 @@ private fun keypadIconButton(
         Icon(
             painter = painterResource(icon),
             contentDescription = contentDescription,
+            tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = if (enabled) 1f else 0.38f),
         )
     }
 }
